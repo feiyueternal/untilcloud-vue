@@ -1,12 +1,30 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import Login from '../views/Login'
+import Changecode from '../views/Changecode'
+import Register from '../views/Register'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/Register',
+    name: 'Register',
+    component: Register
+  },
+  {
+    path: '/Changecode',
+    name: 'Changecode',
+    component: Changecode
+  },
+  {
+    path: '/Home',
     name: 'Home',
     component: Home
   },
@@ -18,6 +36,7 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   }
+  
 ]
 
 const router = new VueRouter({
