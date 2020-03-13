@@ -244,7 +244,7 @@ export default {
       });
     },
     ForgetPw() {
-      this.$router.push({ path: "Changecode" });
+      this.$router.push({ path: "ForgetPassword" });
     },
     RegisterAc() {
       this.$router.push({ path: "Register" });
@@ -279,7 +279,6 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  /* display: table; */
 }
 .el-tabs {
   background: rgba(255, 255, 255, 0.2);

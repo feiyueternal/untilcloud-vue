@@ -156,7 +156,7 @@ export default {
             console.log(res);
             if (res.data.code == 200) {
                 this.$alert(res.data.message);
-                this.$router.push({ path: "HelloWorld" }); //占位
+                this.$router.push({ path: "/" }); //占位
               }else{
                 console.log(res);
                 this.$alert(res.data.message);

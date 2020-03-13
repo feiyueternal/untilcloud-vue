@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login'
 import Changecode from '../views/Changecode'
 import Register from '../views/Register'
+import ForgetPassword from '../views/ForgetPassword'
 
 Vue.use(VueRouter)
 
@@ -18,10 +19,15 @@ const routes = [
     name: 'Register',
     component: Register
   },
+  // {
+  //   path: '/Changecode',
+  //   name: 'Changecode',
+  //   component: Changecode
+  // },
   {
-    path: '/Changecode',
-    name: 'Changecode',
-    component: Changecode
+    path: '/ForgetPassword',
+    name: 'ForgetPassword',
+    component: ForgetPassword
   },
   {
     path: '/Home',
