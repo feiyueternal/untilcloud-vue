@@ -292,7 +292,7 @@ export default {
   border-radius: 10px;
 }
 .a-footer {
-  margin-top: 115px;
+  margin-top: 10px;
 }
 .norbtn {
   width: 100%;
