@@ -5,20 +5,20 @@
         <div class="title">
           <header>到云</header>
         </div>
-        <el-menu background-color="#001529" text-color="#fff" active-text-color="#ffd04b">
+        <el-menu background-color="#001529" text-color="#fff" active-text-color="#409eff">
             <el-menu-item index="1">
-              <i class="el-icon-menu"></i>
+              <i class="iconfont icon-shouye"></i>
               <span slot="title">首页</span>
             </el-menu-item>
 
           <el-menu-item index="2">
-            <i class="el-icon-menu"></i>
+            <i class="iconfont icon-bianji"></i>
             <span slot="title">用户管理</span>
           </el-menu-item>
 
           <el-submenu index="3">
             <template slot="title">
-              <i class="el-icon-location"></i>
+              <i class="iconfont icon-xitong"></i>
               <span>系统管理</span>
             </template>
             <el-menu-item index="3-1">菜单管理</el-menu-item>
@@ -28,7 +28,7 @@
 
            <el-submenu index="4">
             <template slot="title">
-              <i class="el-icon-location"></i>
+              <i class="iconfont icon-jinggao"></i>
               <span>异常页</span>
             </template>
             <el-menu-item index="4-1">找不到页面</el-menu-item>
@@ -37,7 +37,7 @@
           </el-submenu>
 
           <el-menu-item index="5">
-            <i class="el-icon-menu"></i>
+            <i class="iconfont icon-guanyu"></i>
             <span slot="title">关于</span>
           </el-menu-item>
         </el-menu>
