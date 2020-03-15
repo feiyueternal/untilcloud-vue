@@ -5,25 +5,28 @@
         <div class="title">
           <header>到云</header>
         </div>
-        <el-menu background-color="#001529" text-color="#fff" active-text-color="#409eff" router="true">
-            <el-menu-item index="/Home">
+        <el-menu background-color="#001529" text-color="#fff" active-text-color="#409eff" router default-active="activePath">
+            <el-menu-item index="/Home" @click="saveNavState('/Home')">
               <i class="iconfont icon-shouye"></i>
               <span slot="title">首页</span>
             </el-menu-item>
-
-          <el-menu-item index="2">
-            <i class="iconfont icon-bianji"></i>
-            <span slot="title">用户管理</span>
+          <el-submenu index="2"> 
+              <template slot="title">
+              <i class="iconfont icon-bianji"></i>
+              <span>用户配置</span>
+            </template>   
+            <el-menu-item index="/Users" @click="saveNavState('/Users')">用户管理</el-menu-item>
+            <el-menu-item index="/Roles" @click="saveNavState('/Roles')">角色管理</el-menu-item>
           </el-menu-item>
+          </el-submenu>
 
           <el-submenu index="3">
             <template slot="title">
               <i class="iconfont icon-xitong"></i>
-              <span>系统管理</span>
+              <span>系统配置</span>
             </template>
-            <el-menu-item index="3-1">菜单管理</el-menu-item>
-            <el-menu-item index="3-2">角色管理</el-menu-item>
-            <el-menu-item index="3-3">数据字典</el-menu-item>
+            <el-menu-item index="/MenuAdmin" @click="saveNavState('/MenuAdmin')">菜单管理</el-menu-item>
+            <el-menu-item index="/DataDict" @click="saveNavState('/DataDict')">数据字典</el-menu-item>
           </el-submenu>
 
            <el-submenu index="4">
@@ -31,12 +34,12 @@
               <i class="iconfont icon-jinggao"></i>
               <span>异常页</span>
             </template>
-            <el-menu-item index="4-1">找不到页面</el-menu-item>
-            <el-menu-item index="4-2">无权访问</el-menu-item>
-            <el-menu-item index="4-3">服务器出错</el-menu-item>
+            <el-menu-item index="/NotFound" @click="saveNavState('/NotFound')">找不到页面</el-menu-item>
+            <el-menu-item index="/NoRights" @click="saveNavState('/NoRights')">无权访问</el-menu-item>
+            <el-menu-item index="/Error" @click="saveNavState('/Error')">服务器出错</el-menu-item>
           </el-submenu>
 
-          <el-menu-item index="5">
+          <el-menu-item index="/About" @click="saveNavState('/About')">
             <i class="iconfont icon-guanyu"></i>
             <span slot="title">关于</span>
           </el-menu-item>
@@ -54,7 +57,24 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name: "UserAdmin",
+  data(){
+    return {
+        activePath: ''
+    }
+  },
+  created() {
+      this.activePath = window.sessionStorage.getItem('activePath')
+  },
+  methods: {
+  saveNavState(activePath) {
+    window.sessionStorage.setItem('activePath', activePath)
+    this.activePath = activePath
+  }
+}
+}
+
 </script>
 
 <style scoped>
@@ -81,7 +101,7 @@ header {
   font-size: 35px;
 }
 .el-menu {
-  margin-top: 50px;
+  margin-top: 30px;
 }
 .title {
   margin-top: 10px;

@@ -6,6 +6,7 @@ import Changecode from '../views/Changecode'
 import Register from '../views/Register'
 import ForgetPassword from '../views/ForgetPassword'
 import UserAdmin from '../views/UserAdmin'
+import Users from '../views/Users'
 
 Vue.use(VueRouter)
 
@@ -51,7 +52,12 @@ const routes = [
       path: '/Home',
       name: 'Home',
       component: Home
-    }]
+    },{
+      path: '/Users',
+      name: 'Users',
+      component: Users
+    }
+  ]
   }
   
 ]
