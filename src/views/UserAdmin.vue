@@ -5,8 +5,8 @@
         <div class="title">
           <header>到云</header>
         </div>
-        <el-menu background-color="#001529" text-color="#fff" active-text-color="#409eff">
-            <el-menu-item index="1">
+        <el-menu background-color="#001529" text-color="#fff" active-text-color="#409eff" router="true">
+            <el-menu-item index="/Home">
               <i class="iconfont icon-shouye"></i>
               <span slot="title">首页</span>
             </el-menu-item>
@@ -45,7 +45,9 @@
       </el-aside>
       <el-container>
         <el-header>Header</el-header>
-        <el-main>Main</el-main>
+        <el-main>
+          <router-view></router-view>
+        </el-main>
       </el-container>
     </el-container>
   </div>
