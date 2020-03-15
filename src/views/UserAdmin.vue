@@ -61,7 +61,7 @@ export default {
   name: "UserAdmin",
   data(){
     return {
-        activePath: ''
+        activePath: '/Home'
     }
   },
   created() {
