@@ -5,7 +5,8 @@
         <div class="title">
           <header>到云</header>
         </div>
-        <el-menu background-color="#001529" text-color="#fff" active-text-color="#409eff" router default-active="activePath">
+        <el-menu background-color="#001529" text-color="#fff" active-text-color="#409eff" 
+        router default-active="activePath">
             <el-menu-item index="/Home" @click="saveNavState('/Home')">
               <i class="iconfont icon-shouye"></i>
               <span slot="title">首页</span>
@@ -17,7 +18,6 @@
             </template>   
             <el-menu-item index="/Users" @click="saveNavState('/Users')">用户管理</el-menu-item>
             <el-menu-item index="/Roles" @click="saveNavState('/Roles')">角色管理</el-menu-item>
-          </el-menu-item>
           </el-submenu>
 
           <el-submenu index="3">

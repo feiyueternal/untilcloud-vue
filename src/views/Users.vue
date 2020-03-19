@@ -16,7 +16,8 @@
           <el-button type="primary">添加用户</el-button>
         </el-col>
       </el-row>
-      <el-table :data="userList.slice((userListInfo.pagenum-1)*userListInfo.pagesize,userListInfo.pagenum*userListInfo.pagesize)" style="width: 100%" border stripe>
+      <el-table :data="userList.slice((userListInfo.pagenum-1)*userListInfo.pagesize,userListInfo.pagenum*userListInfo.pagesize)" 
+      style="width: 100%" border stripe>
         <el-table-column type="index"></el-table-column>
         <el-table-column prop="name" label="用户名" width="180"></el-table-column>
         <el-table-column prop="enabled" label="状态">

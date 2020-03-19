@@ -53,6 +53,23 @@
                         <el-input v-model="RegisterForm.phone" placeholder="手机号码" clearable></el-input>
                       </el-col>
                     </el-form-item>
+
+                    <!-- <el-form-item label="验证码" prop="verificationCode">
+                      <el-col :span="20">
+                        <el-input
+                        v-model="RegisterForm.verificationCode"
+                        placeholder="请输入验证码"
+                        clearable>
+                        <el-button
+                          size="small"
+                          slot="append"
+                          @click.native.prevent="GetVCode"
+                          :disabled="disabled"
+                        >{{btntxt}}</el-button>
+                      </el-input>
+                      </el-col>
+                    </el-form-item> -->
+                    
                     <el-form-item label="邮箱地址:" prop="email">
                       <el-col :span="20">
                         <el-input v-model="RegisterForm.email" placeholder="邮箱地址" clearable></el-input>
@@ -104,6 +121,9 @@ export default {
         email: "",
         confirmps: ""
       },
+      time: 0, //验证码倒计时
+      disabled: false, //验证码按钮可用
+      btntxt: "获取验证码", //验证码按钮文字
       rules: {
         phone: [
           { required: true, message: "请输入手机号", trigger: "blur" },
@@ -124,7 +144,11 @@ export default {
         confirmps: [
           { required: true, message: "请再次输入密码", trigger: "blur" },
           { validator: validateConfirmps, trigger: "blur" }
-        ]
+        ],
+        // verificationCode: [
+        //   { required: true, message: "请输入验证码", trigger: "blur" },
+        //   {type: 'string', min: 4, message: '验证码必须是4位', trigger: 'blur'}
+        // ]
       }
     };
   },
@@ -132,17 +156,49 @@ export default {
     Back() {
       this.$router.push({ path: "/" });
     },
+    timer() {
+      if (this.time > 0) {
+        this.time--;
+        this.btntxt = this.time + "s后重新获取";
+        setTimeout(this.timer, 1000);
+      } else {
+        this.time = 0;
+        this.btntxt = "获取验证码";
+        this.disabled = false;
+      }
+    },
+    GetVCode() {
+    //验证码验证功能未完善
+          var data = {
+            phone: this.PhoneloginForm.phone,
+            count: 4
+          };
+          var url = "/index/getVerificationCode";
+          this.$http
+            .get(url, { params: data })
+            .then(res => {
+              if (res.data.code == 200) {
+                this.$message({
+                  message: "发送成功",
+                  type: "info"
+                });
+                this.time = 60;
+                this.disabled = true;
+                this.timer();
+              }
+            })
+            .catch(err => {
+              console.log(err);
+              this.$message({
+                message: err,
+                type: "error"
+              });
+            });
+      
+    },
     RegConfirm() {
       this.$refs["RegisterForm"].validate(valid =>{
         if(valid){
-          // this.$alert("111");
-          // var data=JSON.stringify({
-          //   username:this.RegisterForm.username,
-          //   password:this.RegisterForm.password,
-          //   nickname:this.RegisterForm.nickname,
-          //   phone:this.RegisterForm.phone,
-          //   email:this.RegisterForm.email
-          // })
           var data={
             username:this.RegisterForm.username,
             password:this.RegisterForm.password,

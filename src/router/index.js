@@ -7,6 +7,7 @@ import Register from '../views/Register'
 import ForgetPassword from '../views/ForgetPassword'
 import UserAdmin from '../views/UserAdmin'
 import Users from '../views/Users'
+import Roles from '../views/Roles/RolesManageIndex'
 
 Vue.use(VueRouter)
 
@@ -56,9 +57,14 @@ const routes = [
       path: '/Users',
       name: 'Users',
       component: Users
+    },{
+      path: '/Roles',
+      name: 'Roles',
+      component: Roles
     }
   ]
   }
+  
   
 ]
 
