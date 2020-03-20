@@ -27,7 +27,11 @@
                     >
       </el-table-column>-->
       <el-table-column label="操作" fixed="right" align="center" width="300">
-        <template>
+        <template slot-scope="scope">
+          <el-tooltip effect="dark" content="查看权限与菜单" placement="top" :enterable="false">
+              <el-button type="info" icon="el-icon-info" size="mini" @click="Openshow(scope.row)"></el-button>
+          </el-tooltip>
+
           <el-tooltip effect="dark" content="分配用户" placement="top" :enterable="false">
               <el-button type="warning" icon="el-icon-setting" size="mini"></el-button>
           </el-tooltip>
@@ -89,9 +93,14 @@ export default {
         });
         this.loading = false;
          
-        }, 1000);
+        }, 1200);
        
     },
+
+    Openshow (row) {
+      this.$emit('rolesInfo-Show', row);
+    },
+
     //每页查看页数变化
     handleSizeChange(val) {
       // console.log("size "+val)

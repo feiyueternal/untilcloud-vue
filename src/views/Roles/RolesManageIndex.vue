@@ -24,27 +24,31 @@
       </el-row>
     <div class="roles-table">
     <roles-manage-table
+      @rolesInfo-Show="showOpen"
       ref="rolesmanageTable">
     </roles-manage-table>
     </div>
-    
+    <roles-info-show-drawer ref="rolesinfoShowDrawer"></roles-info-show-drawer>
     </el-card>
   </div>
 </template>
 
 <script>
 import RolesManageTable from './RolesManageTable'
+import RolesInfoShowDrawer from './RolesInfoShowDrawer'
 
 export default {
     name:"Roles",
-    components:{RolesManageTable},
+    components:{RolesManageTable,RolesInfoShowDrawer},
     data(){
       return{
      
       }
     },
     methods: {
-
+      showOpen (row) {
+        this.$refs.rolesinfoShowDrawer.open(row);
+      },
     }
 }
 </script>
