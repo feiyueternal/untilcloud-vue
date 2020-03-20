@@ -1,7 +1,8 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your the home"/>
+    <img :src="img" alt="">
+   
+    <!-- <HelloWorld msg="Welcome to Your the home"/> -->
   </div>
 </template>
 
@@ -13,6 +14,15 @@ export default {
   name: 'Home',
   components: {
     HelloWorld
+  },
+  data() {
+    return {
+      img:require("../assets/image/IMG_6399.jpg")
+    }
+    
   }
 }
 </script>
+
+<style scoped>
+</style>
