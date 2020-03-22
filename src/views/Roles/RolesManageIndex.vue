@@ -8,23 +8,21 @@
     <el-card>
       <el-row :gutter="20">
         <el-col :span="7">
-          <el-input placeholder="请输入内容">
-            <el-button slot="append" icon="el-icon-search"></el-button>
+          <el-input placeholder="请输入内容" v-model="keywords" clearable @clear="GetRolesAll">
+            <el-button slot="append" icon="el-icon-search" @click="SearchRoles(keywords)"></el-button>
           </el-input>
         </el-col>
         <el-col :span="2">
-            <el-button type="primary">搜索</el-button>
+        <el-button type="primary">新增角色</el-button>
         </el-col>
         <el-col :span="2">
-        <el-button type="success">新增</el-button>
-        </el-col>
-        <el-col :span="2">
-        <el-button type="danger">一键删除</el-button>
+        <el-button type="danger" @click="DeletechosenRoles">批量删除</el-button>
         </el-col>
       </el-row>
     <div class="roles-table">
     <roles-manage-table
       @rolesInfo-Show="showOpen"
+      @DeleteChosenRoles="GetSelections"
       ref="rolesmanageTable">
     </roles-manage-table>
     </div>
@@ -42,13 +40,66 @@ export default {
     components:{RolesManageTable,RolesInfoShowDrawer},
     data(){
       return{
-     
+        keywords:"",
+        selections:[]
       }
     },
     methods: {
       showOpen (row) {
         this.$refs.rolesinfoShowDrawer.open(row);
       },
+      GetRolesAll(){
+        this.$refs.rolesmanageTable.load()
+      },
+      SearchRoles(keywords){
+        var url="/index/admin/role/search";
+        if(keywords==""){
+          this.GetRolesAll()
+        }else{
+          this.$http.get(url,{
+            params:{keywords}
+          }).then(res => {
+            if(res.data.code==200){
+              if(res.data.data==undefined||res.data.data.length<=0){
+                return this.$message.error("该用户不存在");
+              }else{
+                this.$message.success("模糊查找成功")
+                this.$refs.rolesmanageTable.load(res.data.data)
+              }
+            }else{
+              this.$message.error(res.data.message)
+            }
+          }).catch(err => {
+            console.log(err)
+          })
+        }
+      },
+      GetSelections(val){
+        this.selections=val
+        // console.log(this.selections)
+      },
+      //未测试
+      DeletechosenRoles(val){
+        var id_nums=[]
+        var url="/index/admin/role/delete"
+        for (var i = 0; i < this.selections.length; i++) {
+          id_nums.push(this.selections[i].id);
+        }
+        var data={
+          roleIds:id_nums
+        }
+        console.log(data)
+        this.$http.post(url,data).then(res => {
+          if(res.data.code==200){
+            this.$message.success(res.data.message)
+            this.GetRolesAll()
+          }else{
+            this.$message.error(res.data.message)
+          }
+        }).catch(err => {
+            console.log(err)
+          })
+      }
     }
 }
 </script>

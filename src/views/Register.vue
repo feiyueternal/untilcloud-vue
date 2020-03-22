@@ -211,11 +211,11 @@ export default {
           this.$http.post(url,data).then(res =>{
             console.log(res);
             if (res.data.code == 200) {
-                this.$alert(res.data.message);
+                this.$message.success(res.data.message);
                 this.$router.push({ path: "/" }); //占位
               }else{
                 console.log(res);
-                this.$alert(res.data.message);
+                this.$message.error(res.data.message);
               }
           }).catch(err =>{
             console.log(err);

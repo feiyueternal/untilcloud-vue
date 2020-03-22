@@ -182,14 +182,14 @@ export default {
                 this.$router.push({ path: "/" });
               }else{
                 console.log(res);
-                this.$alert(res.data.message);
+                this.$message.error(res.data.message);
               }
             })
             .catch(err => {
               console.log(err);
             });
         }else{
-          this.$alert("不可为空!");
+          this.$message.error("不可为空!");
         }
       });
         
