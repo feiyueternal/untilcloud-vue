@@ -8,21 +8,25 @@
     <el-card>
       <el-row :gutter="10">
         <el-col :span="7">
-          <el-input placeholder="请输入内容">
-            <el-button slot="append" icon="el-icon-search"></el-button>
+          <el-input placeholder="请输入内容" v-model="keywords" clearable @clear="getUserList">
+            <el-button slot="append" icon="el-icon-search" @click="searchUser(keywords)"></el-button>
           </el-input>
         </el-col>
         <el-col :span="2">
           <el-button type="primary">添加用户</el-button>
         </el-col>
       </el-row>
-      <el-table :data="userList.slice((userListInfo.pagenum-1)*userListInfo.pagesize,userListInfo.pagenum*userListInfo.pagesize)" 
-      style="width: 100%" border stripe>
+      <el-table
+        :data="userList.slice((userListInfo.pagenum-1)*userListInfo.pagesize,userListInfo.pagenum*userListInfo.pagesize)"
+        style="width: 100%"
+        border
+        stripe
+      >
         <el-table-column type="index"></el-table-column>
         <el-table-column prop="name" label="用户名" width="180"></el-table-column>
         <el-table-column prop="enabled" label="状态">
           <template slot-scope="scope">
-            <el-switch v-model="scope.row.enabled"></el-switch>
+            <el-switch v-model="scope.row.enabled" @change="userStateChange(scope.row)"></el-switch>
           </template>
         </el-table-column>
         <el-table-column prop="phone" label="手机号"></el-table-column>
@@ -60,6 +64,7 @@ export default {
         pagesize: 5,
         total: 0
       },
+      keywords: "",
       userList: []
       // rolesList: []
     };
@@ -85,14 +90,59 @@ export default {
         });
     },
     handleSizeChange(newSize) {
-     
       this.userListInfo.pagesize = newSize;
       // this.getUserList();
-       console.log(this.userListInfo.pagesize);
+      console.log(this.userListInfo.pagesize);
     },
     handleCurrentChange(newPage) {
       console.log(newPage);
       this.userListInfo.pagenum = newPage;
+    },
+    userStateChange(userinfo) {
+      console.log(userinfo);
+      // var data = {
+      //   id: userinfo.id,
+      //   enabled: userinfo.enabled
+      // }
+      this.$http
+        .put("/index/admin/user/status", {
+          id: userinfo.id,
+          enabled: userinfo.enabled,
+          username: userinfo.username
+        })
+        .then(res => {
+          console.log(res);
+          if (res.data.code !== 200) {
+            userinfo.enabled = !userinfo.enabled;
+            return this.$message.error(res.data.data);
+          }
+          this.$message.success("更新用户状态成功!");
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    searchUser(keywords) {
+      // console.log(keywords)
+      this.$http
+        .get("/index/admin/user/search", { params: { keywords } })
+        .then(res => {
+          console.log(res.data.data);
+          if (keywords == "") {
+            this.getUserList();
+          } else {
+            if (res.data.data.length == 0) {
+              return this.$message.error("该用户不存在");
+            }
+            this.userList = [];
+            console.log(this.userList);
+            this.userList.push(res.data.data[0]);
+            console.log(this.userList);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
 };
