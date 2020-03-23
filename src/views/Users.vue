@@ -13,7 +13,7 @@
           </el-input>
         </el-col>
         <el-col :span="2">
-          <el-button type="primary">添加用户</el-button>
+          <el-button type="primary" @click="addDialogVisible = true">添加用户</el-button>
         </el-col>
       </el-row>
       <el-table
@@ -52,12 +52,50 @@
         :total="userListInfo.total"
       ></el-pagination>
     </el-card>
+    <el-dialog title="添加用户" :visible.sync="addDialogVisible" width="50%" :append-to-body="true" @close="addDialogClosed">
+      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="80px">
+        <el-form-item label="用户名" prop="username">
+          <el-input v-model="addForm.username"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" prop="password">
+          <el-input v-model="addForm.password"></el-input>
+        </el-form-item>
+        <el-form-item label="真实姓名" prop="name">
+          <el-input v-model="addForm.name"></el-input>
+        </el-form-item>
+        <el-form-item label="手机" prop="mobile">
+          <el-input v-model="addForm.mobile"></el-input>
+        </el-form-item>
+        <el-form-item label="邮箱" prop="email">
+          <el-input v-model="addForm.email"></el-input>
+        </el-form-item>
+        
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="addDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addUser(addForm)">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 export default {
   data() {
+    var checkEmail = (rule, value, cb) => {
+      const regEmail = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/
+      if (regEmail.test(value)) {
+        return cb()
+      }
+      cb(new Error('请输入合法的邮箱'))
+    }
+    var checkMobile = (rule, value, cb) => {
+      const regMobile = /^(0|86|17951)?(13[0-9]|15[0123456789]|17[678]|18[0-9]|14[57])[0-9]{8}$/
+      if (regMobile.test(value)) {
+        return cb()
+      }
+      cb(new Error('请输入合法的手机号'))
+    }
     return {
       userListInfo: {
         pagenum: 1,
@@ -65,8 +103,42 @@ export default {
         total: 0
       },
       keywords: "",
-      userList: []
+      userList: [],
       // rolesList: []
+      addDialogVisible: false,
+      addForm: {
+        username: '',
+        password: '',
+        name: '',
+        mobile: '',
+        email: ''
+        
+      },
+      addFormRules: {
+        username: [
+          { required: true, message: "请输入用户名", trigger: "blur" },
+          {
+            min: 3,
+            max: 10,
+            message: "用户名的长度在3~10个字符之间",
+            trigger: "blur"
+          }
+        ],
+        password: [
+          { required: true, message: "请输入密码", trigger: "blur" },
+          {
+            min: 3,
+            max: 10,
+            message: "密码的长度在3~10个字符之间",
+            trigger: "blur"
+          }
+        ],
+        name: [{ required: true, message: "请输入真实姓名", trigger: "blur"}],
+        email: [{ required: true, message: "请输入邮箱", trigger: "blur" },
+                { validator: checkEmail, trigger: "blur"}],
+        mobile: [{ required: true, message: "请输入手机", trigger: "blur" },
+                 {validator: checkMobile, trigger: "blur"}]
+      }
     };
   },
   created() {
@@ -74,11 +146,13 @@ export default {
   },
   methods: {
     getUserList() {
+      this.userList = []
       this.$http
         .get("/index/admin/user/all")
         .then(res => {
           // console.log(res.data)
           for (var i = 0; i < res.data.length; i++) {
+            
             this.userList.push(res.data[i]);
             // this.rolesList[i] = res.data[i].roles
           }
@@ -143,6 +217,40 @@ export default {
         .catch(err => {
           console.log(err);
         });
+    },
+    addDialogClosed() {
+      this.$refs.addFormRef.resetFields()
+    },
+    addUser(addForm) {
+        
+      this.$refs.addFormRef.validate(valid => {
+        console.log(valid)
+        if (!valid) return
+        this.$http.post("/index/admin/user/add", {
+          username: addForm.username,
+          password: addForm.password,
+          name: addForm.name,
+          phone: addForm.mobile,
+          email: addForm.email
+        })
+        .then(res => {
+          console.log(res)
+          // console.log(this.addForm)
+          if (res.data.code == 200) {
+            this.$message.success('添加用户成功')
+            this.addDialogVisible = false
+            this.getUserList()
+          }
+          else {
+            this.$message.error(res.data.message)
+            this.addDialogVisible = false
+          }
+          
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      })
     }
   }
 };
