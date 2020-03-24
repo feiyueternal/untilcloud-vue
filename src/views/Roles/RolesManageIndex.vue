@@ -7,16 +7,19 @@
     </el-breadcrumb>
     <el-card>
       <el-row :gutter="20">
-        <el-col :span="7">
+        <el-col :span="10">
           <el-input placeholder="请输入内容" v-model="keywords" clearable @clear="GetRolesAll">
             <el-button slot="append" icon="el-icon-search" @click="SearchRoles(keywords)"></el-button>
           </el-input>
         </el-col>
-        <el-col :span="2">
-        <el-button type="primary">新增角色</el-button>
+        <el-col :span="3">
+        <el-button type="primary" @click="addRoles">新增角色</el-button>
         </el-col>
-        <el-col :span="2">
+        <el-col :span="3">
         <el-button type="danger" @click="DeletechosenRoles">批量删除</el-button>
+        </el-col>
+        <el-col :span="3">
+        <el-button type="success" icon="el-icon-refresh" @click="GetRolesAll"></el-button>
         </el-col>
       </el-row>
     <div class="roles-table">
@@ -28,16 +31,21 @@
     </div>
     <roles-info-show-drawer ref="rolesinfoShowDrawer"></roles-info-show-drawer>
     </el-card>
+    <roles-add-dialog
+      ref="rolesaddDialog"
+      @needfresh="Fresh"
+    ></roles-add-dialog>
   </div>
 </template>
 
 <script>
 import RolesManageTable from './RolesManageTable'
 import RolesInfoShowDrawer from './RolesInfoShowDrawer'
+import RolesAddDialog from './RolesAddDialog'
 
 export default {
     name:"Roles",
-    components:{RolesManageTable,RolesInfoShowDrawer},
+    components:{RolesManageTable,RolesInfoShowDrawer,RolesAddDialog},
     data(){
       return{
         keywords:"",
@@ -45,6 +53,9 @@ export default {
       }
     },
     methods: {
+      addRoles(){
+        this.$refs.rolesaddDialog.open()
+      },
       showOpen (row) {
         this.$refs.rolesinfoShowDrawer.open(row);
       },
@@ -78,27 +89,41 @@ export default {
         this.selections=val
         // console.log(this.selections)
       },
-      //未测试
       DeletechosenRoles(val){
-        var id_nums=[]
-        var url="/index/admin/role/delete"
-        for (var i = 0; i < this.selections.length; i++) {
-          id_nums.push(this.selections[i].id);
-        }
-        var data={
-          roleIds:id_nums
-        }
-        console.log(data)
-        this.$http.post(url,data).then(res => {
-          if(res.data.code==200){
-            this.$message.success(res.data.message)
-            this.GetRolesAll()
-          }else{
-            this.$message.error(res.data.message)
+
+        this.$confirm('是否确认删除选中的角色?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          var id_nums=[]
+          var url="/index/admin/role/delete"
+          for (var i = 0; i < this.selections.length; i++) {
+            id_nums.push(this.selections[i].id);
           }
-        }).catch(err => {
-            console.log(err)
-          })
+          var data={
+            roleIds:id_nums
+          }
+          console.log(data)
+          this.$http.post(url,data).then(res => {
+            if(res.data.code==200){
+              this.$message.success("成功删除选中的角色")
+              this.GetRolesAll()
+            }else{
+              this.$message.error(res.data.message)
+            }
+          }).catch(err => {
+              console.log(err)
+            })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });    
+      },
+      Fresh(){
+        this.$refs.rolesmanageTable.load()
       }
     }
 }

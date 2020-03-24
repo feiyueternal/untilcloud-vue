@@ -131,33 +131,45 @@ export default {
         .put(url, data)
         .then(res => {
           if (res.data.code == 200) {
-            this.$message.success(res.data.message);
+            // this.$message.success(res.data.message);
+            this.$message.success("更新角色状态成功");
           } else {
-            this.$message.error(res.data.message);
+            // this.$message.error(res.data.message);
+            this.$message.error("更新角色状态失败");
           }
         })
         .catch(err => {
           console.log(err);
         });
     },
-    //未测试
     DeleteRole(row){
-      console.log(row)
-      var url="/index/admin/role/delete"
-      var data={
-        rid:row.id
-      }
-      this.$http.get(url,{params: data}).then(res => {
-        if(res.data.code==200){
-          this.$message.success(res.data.message)
-          this.load()
-        }else{
-          row.enabled=!row.enabled
-          this.$message.error(res.data.message)
-        }
-      }).catch(err => {
-        console.log(err)
-      })
+      // console.log(row)
+      this.$confirm('是否确认删除该用户?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          var url="/index/admin/role/delete"
+          var data={
+            rid:row.id
+          }
+          this.$http.get(url,{params: data}).then(res => {
+            if(res.data.code==200){
+              this.$message.success("成功删除该用户")
+              this.load()
+            }else{
+              row.enabled=!row.enabled
+              this.$message.error(res.data.message)
+            }
+          }).catch(err => {
+            console.log(err)
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
     },
     handleSelectionChange(){
       this.$emit("DeleteChosenRoles",this.$refs.table.selection)

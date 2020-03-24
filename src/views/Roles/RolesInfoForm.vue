@@ -6,76 +6,108 @@
     :rules="rules"
     label-position="right"
     label-width="120px"
-    class="edit-dialog-form"
     v-loading="loading"
+    :disabled="!editable"
   >
     <el-form-item
-      v-model="data.id"
-      :span="6"
-      prop="id"
       label="Id"
     >
-    <el-input
-        :disabled="true"
-        type="text"
+    <el-row>
+      <el-col :span="12"> 
+        <el-input
+        size="small"
+        readonly
+        autocomplete="off"
         v-model="data.id"
       ></el-input>
+      </el-col>
+    </el-row>
+    
+    
     </el-form-item>
 
     <el-form-item
-      v-model="data.name"
-      :span="9"
       prop="name"
       label="角色名"
     >
+    <el-row>
+      <el-col :span="12"> 
     <el-input
-        :disabled="!editable"
-        type="text"
         v-model="data.name"
       ></el-input>
+      </el-col>
+    </el-row>
+    
     </el-form-item>
 
     <el-form-item
-      v-model="data.nameZh"
-      :span="9"
       prop="nameZh"
       label="角色类型"
     >
+    <el-row>
+      <el-col :span="12"> 
     <el-input
-        :disabled="!editable"
-        type="text"
         v-model="data.nameZh"
       ></el-input>
+      </el-col>
+    </el-row>
+    
     </el-form-item>
-
-    <el-form-item
-      v-model="data.perms"
-      :span="18"
+<!-- 显示状态 -->
+    <el-form-item    
       prop="perms"
       label="角色权限"
+      v-if="!editable"
+    >
+      <el-tree
+        ref="permstree"
+        :data="data.perms"
+        node-key="id"
+        :props="permsprops"
+        >
+      </el-tree> 
+    </el-form-item>
+<!-- 编辑状态 -->
+    <el-form-item
+      prop="perms"
+      label="角色权限"
+      v-if="editable"
     >
       <el-tree
         ref="permstree"
         :data="data.perms"
         node-key="id"
         show-checkbox
-        :disabled="!editable"
         :props="permsprops"
         >
       </el-tree> 
     </el-form-item>
-
+<!-- 显示状态 -->
     <el-form-item
-      v-model="data.menus"
-      :span="18"
+   
       prop="menus"
       label="菜单显示"
+      v-if="!editable"
     >
     <el-tree
         ref="menustree"
         :data="data.menus"
         node-key="id"
-        :disabled="!editable"
+        :props="menusprops"
+        >
+      </el-tree> 
+    </el-form-item> 
+<!-- 编辑状态 -->
+    <el-form-item
+
+      prop="menus"
+      label="菜单显示"
+      v-if="editable"
+    >
+    <el-tree
+        ref="menustree"
+        :data="data.menus"
+        node-key="id"
         show-checkbox
         :props="menusprops"
         >
@@ -99,10 +131,13 @@ export default {
       type: Boolean,
       default: false
     },
+    editable:{
+      type:Boolean,
+      default:false
+    }
   },
   data() {
     return {
-      editable:false,
       rules: {
         name: [
           { required: true, message: "角色名不能为空", trigger: "blur" }
@@ -139,4 +174,9 @@ export default {
 };
 </script>
 <style scoped>
+.el-input__inner {
+  width:50px;
+  text-align: left;
+}
+
 </style>

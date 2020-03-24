@@ -33,13 +33,13 @@
         <el-table-column prop="email" label="邮箱"></el-table-column>
         <el-table-column prop="roles[0].nameZh" label="角色类型"></el-table-column>
         <el-table-column label="操作">
-          <template slot-scope="scope">
+          <!-- <template slot-scope="scope"> -->
             <el-button type="primary" icon="el-icon-edit" size="mini"></el-button>
             <el-button type="danger" icon="el-icon-delete" size="mini"></el-button>
             <el-tooltip effect="dark" content="分配角色" placement="top" :enterable="false">
               <el-button type="warning" icon="el-icon-setting" size="mini"></el-button>
             </el-tooltip>
-          </template>
+          <!-- </template> -->
         </el-table-column>
       </el-table>
       <el-pagination
