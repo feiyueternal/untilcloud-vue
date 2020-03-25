@@ -26,15 +26,21 @@
     <roles-manage-table
       @rolesInfo-Show="showOpen"
       @DeleteChosenRoles="GetSelections"
+      @rolesInfo-Edit="editOpen"
+      @roles-Allot="allotOpen"
       ref="rolesmanageTable">
     </roles-manage-table>
     </div>
     <roles-info-show-drawer ref="rolesinfoShowDrawer"></roles-info-show-drawer>
+    <roles-info-edit-drawer @needfresh="Fresh" ref="rolesinfoEditDrawer"></roles-info-edit-drawer>
     </el-card>
     <roles-add-dialog
       ref="rolesaddDialog"
       @needfresh="Fresh"
     ></roles-add-dialog>
+    <roles-allot-dialog
+      ref="rolesallotDialog"
+    ></roles-allot-dialog>
   </div>
 </template>
 
@@ -42,10 +48,12 @@
 import RolesManageTable from './RolesManageTable'
 import RolesInfoShowDrawer from './RolesInfoShowDrawer'
 import RolesAddDialog from './RolesAddDialog'
+import RolesInfoEditDrawer from './RolesInfoEditDrawer'
+import RolesAllotDialog from './RolesAllotDailog'
 
 export default {
     name:"Roles",
-    components:{RolesManageTable,RolesInfoShowDrawer,RolesAddDialog},
+    components:{RolesManageTable,RolesInfoShowDrawer,RolesAddDialog,RolesInfoEditDrawer,RolesAllotDialog},
     data(){
       return{
         keywords:"",
@@ -58,6 +66,12 @@ export default {
       },
       showOpen (row) {
         this.$refs.rolesinfoShowDrawer.open(row);
+      },
+      editOpen(row){
+        this.$refs.rolesinfoEditDrawer.open(row)
+      },
+      allotOpen(row){
+        this.$refs.rolesallotDialog.open(row)
       },
       GetRolesAll(){
         this.$refs.rolesmanageTable.load()
@@ -104,7 +118,7 @@ export default {
           var data={
             roleIds:id_nums
           }
-          console.log(data)
+          // console.log(data)
           this.$http.post(url,data).then(res => {
             if(res.data.code==200){
               this.$message.success("成功删除选中的角色")

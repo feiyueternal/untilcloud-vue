@@ -1,9 +1,14 @@
 <template>
 
-  <el-drawer title="角色信息查看" size="30%" :visible.sync="dialogVisible" :modal-append-to-body="false">
-    <!-- <el-scrollbar> -->
-    <roles-info-form ref="showform" v-bind:editable="false" :data="info" :loading="showLoading"></roles-info-form>
-  <!-- </el-scrollbar> -->
+  <el-drawer title="角色信息查看" 
+  size="30%" 
+  :visible.sync="dialogVisible" 
+  :modal-append-to-body="false"
+  style="height:100%;"
+  >
+    <roles-info-form ref="showform" v-bind:editable="false" :data="info" :loading="showLoading">
+      
+    </roles-info-form>
   </el-drawer>
   
 </template>
@@ -45,8 +50,6 @@
 </script>
 
 <style scoped>
-.el-scrollbar{
-  height: 100%;
-    /* overflow-x: hidden; */
-}
+
 </style>
+

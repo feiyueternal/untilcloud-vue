@@ -10,40 +10,33 @@
       :data="rolesdata.slice((pagenum-1)*pagesize,pagenum*pagesize)"
     >
       <el-table-column type="selection" width="55" ></el-table-column>
-      <el-table-column align="center" fixed type="index" width="50" prop="id" label="Id"></el-table-column>
+      <el-table-column align="center" fixed width="50" 
+      prop="id" label="角色id" v-model="rolesdata.id"></el-table-column>
       <el-table-column align="center" fixed prop="name" label="角色名"></el-table-column>
       <el-table-column align="center" prop="enabled" label="状态">
         <template slot-scope="scope">
           <el-switch v-model="scope.row.enabled" @change="RolesChangeState(scope.row)"></el-switch>
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="nameZh" fixed label="角色类型"></el-table-column>
-
-      <!--     
-    <el-table-column align="center"
-                     prop="perm"
-                     width="200"
-                     >
-      </el-table-column>-->
-      <!-- <el-table-column align="center"
-                     prop="menus"
-                    >
-      </el-table-column>-->
+      <el-table-column align="center" prop="nameZh" fixed label="角色描述"></el-table-column>
       <el-table-column label="操作" fixed="right" align="center" width="300">
         <template slot-scope="scope">
           <el-tooltip effect="dark" content="查看权限与菜单" placement="top" :enterable="false">
-            <el-button type="info" icon="el-icon-info" size="mini" @click="Openshow(scope.row)"></el-button>
+            <el-button type="info" icon="el-icon-info" size="mini" 
+            @click.native.prevent="Openshow(scope.row)"></el-button>
           </el-tooltip>
 
           <el-tooltip effect="dark" content="分配用户" placement="top" :enterable="false">
-            <el-button type="warning" icon="el-icon-setting" size="mini"></el-button>
+            <el-button type="warning" icon="el-icon-setting" size="mini"
+            @click.native.prevent="Openallot(scope.row)"></el-button>
           </el-tooltip>
 
-          <el-tooltip effect="dark" content="编辑" placement="top" :enterable="false">
-            <el-button size="mini" type="primary" icon="el-icon-edit"></el-button>
+          <el-tooltip effect="dark" content="编辑角色" placement="top" :enterable="false">
+            <el-button size="mini" type="primary" icon="el-icon-edit"
+            @click.native.prevent="Openedit(scope.row)"></el-button>
           </el-tooltip>
 
-          <el-tooltip effect="dark" content="删除" placement="top" :enterable="false">
+          <el-tooltip effect="dark" content="删除角色" placement="top" :enterable="false">
             <el-button size="mini" type="danger" icon="el-icon-delete" 
             @click="DeleteRole(scope.row)"></el-button>
           </el-tooltip>
@@ -80,8 +73,8 @@ export default {
       var url = "/index/admin/role/all";
       setTimeout(() => {
         if (tmpdata != undefined && tmpdata.length > 0) {
-          console.log(tmpdata);
-          console.log("rolesdata->tmp");
+          // console.log(tmpdata);
+          // console.log("rolesdata->tmp");
           this.rolesdata = tmpdata;
         } else {
           this.$http
@@ -107,6 +100,12 @@ export default {
     Openshow(row) {
       this.$emit("rolesInfo-Show", row);
     },
+    Openedit(row){
+      this.$emit("rolesInfo-Edit",row)
+    },
+    Openallot(row){
+      this.$emit("roles-Allot",row)
+    },
 
     //每页查看页数变化
     handleSizeChange(val) {
@@ -126,7 +125,7 @@ export default {
         id: row.id,
         enabled: row.enabled
       };
-      console.log(row)
+      // console.log(row)
       this.$http
         .put(url, data)
         .then(res => {
@@ -176,7 +175,7 @@ export default {
       // console.log(this.$refs.table.selection)
     }
   },
-  created() {
+  mounted() {
     this.load();
   }
 };
