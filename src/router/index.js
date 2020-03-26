@@ -8,6 +8,9 @@ import ForgetPassword from '../views/ForgetPassword'
 import UserAdmin from '../views/UserAdmin'
 import Users from '../views/Users'
 import Roles from '../views/Roles/RolesManageIndex'
+import Page404 from '../views/ExceptionPage/Page404'
+import Page403 from '../views/ExceptionPage/Page403'
+import Page500 from '../views/ExceptionPage/Page500'
 
 Vue.use(VueRouter)
 
@@ -61,6 +64,18 @@ const routes = [
       path: '/Roles',
       name: 'Roles',
       component: Roles
+    },{
+      path:'/Page404',
+      name:'Page404',
+      component:Page404
+    },{
+      path:'/Page403',
+      name:'Page403',
+      component:Page403
+    },{
+      path:'/Page500',
+      name:'Page500',
+      component:Page500
     }
   ]
   }

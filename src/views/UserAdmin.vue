@@ -34,9 +34,9 @@
               <i class="iconfont icon-jinggao"></i>
               <span>异常页</span>
             </template>
-            <el-menu-item index="/NotFound" @click="saveNavState('/NotFound')">找不到页面</el-menu-item>
-            <el-menu-item index="/NoRights" @click="saveNavState('/NoRights')">无权访问</el-menu-item>
-            <el-menu-item index="/Error" @click="saveNavState('/Error')">服务器出错</el-menu-item>
+            <el-menu-item index="/Page404" @click="saveNavState('/Page404')">找不到页面</el-menu-item>
+            <el-menu-item index="/Page403" @click="saveNavState('/Page403')">无权访问</el-menu-item>
+            <el-menu-item index="/Page500" @click="saveNavState('/Page500')">服务器出错</el-menu-item>
           </el-submenu>
 
           <el-menu-item index="/About" @click="saveNavState('/About')">

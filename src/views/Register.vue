@@ -54,7 +54,7 @@
                       </el-col>
                     </el-form-item>
 
-                    <!-- <el-form-item label="验证码" prop="verificationCode">
+                    <el-form-item label="验证码" prop="verificationCode">
                       <el-col :span="20">
                         <el-input
                         v-model="RegisterForm.verificationCode"
@@ -68,7 +68,7 @@
                         >{{btntxt}}</el-button>
                       </el-input>
                       </el-col>
-                    </el-form-item> -->
+                    </el-form-item>
                     
                     <el-form-item label="邮箱地址:" prop="email">
                       <el-col :span="20">
@@ -145,10 +145,10 @@ export default {
           { required: true, message: "请再次输入密码", trigger: "blur" },
           { validator: validateConfirmps, trigger: "blur" }
         ],
-        // verificationCode: [
-        //   { required: true, message: "请输入验证码", trigger: "blur" },
-        //   {type: 'string', min: 4, message: '验证码必须是4位', trigger: 'blur'}
-        // ]
+        verificationCode: [
+          { required: true, message: "请输入验证码", trigger: "blur" },
+          {type: 'string', min: 4, message: '验证码必须是4位', trigger: 'blur'}
+        ]
       }
     };
   },

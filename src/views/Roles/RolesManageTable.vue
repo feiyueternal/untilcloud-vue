@@ -9,7 +9,7 @@
       @selection-change="handleSelectionChange"
       :data="rolesdata.slice((pagenum-1)*pagesize,pagenum*pagesize)"
     >
-      <el-table-column type="selection" width="55" ></el-table-column>
+      <el-table-column align="center" type="selection" width="55" ></el-table-column>
       <el-table-column align="center" fixed width="50" 
       prop="id" label="角色id" v-model="rolesdata.id"></el-table-column>
       <el-table-column align="center" fixed prop="name" label="角色名"></el-table-column>
@@ -94,7 +94,7 @@ export default {
             });
         }
         this.loading = false;
-      }, 1200);
+      }, 1000);
     },
 
     Openshow(row) {
