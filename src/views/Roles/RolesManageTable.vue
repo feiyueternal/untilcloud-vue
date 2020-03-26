@@ -172,7 +172,7 @@ export default {
     },
     handleSelectionChange(){
       this.$emit("DeleteChosenRoles",this.$refs.table.selection)
-      // console.log(this.$refs.table.selection)
+      console.log(this.$refs.table.selection)
     }
   },
   mounted() {

@@ -15,26 +15,32 @@
         <el-col :span="2">
           <el-button type="primary" @click="addDialogVisible = true">添加用户</el-button>
         </el-col>
+        <el-col :span="3">
+          <el-button type="danger" @click="DeletechosenRoles">批量删除</el-button>
+        </el-col>
       </el-row>
       <el-table
         :data="userList.slice((userListInfo.pagenum-1)*userListInfo.pagesize,userListInfo.pagenum*userListInfo.pagesize)"
         style="width: 100%"
         border
         stripe
+        @selection-change = "handleSelectionChange"
+        ref="table"
       >
-        <el-table-column type="index"></el-table-column>
-        <el-table-column prop="username" label="用户名" width="150"></el-table-column>
+        <el-table-column type="selection" width="30"></el-table-column>
+        <el-table-column type="index" label="序号" width="55"></el-table-column>
+        <el-table-column prop="username" label="用户名" width="100"></el-table-column>
 
-        <el-table-column prop="name" label="真实姓名" width="150"></el-table-column>
-        <el-table-column prop="enabled" label="状态">
+        <el-table-column prop="name" label="真实姓名" width="100"></el-table-column>
+        <el-table-column prop="enabled" label="状态" width="100">
           <template slot-scope="scope">
             <el-switch v-model="scope.row.enabled" @change="userStateChange(scope.row)"></el-switch>
           </template>
         </el-table-column>
-        <el-table-column prop="phone" label="手机号"></el-table-column>
-        <el-table-column prop="email" label="邮箱"></el-table-column>
+        <el-table-column prop="phone" label="手机号" width="120"></el-table-column>
+        <el-table-column prop="email" label="邮箱" width="180"></el-table-column>
         <el-table-column prop="roles[0].nameZh" label="角色类型"></el-table-column>
-        <el-table-column label="操作">
+        <el-table-column label="操作" width="200">
           <template slot-scope="scope">
             <el-button
               type="primary"
@@ -42,8 +48,13 @@
               size="mini"
               @click="showEditDialog(scope.row)"
             ></el-button>
-            <el-button type="danger" icon="el-icon-delete" size="mini"></el-button>
-            <el-tooltip effect="dark" content="分配角色" placement="top" :enterable="false">
+            <el-button
+              type="danger"
+              icon="el-icon-delete"
+              size="mini"
+              @click="removeUserById(scope.row.id)"
+            ></el-button>
+            <el-tooltip effect="dark" content="重置密码" placement="top" :enterable="false">
               <el-button type="warning" icon="el-icon-setting" size="mini"></el-button>
             </el-tooltip>
           </template>
@@ -89,7 +100,13 @@
       </span>
     </el-dialog>
 
-    <el-dialog title="修改用户" :visible.sync="editDialogVisible" width="50%" :append-to-body="true"  @close="editDialogClosed">
+    <el-dialog
+      title="修改用户"
+      :visible.sync="editDialogVisible"
+      width="50%"
+      :append-to-body="true"
+      @close="editDialogClosed"
+    >
       <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="70px">
         <el-form-item label="用户ID">
           <el-input v-model="editForm.id" disabled></el-input>
@@ -106,8 +123,8 @@
         <el-form-item label="邮箱" prop="email">
           <el-input v-model="editForm.email"></el-input>
         </el-form-item>
-        <!-- <el-form-item label="用户角色" prop="email">
-          <el-input v-model="editForm.roles[0].nameZh"></el-input>
+        <!-- <el-form-item label="角色">
+          
         </el-form-item>-->
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -161,6 +178,7 @@ export default {
         roles: []
       },
       editDialogVisible: false,
+      selections:[],
       addFormRules: {
         username: [
           { required: true, message: "请输入用户名", trigger: "blur" },
@@ -190,8 +208,8 @@ export default {
           { validator: checkMobile, trigger: "blur" }
         ]
       },
-       editFormRules: {
-          email: [
+      editFormRules: {
+        email: [
           { required: true, message: "请输入邮箱", trigger: "blur" },
           { validator: checkEmail, trigger: "blur" }
         ],
@@ -199,7 +217,7 @@ export default {
           { required: true, message: "请输入手机", trigger: "blur" },
           { validator: checkMobile, trigger: "blur" }
         ]
-       }
+      }
     };
   },
   created() {
@@ -315,49 +333,117 @@ export default {
     },
     showEditDialog(info) {
       // console.log(info);
-      this.editForm.id = info.id,
-      this.editForm.username = info.username,
-      this.editForm.name = info.name,
-      this.editForm.phone = info.phone,
-      this.editForm.email = info.email,
-      // if (info.roles.length == 0) {
-      //   this.editForm.roles = '',
-      // } 
-      // else {
-      //   this.editForm.roles = info.roles,
-      // },
-      this.editForm.roles = info.roles,
-      console.log(this.editForm),
-      this.editDialogVisible = true;
+      (this.editForm.id = info.id),
+        (this.editForm.username = info.username),
+        (this.editForm.name = info.name),
+        (this.editForm.phone = info.phone),
+        (this.editForm.email = info.email),
+        // if (info.roles.length == 0) {
+        //   this.editForm.roles = '',
+        // }
+        // else {
+        //   this.editForm.roles = info.roles,
+        // },
+        (this.editForm.roles = info.roles);
+      console.log(this.editForm), (this.editDialogVisible = true);
     },
     editUserInfo(editForm) {
       this.$refs.editFormRef.validate(valid => {
         console.log(valid);
         if (!valid) return;
         this.$http
-        .put("/index/admin/user/edit", {
-          id: editForm.id,
-          username: editForm.username,
-          name: editForm.name,
-          phone: editForm.phone,
-          email: editForm.email,
-          roles: editForm.roles,
-        })
-        .then(res => {
-          console.log(res);
-          if (res.data.code == 200) {
-            this.$message.success('修改用户成功');
-            this.editDialogVisible = false;
-            this.getUserList();
-          } else {
-            this.$message.error(res.data.message);
-            this.editDialogVisible = false;
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        })
+          .put("/index/admin/user/edit", {
+            id: editForm.id,
+            username: editForm.username,
+            name: editForm.name,
+            phone: editForm.phone,
+            email: editForm.email,
+            roles: editForm.roles
+          })
+          .then(res => {
+            console.log(res);
+            if (res.data.code == 200) {
+              this.$message.success("修改用户成功");
+              this.editDialogVisible = false;
+              this.getUserList();
+            } else {
+              this.$message.error(res.data.message);
+              this.editDialogVisible = false;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      });
+    },
+    removeUserById(id) {
+      console.log(id);
+      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
       })
+        .then(() => {
+          this.$http
+            .get("/index/admin/user/delete", { params: { uid: id } })
+            .then(res => {
+              if (res.data.code == 200) {
+                this.$message.success("成功删除该用户");
+                this.getUserList();
+              } else {
+                this.$message.error(res.data.message);
+                this.getUserList;
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    },
+    handleSelectionChange(){
+      // this.$emit("DeleteChosenRoles",this.$refs.table.selection)
+      // console.log(this.$refs.table.selection)
+      for(var i = 0; i < this.$refs.table.selection.length; i++) {
+        this.selections[i] = this.$refs.table.selection[i].id
+      }
+      console.log(this.selections)
+    },
+    DeletechosenRoles() {
+       this.$confirm('是否确认删除选中的角色?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          var id_nums = []
+          for (var i = 0; i < this.selections.length; i++) {
+            id_nums.push(this.selections[i]);
+          }
+          console.log(id_nums)
+          var data = {
+            userIds: id_nums
+          }
+          this.$http.post("/index/admin/user/delete", data).then(res => {
+            if(res.data.code == 200){
+              this.$message.success('成功删除选中的用户')
+              this.getUserList()
+            }else{
+              this.$message.error(res.data.message)
+            }
+          }).catch(err => {
+            console.log(err)
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
     }
   }
 };
