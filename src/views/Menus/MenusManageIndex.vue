@@ -2,8 +2,8 @@
     <div>
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/Home' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>用户配置</el-breadcrumb-item>
-      <el-breadcrumb-item>角色管理</el-breadcrumb-item>
+      <el-breadcrumb-item>系统配置</el-breadcrumb-item>
+      <el-breadcrumb-item>菜单管理</el-breadcrumb-item>
     </el-breadcrumb>
     <el-card>
       <el-row :gutter="20">
@@ -13,47 +13,45 @@
           </el-input>
         </el-col>
         <el-col :span="3">
-        <el-button type="primary" @click="addRoles">新增角色</el-button>
+        <el-button type="primary" @click="addRoles">新增菜单</el-button>
         </el-col>
         <el-col :span="3">
-        <el-button type="danger" @click="DeletechosenRoles">批量删除</el-button>
+        <el-button type="danger" @click="DeletechosenMenus">批量删除</el-button>
         </el-col>
         <el-col :span="3">
-        <el-button type="success" icon="el-icon-refresh" @click="GetRolesAll"></el-button>
+        <el-button type="success" icon="el-icon-refresh" @click="GetMenusAll"></el-button>
         </el-col>
       </el-row>
-    <div class="roles-table">
-    <roles-manage-table
-      @rolesInfo-Show="showOpen"
-      @DeleteChosenRoles="GetSelections"
-      @rolesInfo-Edit="editOpen"
-      @roles-Allot="allotOpen"
-      ref="rolesmanageTable">
-    </roles-manage-table>
+    <div class="menus-table">
+    <menus-manage-table
+      @DeleteChosenMenus="GetSelections"
+      @menusInfo-Edit="editOpen"
+      ref="menusmanageTable">
+    </menus-manage-table>
     </div>
-    <roles-info-show-drawer ref="rolesinfoShowDrawer"></roles-info-show-drawer>
-    <roles-info-edit-drawer @needfresh="Fresh" ref="rolesinfoEditDrawer"></roles-info-edit-drawer>
+    <!-- <roles-info-show-drawer ref="rolesinfoShowDrawer"></roles-info-show-drawer>
+    <roles-info-edit-drawer @needfresh="Fresh" ref="rolesinfoEditDrawer"></roles-info-edit-drawer> -->
     </el-card>
-    <roles-add-dialog
+    <!-- <roles-add-dialog
       ref="rolesaddDialog"
       @needfresh="Fresh"
     ></roles-add-dialog>
     <roles-allot-dialog
       ref="rolesallotDialog"
-    ></roles-allot-dialog>
+    ></roles-allot-dialog> -->
   </div>
 </template>
 
 <script>
-import RolesManageTable from './RolesManageTable'
-import RolesInfoShowDrawer from './RolesInfoShowDrawer'
-import RolesAddDialog from './RolesAddDialog'
-import RolesInfoEditDrawer from './RolesInfoEditDrawer'
-import RolesAllotDialog from './RolesAllotDailog'
+import MenusManageTable from './MenusManageTable'
+// import RolesInfoShowDrawer from './RolesInfoShowDrawer'
+// import RolesAddDialog from './RolesAddDialog'
+// import RolesInfoEditDrawer from './RolesInfoEditDrawer'
+// import RolesAllotDialog from './RolesAllotDailog'
 
 export default {
-    name:"Roles",
-    components:{RolesManageTable,RolesInfoShowDrawer,RolesAddDialog,RolesInfoEditDrawer,RolesAllotDialog},
+    name:"Menus",
+    components:{MenusManageTable},
     data(){
       return{
         keywords:"",
@@ -70,26 +68,23 @@ export default {
       editOpen(row){
         this.$refs.rolesinfoEditDrawer.open(row)
       },
-      allotOpen(row){
-        this.$refs.rolesallotDialog.open(row)
-      },
-      GetRolesAll(){
+      GetMenusAll(){
         this.$refs.rolesmanageTable.load()
       },
       SearchRoles(keywords){
-        var url="/index/admin/role/search";
+        var url="/index/admin/menu/search";
         if(keywords==""){
-          this.GetRolesAll()
+          this.GetMenusAll()
         }else{
           this.$http.get(url,{
             params:{keywords}
           }).then(res => {
             if(res.data.code==200){
               if(res.data.data==undefined||res.data.data.length<=0){
-                return this.$message.error("该用户不存在");
+                return this.$message.error("该菜单不存在");
               }else{
                 this.$message.success("模糊查找成功")
-                this.$refs.rolesmanageTable.load(res.data.data)
+                this.$refs.menusmanageTable.load(res.data.data)
               }
             }else{
               this.$message.error(res.data.message)
@@ -101,26 +96,27 @@ export default {
       },
       GetSelections(val){
         this.selections=val
+        // console.log(this.selections)
       },
-      DeletechosenRoles(val){
+      DeletechosenMenus(val){
 
-        this.$confirm('是否确认删除选中的角色?', '提示', {
+        this.$confirm('是否确认删除选中的菜单?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
           var id_nums=[]
-          var url="/index/admin/role/delete"
+          var url="/index/admin/menu/delete"
           for (var i = 0; i < this.selections.length; i++) {
             id_nums.push(this.selections[i].id);
           }
           var data={
-            roleIds:id_nums
+            menuIds:id_nums
           }
           this.$http.post(url,data).then(res => {
             if(res.data.code==200){
-              this.$message.success("成功删除选中的角色")
-              this.GetRolesAll()
+              this.$message.success("成功删除选中的菜单")
+              this.GetMenusAll()
             }else{
               this.$message.error(res.data.message)
             }
@@ -135,7 +131,7 @@ export default {
         });    
       },
       Fresh(){
-        this.$refs.rolesmanageTable.load()
+        this.$refs.menusmanageTable.load()
       }
     }
 }
@@ -149,7 +145,7 @@ export default {
 .el-card {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15) !important;
 }
-.roles-table {
+.menus-table {
   margin-top: 15px;
 }
 .el-pagination {

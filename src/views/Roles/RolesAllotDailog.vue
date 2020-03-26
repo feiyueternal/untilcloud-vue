@@ -69,9 +69,7 @@ export default {
     },
     getSelect() {
       return new Promise((resolve, reject) => {
-        // console.log("2");
         this.selectedUsers = [];
-        // console.log(this.selectedUsers);
         for (let i = 0; i < this.users.length; i++) {
           for (let j = 0; j < this.users[i].roles.length; j++) {
             if (this.users[i].roles[j].id == this.rid) {
@@ -80,11 +78,9 @@ export default {
             }
           }
         }
-        // console.log(this.selectedUsers)
       });
     },
     load() {
-      //   console.log("1");
       return new Promise((resolve, reject) => {
         this.loading = true;
         var url = "/index/admin/user/all";
@@ -104,26 +100,21 @@ export default {
             });
           this.loading = false;
         }, 1200);
-        // console.log("14")
       });
     },
     updateUsers() {
-      //   console.log(this.$refs.table.selection);
       var nowchoose = [];
       nowchoose = this.$refs.table.selection;
-      //   console.log(nowchoose)
       this.userIds=[]
       for (let i = 0; i < nowchoose.length; i++) {
         this.userIds.push(nowchoose[i].id);
       }
-      //   console.log(this.userIds)
       var url = "/index/admin/role/user?rid=";
       var data={
           userIds:this.userIds
       }
       console.log(data)
       this.$http.put(url+this.rid,data).then(res => {
-        //   console.log(res)
           if(res.data.code==200){
               this.$message.success("分配角色成功")
               this.load()

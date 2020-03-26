@@ -8,6 +8,7 @@ import ForgetPassword from '../views/ForgetPassword'
 import UserAdmin from '../views/UserAdmin'
 import Users from '../views/Users'
 import Roles from '../views/Roles/RolesManageIndex'
+import Menus from '../views/Menus/MenusManageIndex'
 import Page404 from '../views/ExceptionPage/Page404'
 import Page403 from '../views/ExceptionPage/Page403'
 import Page500 from '../views/ExceptionPage/Page500'
@@ -64,6 +65,10 @@ const routes = [
       path: '/Roles',
       name: 'Roles',
       component: Roles
+    },{
+      path: '/Menus',
+      name: 'Menus',
+      component: Menus
     },{
       path:'/Page404',
       name:'Page404',

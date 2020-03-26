@@ -25,7 +25,7 @@
               <i class="iconfont icon-xitong"></i>
               <span>系统配置</span>
             </template>
-            <el-menu-item index="/MenuAdmin" @click="saveNavState('/MenuAdmin')">菜单管理</el-menu-item>
+            <el-menu-item index="/Menus" @click="saveNavState('/Menus')">菜单管理</el-menu-item>
             <el-menu-item index="/DataDict" @click="saveNavState('/DataDict')">数据字典</el-menu-item>
           </el-submenu>
 
