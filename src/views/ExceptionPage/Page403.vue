@@ -39,8 +39,8 @@ export default {
 }
 .img1 {
   margin-top: 30px;
-  width: 30%;
-  height: 30%;
+  width: 25%;
+  height: 25%;
 }
 .img2 {
   width: 20%;
