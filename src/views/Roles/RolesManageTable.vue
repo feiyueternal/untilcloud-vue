@@ -76,6 +76,7 @@ export default {
           // console.log(tmpdata);
           // console.log("rolesdata->tmp");
           this.rolesdata = tmpdata;
+          console.log(rolesdata)
         } else {
           this.$http
             .get(url)
@@ -177,6 +178,7 @@ export default {
   },
   mounted() {
     this.load();
+    // console.log(rolesdata)
   }
 };
 </script>
