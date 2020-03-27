@@ -206,7 +206,7 @@ export default {
             phone:this.RegisterForm.phone,
             email:this.RegisterForm.email
           }
-          var url="/index/common/register";
+          var url="/index/common/register?VerificationCode="+this.verificationCode;
           console.log(data)
           this.$http.post(url,data).then(res =>{
             console.log(res);
