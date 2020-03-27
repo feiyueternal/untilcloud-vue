@@ -74,6 +74,7 @@ export default {
       setTimeout(() => {
         if (tmpdata != undefined && tmpdata.length > 0) {
           this.rolesdata = tmpdata;
+          console.log(rolesdata)
         } else {
           this.$http
             .get(url)
@@ -171,6 +172,7 @@ export default {
   },
   mounted() {
     this.load();
+    // console.log(rolesdata)
   }
 };
 </script>
