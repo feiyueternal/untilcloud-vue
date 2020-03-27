@@ -96,15 +96,8 @@ export default {
         this.loading = false;
       }, 1000);
     },
-
-    Openshow(row) {
-      this.$emit("rolesInfo-Show", row);
-    },
     Openedit(row){
-      this.$emit("rolesInfo-Edit",row)
-    },
-    Openallot(row){
-      this.$emit("roles-Allot",row)
+      this.$emit("menusInfo-Edit",row)
     },
 
     //每页查看页数变化

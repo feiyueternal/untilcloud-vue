@@ -1,17 +1,17 @@
 <template>
 
-  <el-drawer title="角色信息修改" 
+  <el-drawer title="菜单信息修改" 
   size="30%" 
   :visible.sync="dialogVisible" 
   :modal-append-to-body="false"
   style="height:100%;"
   >
-    <roles-info-form ref="editform" v-bind:editable="true" :data="info" :loading="showLoading"
+    <menus-info-form ref="editform" v-bind:editable="true" :data="info" :loading="showLoading"
     @success-edit="successEdit">
-      
-    </roles-info-form>
+    </menus-info-form>
+
     <div class="demo-drawer__footer">
-      <el-button @click.native.prevent="dialogVisible=false">取 消</el-button>
+      <el-button @click="dialogVisible=false">取 消</el-button>
       <el-button type="primary" @click.native.prevent="Submit"
       :loading="showLoading">提 交</el-button>
     </div>
@@ -22,11 +22,11 @@
 <script>
 
   
-  import RolesInfoForm from './RolesInfoForm'
+  import MenusInfoForm from './MenusInfoForm'
 
   export default {
-    name: 'RolesInfoEditDrawer',
-    components: {RolesInfoForm},
+    name: 'MenusInfoEditDrawer',
+    components: {MenusInfoForm},
     data () {
       return {
         info: {},
@@ -38,6 +38,7 @@
       init (row) {
         this.loadingStart();
         this.info=row;
+        console.log(row)
         this.loadingEnd();
       },
       open (row) {

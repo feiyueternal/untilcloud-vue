@@ -183,16 +183,12 @@ export default {
     },
     selectedPerms(){
       let permsId=[]
-      // console.log("data")
-      // console.log(this.data.perms)
       for(var i =0;i<this.data.perms.length;i++){
         permsId.push(this.data.perms[i].id)
         for (var j = 0; j < this.data.perms[i].children.length; j++) {
           permsId.push(this.data.perms[i].children[j].id)
         }
       }
-      // console.log("permsid")
-      // console.log(permsId)
       this.selectedPermIds=permsId
       if (this.$refs.permstree) {
         this.$refs.permstree.setCheckedKeys(permsId)
@@ -213,16 +209,12 @@ export default {
     },
     selectedMenus(){
       let menusId=[]
-      // console.log("data")
-      // console.log(this.data.menus)
       for(var i =0;i<this.data.menus.length;i++){
         menusId.push(this.data.menus[i].id)
         for (var j = 0; j < this.data.menus[i].children.length; j++) {
           menusId.push(this.data.menus[i].children[j].id)
         }
       }
-      // console.log("menusId")
-      // console.log(menusId)
       this.selectedMenuIds=menusId
       if (this.$refs.menustree) {
         this.$refs.menustree.setCheckedKeys(menusId)
@@ -252,14 +244,12 @@ export default {
             menus:this.$refs.menustree.getCheckedNodes(),
             perms:this.$refs.permstree.getCheckedNodes()
           }
-          // console.log(edit_data)
-          // console.log(typeof(edit_data.menus[0]))
           this.$http.put(url,edit_data).then(res => {
             if(res.data.code==200){
-              this.$message.success("编辑信息成功")
+              this.$message.success("编辑角色成功")
               this.$emit("success-edit",true)
             }else{
-              this.$message.error("编辑信息失败")
+              this.$message.error("编辑角色失败")
             }
           }).catch(err => {
             console.log(err)
