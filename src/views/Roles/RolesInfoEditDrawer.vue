@@ -37,7 +37,7 @@
     methods: {
       init (row) {
         this.loadingStart();
-        this.info=row;
+        this.info=Object.assign({},row);
         this.loadingEnd();
       },
       open (row) {
