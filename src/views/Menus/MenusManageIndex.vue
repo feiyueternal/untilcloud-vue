@@ -8,7 +8,7 @@
     <el-card>
       <el-row :gutter="20">
         <el-col :span="10">
-          <el-input placeholder="请输入菜单名称" v-model="keywords" clearable @clear="GetMenusAll">
+          <el-input placeholder="请输入搜索内容" v-model="keywords" clearable @clear="GetMenusAll">
             <el-button slot="append" icon="el-icon-search" @click="SearchMenus(keywords)"></el-button>
           </el-input>
         </el-col>
