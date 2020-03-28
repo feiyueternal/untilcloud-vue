@@ -31,6 +31,7 @@
       <el-row>
         <el-col :span="12"> 
       <el-input
+          type="textarea"
           v-model="data.name"
         ></el-input>
         </el-col>

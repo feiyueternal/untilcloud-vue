@@ -2,7 +2,7 @@
   <el-form
     size="small"
     :model="data"
-    ref="menusForm"
+    ref="permsForm"
     :rules="rules"
     label-position="right"
     label-width="120px"
@@ -18,7 +18,7 @@
       </el-row>
     </el-form-item>
 
-    <el-form-item prop="name" label="菜单代码">
+    <el-form-item prop="name" label="权限代码">
       <el-row>
         <el-col :span="12">
           <el-input type="textarea" v-model="data.name"></el-input>
@@ -26,33 +26,18 @@
       </el-row>
     </el-form-item>
 
-    <el-form-item prop="nameZh" label="菜单名称">
+    <el-form-item prop="desc_" label="权限描述">
       <el-row>
         <el-col :span="12">
-          <el-input v-model="data.nameZh" placeholder="请输入菜单名称"></el-input>
+          <el-input v-model="data.desc_" placeholder="请输入权限描述"></el-input>
         </el-col>
       </el-row>
     </el-form-item>
 
-    <el-form-item prop="iconCls" label="菜单图标">
-      <el-row>
-      <el-col :span="12">
-      <e-icon-picker v-model="data.iconCls" />
-      </el-col>
-      </el-row>
-    </el-form-item>
-    <el-form-item prop="path" label="菜单路径">
+    <el-form-item prop="url" label="权限路径">
       <el-row>
         <el-col :span="12">
-          <el-input type="textarea" v-model="data.path"></el-input>
-        </el-col>
-      </el-row>
-    </el-form-item>
-
-    <el-form-item prop="component" label="组件名">
-      <el-row>
-        <el-col :span="12">
-          <el-input type="textarea" v-model="data.component"></el-input>
+          <el-input type="textarea" v-model="data.url"></el-input>
         </el-col>
       </el-row>
     </el-form-item>
@@ -69,7 +54,7 @@
 
 <script>
 export default {
-  name: "MenusInfoForm",
+  name: "PermsInfoForm",
   props: {
     data: {
       type: Object,
@@ -89,14 +74,11 @@ export default {
   data() {
     return {
       rules: {
-        name: [{ required: true, message: "请输入菜单代码", trigger: "blur" }],
-        nameZh: [
-          { required: true, message: "请输入菜单名称", trigger: "blur" }
+        name: [{ required: true, message: "请输入权限代码", trigger: "blur" }],
+        desc_: [
+          { required: true, message: "请输入权限描述", trigger: "blur" }
         ],
-        path: [{ required: true, message: "请输入菜单路径", trigger: "blur" }],
-        component: [
-          { required: true, message: "请输入组件名", trigger: "blur" }
-        ],
+        url: [{ required: true, message: "请输入权限路径", trigger: "blur" }],
         parentId: [
           { required: true, message: "请输入父节点id", trigger: "blur" }
         ]
@@ -105,11 +87,11 @@ export default {
   },
   methods: {
     resetFields() {
-      this.$refs.menusForm.resetFields();
+      this.$refs.permsForm.resetFields();
     },
     validate() {
       return new Promise((resolve, reject) => {
-        this.$refs.menusForm.validate(valid => {
+        this.$refs.permsForm.validate(valid => {
           if (valid) {
             resolve();
           }
@@ -117,25 +99,23 @@ export default {
       });
     },
     submit() {
-      this.$refs.menusForm.validate(valid => {
+      this.$refs.permsForm.validate(valid => {
         if (valid) {
-          var url = "/index/admin/menu/edit";
+          var url = "/index/admin/perm/edit";
           var edit_data = {
             id: this.data.id,
-            path:this.data.path,
             name: this.data.name,
-            nameZh: this.data.nameZh,
-            iconCls:this.data.iconCls,
-            component:this.data.component,
+            desc_: this.data.desc_,
+            url:this.data.url,
             parentId:this.data.parentId   
           };
           console.log(edit_data);
             this.$http.put(url,edit_data).then(res => {
               if(res.data.code==200){
-                this.$message.success("编辑菜单成功")
+                this.$message.success("编辑权限成功")
                 this.$emit("success-edit",true)
               }else{
-                this.$message.error("编辑菜单失败")
+                this.$message.error("编辑权限失败")
               }
             }).catch(err => {
               console.log(err)
@@ -150,7 +130,7 @@ export default {
 </script>
 <style scoped>
 .el-input__inner {
-  /* width: 50%; */
+  /* width: 100px; */
   text-align: left;
 }
 .scroll-form {

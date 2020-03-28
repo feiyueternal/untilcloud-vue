@@ -26,6 +26,7 @@
               <span>系统配置</span>
             </template>
             <el-menu-item index="/Menus" @click="saveNavState('/Menus')">菜单管理</el-menu-item>
+            <el-menu-item index="/Perms" @click="saveNavState('/Perms')">权限管理</el-menu-item>
             <el-menu-item index="/DataDict" @click="saveNavState('/DataDict')">数据字典</el-menu-item>
           </el-submenu>
 

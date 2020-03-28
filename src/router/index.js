@@ -9,6 +9,7 @@ import UserAdmin from '../views/UserAdmin'
 import Users from '../views/Users'
 import Roles from '../views/Roles/RolesManageIndex'
 import Menus from '../views/Menus/MenusManageIndex'
+import Perms from '../views/Perms/PermsManageIndex'
 import Page404 from '../views/ExceptionPage/Page404'
 import Page403 from '../views/ExceptionPage/Page403'
 import Page500 from '../views/ExceptionPage/Page500'
@@ -36,7 +37,7 @@ const routes = [
     name: 'ForgetPassword',
     component: ForgetPassword
   },
-  
+
   {
     path: '/about',
     name: 'About',
@@ -57,35 +58,39 @@ const routes = [
       path: '/Home',
       name: 'Home',
       component: Home
-    },{
+    }, {
       path: '/Users',
       name: 'Users',
       component: Users
-    },{
+    }, {
       path: '/Roles',
       name: 'Roles',
       component: Roles
-    },{
+    }, {
       path: '/Menus',
       name: 'Menus',
       component: Menus
-    },{
-      path:'/Page404',
-      name:'Page404',
-      component:Page404
-    },{
-      path:'/Page403',
-      name:'Page403',
-      component:Page403
-    },{
-      path:'/Page500',
-      name:'Page500',
-      component:Page500
+    }, {
+      path: '/Perms',
+      name: 'Perms',
+      component: Perms
+    }, {
+      path: '/Page404',
+      name: 'Page404',
+      component: Page404
+    }, {
+      path: '/Page403',
+      name: 'Page403',
+      component: Page403
+    }, {
+      path: '/Page500',
+      name: 'Page500',
+      component: Page500
     }
-  ]
+    ]
   }
-  
-  
+
+
 ]
 
 const router = new VueRouter({
