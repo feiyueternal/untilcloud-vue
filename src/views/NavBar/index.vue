@@ -1,7 +1,7 @@
 <template>
 	<el-container style="height:100%">
 
-      <el-aside style="height: 100%;width: 250px">
+      <el-aside style="width: 250px">
         <menu-tree></menu-tree>
       </el-aside>
 
@@ -43,6 +43,7 @@ export default {
   top: 0;
   bottom: 0;
   overflow-y: scroll;
+  /* height: 100%; */
 }
 .el-container {
   height: 100%;
