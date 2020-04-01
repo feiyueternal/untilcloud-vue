@@ -5,21 +5,26 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    rolesData: []
+    rolesData: [],
+    adminMenus: []
   },
   mutations: {
     changeRolesData(state, obj) {
-      for(var i = 0; i < obj.length; i++) {
+      for (var i = 0; i < obj.length; i++) {
         state.rolesData.push(obj[i])
       }
       // state.rolesData = obj
+    },
+    initAdminMenu(state,menus){
+      state.adminMenus=menus
+      console.log("adminMenus")
+      console.log(state.adminMenus)
     }
   },
   actions: {
-    getRolesData (context) {
-      
+    getRolesData(context) {
       // this.$http
-        axios.get('/index/admin/user/role')
+      axios.get('/index/admin/user/role')
         .then(res => {
           if (res.data.code == 200) {
             // state.rolesData = res.data.data;
@@ -33,7 +38,7 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err);
         })
-    }
+    },
   },
   modules: {
   }

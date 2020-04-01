@@ -229,7 +229,7 @@ export default {
             .get(url, { params: data })
             .then(res => {
               if (res.data.code == 200) {
-                this.$router.push({ path: "Home" }); //占位
+                this.$router.push({ name: "AdminIndex" }); //占位
               }else{
                 console.log(res);
                 this.$message.error(res.data.message);
@@ -244,10 +244,10 @@ export default {
       });
     },
     ForgetPw() {
-      this.$router.push({ path: "ForgetPassword" });
+      this.$router.push({ name: "ForgetPassword" });
     },
     RegisterAc() {
-      this.$router.push({ path: "Register" });
+      this.$router.push({ name: "Register" });
     }
   }
 };

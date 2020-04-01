@@ -13,18 +13,18 @@
 
 <script>
 export default {
-  name: "Page404",
+  name: "Page403",
   data() {
     return {
       dialogVisible: false,
-      img1: require("../../assets/image/u404.png"),
-      img2: require("../../assets/image/t404.png"),
-      message: "抱歉，您访问的页面不存在!"
+      img1: require("../../assets/image/u403.png"),
+      img2: require("../../assets/image/t403.png"),
+      message: "抱歉，你无权访问该页面!"
     };
   },
   methods: {
     back() {
-      this.$router.push({ path: "/Home" });
+      this.$router.push({ name: "AdminIndex" });
     }
   }
 };
@@ -39,8 +39,8 @@ export default {
 }
 .img1 {
   margin-top: 30px;
-  width: 35%;
-  height: 35%;
+  width: 25%;
+  height: 25%;
 }
 .img2 {
   width: 20%;
