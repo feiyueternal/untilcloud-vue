@@ -75,9 +75,9 @@ export default {
               if (res.data.code == 200) {
                 this.permsdata = res.data.data;
                 this.total = res.data.data.length;
-                console.log(res.data.data);
+                // console.log(res.data.data);
               } else {
-                console.log(res);
+                // console.log(res);
                 this.$message.error(res.data.message);
               }
             })

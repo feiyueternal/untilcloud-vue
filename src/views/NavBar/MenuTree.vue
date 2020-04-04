@@ -63,6 +63,7 @@ export default {
     handleRoute(menu){
       // this.$router.push({name:menu.name})
       console.log(menu.path)
+      // console.log(menu)
       this.$router.push({path:menu.path})
     }
   }

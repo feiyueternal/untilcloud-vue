@@ -65,6 +65,7 @@ const initAdminMenu=(router,store) => {
       this.$message.error("获取菜单失败")
       console.log(res.data)
     }
+    
   }).catch(err => {
     console.log(err)
   })

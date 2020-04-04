@@ -187,7 +187,7 @@ const mpalist=
         'Unauthorized': () => import(/* webpackChunkName: "page403" */ '@/views/error/Page403.vue'),
         'ServerError': () => import(/* webpackChunkName: "page500" */ '@/views/error/Page500.vue'),
         'NotFound': () => import(/* webpackChunkName: "page404" */ '@/views/error/Page404.vue'),
-        "DataDictionary": () => import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
+        "DataDictionary": () => import(/* webpackChunkName: "home" */ '@/views/DataDic/DataDicIndex.vue'),
         "User": Navbar,
         "System": Navbar,
         "Error":Navbar, 
