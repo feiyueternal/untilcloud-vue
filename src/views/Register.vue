@@ -43,9 +43,9 @@
                         ></el-input>
                       </el-col>
                     </el-form-item>
-                    <el-form-item label="角色代码:">
+                    <el-form-item label="真实姓名:">
                       <el-col :span="20">
-                        <el-input v-model="RegisterForm.nickname" placeholder="角色代码" clearable></el-input>
+                        <el-input v-model="RegisterForm.name" placeholder="真实姓名" clearable></el-input>
                       </el-col>
                     </el-form-item>
                     <el-form-item label="手机号码:" prop="phone">
@@ -57,19 +57,20 @@
                     <el-form-item label="验证码" prop="verificationCode">
                       <el-col :span="20">
                         <el-input
-                        v-model="RegisterForm.verificationCode"
-                        placeholder="请输入验证码"
-                        clearable>
-                        <el-button
-                          size="small"
-                          slot="append"
-                          @click.native.prevent="GetVCode"
-                          :disabled="disabled"
-                        >{{btntxt}}</el-button>
-                      </el-input>
+                          v-model="RegisterForm.verificationCode"
+                          placeholder="请输入验证码"
+                          clearable
+                        >
+                          <el-button
+                            size="small"
+                            slot="append"
+                            @click.native.prevent="GetVCode"
+                            :disabled="disabled"
+                          >{{btntxt}}</el-button>
+                        </el-input>
                       </el-col>
                     </el-form-item>
-                    
+
                     <el-form-item label="邮箱地址:" prop="email">
                       <el-col :span="20">
                         <el-input v-model="RegisterForm.email" placeholder="邮箱地址" clearable></el-input>
@@ -94,7 +95,7 @@ import {
   validatePassword,
   validateUsername
 } from "../utils/validRules";
-import qs from 'qs';
+import qs from "qs";
 
 export default {
   name: "Register",
@@ -110,20 +111,22 @@ export default {
     };
     return {
       msg: "注册",
-      bgImg:{
-        backgroundImage: "url(" + require("../assets/image/background2.jpg") + ") "
+      bgImg: {
+        backgroundImage:
+          "url(" + require("../assets/image/background2.jpg") + ") "
       },
       RegisterForm: {
         username: "",
         password: "",
-        nickname: "",
+        name: "",
         phone: "",
         email: "",
         confirmps: ""
       },
       time: 0, //验证码倒计时
       disabled: false, //验证码按钮可用
-      btntxt: "获取验证码", //验证码按钮文字
+      btntxt: "获取验证码", //验证码按钮文字,
+      verificationCode:"",
       rules: {
         phone: [
           { required: true, message: "请输入手机号", trigger: "blur" },
@@ -147,14 +150,19 @@ export default {
         ],
         verificationCode: [
           { required: true, message: "请输入验证码", trigger: "blur" },
-          {type: 'string', min: 4, message: '验证码必须是4位', trigger: 'blur'}
+          {
+            type: "string",
+            min: 4,
+            message: "验证码必须是4位",
+            trigger: "blur"
+          }
         ]
       }
     };
   },
   methods: {
     Back() {
-      this.$router.push({ path: "/" });
+      this.$router.push({ name: "Login" });
     },
     timer() {
       if (this.time > 0) {
@@ -168,64 +176,60 @@ export default {
       }
     },
     GetVCode() {
-    //验证码验证功能未完善
+      //验证码验证功能未完善
+      if (this.RegisterForm.phone) {
+        var data = {
+          phone: this.RegisterForm.phone,
+          count: 4
+        };
+        var url = "/index/common/getVerificationCode";
+        this.$http
+          .get(url, { params: data })
+          .then(res => {
+            if (res.data.code == 200) {
+              this.$message.success("发送成功")
+              this.time = 60;
+              this.disabled = true;
+              this.timer();
+            }
+          })
+          .catch(err => {
+            console.log(err);
+            this.$message.error("发送失败")
+          });
+      }
+    },
+    RegConfirm() {
+      this.$refs["RegisterForm"].validate(valid => {
+        if (valid) {
           var data = {
-            phone: this.PhoneloginForm.phone,
-            count: 4
+            username: this.RegisterForm.username,
+            password: this.RegisterForm.password,
+            name: this.RegisterForm.name,
+            phone: this.RegisterForm.phone,
+            email: this.RegisterForm.email
           };
-          var url = "/index/getVerificationCode";
+          var url =
+            "/index/common/register?VerificationCode=" + this.verificationCode;
+          console.log(data);
           this.$http
-            .get(url, { params: data })
+            .post(url, data)
             .then(res => {
+              console.log(res);
               if (res.data.code == 200) {
-                this.$message({
-                  message: "发送成功",
-                  type: "info"
-                });
-                this.time = 60;
-                this.disabled = true;
-                this.timer();
+                this.$message.success(res.data.message);
+                this.$router.push({ name: "Login" }); 
+              } else {
+                console.log(res);
+                this.$message.error(res.data.message);
               }
             })
             .catch(err => {
               console.log(err);
-              this.$message({
-                message: err,
-                type: "error"
-              });
+              this.$message.error("注册失败")
             });
-      
-    },
-    RegConfirm() {
-      this.$refs["RegisterForm"].validate(valid =>{
-        if(valid){
-          var data={
-            username:this.RegisterForm.username,
-            password:this.RegisterForm.password,
-            nickname:this.RegisterForm.nickname,
-            phone:this.RegisterForm.phone,
-            email:this.RegisterForm.email
-          }
-          var url="/index/common/register?VerificationCode="+this.verificationCode;
-          console.log(data)
-          this.$http.post(url,data).then(res =>{
-            console.log(res);
-            if (res.data.code == 200) {
-                this.$message.success(res.data.message);
-                this.$router.push({ path: "/" }); //占位
-              }else{
-                console.log(res);
-                this.$message.error(res.data.message);
-              }
-          }).catch(err =>{
-            console.log(err);
-              this.$message({
-                message: err,
-                type: "error"
-              });
-          })
         }
-      })
+      });
     }
   }
 };

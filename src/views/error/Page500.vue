@@ -33,6 +33,7 @@ export default {
 <style scoped>
 .page404-container {
   text-align: center;
+  margin-top: 30px;
   /*color: #d3dce6;*/
   /* margin-top: 3rem; */
   position: relative;

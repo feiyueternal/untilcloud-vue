@@ -18,6 +18,11 @@
   text-align: center;
   color: #2c3e50;
 }
+*{
+  margin:0;
+  padding:0;
+  border:0;
+}
 
 /* #nav {
   padding: 30px;

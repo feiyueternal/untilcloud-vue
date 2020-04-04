@@ -58,7 +58,7 @@
           this.$emit("needfresh",true)
       },
       Submit(){
-          console.log(this.$refs.editform)
+          // console.log(this.$refs.editform)
           this.$refs.editform.submit()
       }
     },

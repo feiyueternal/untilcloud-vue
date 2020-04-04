@@ -5,7 +5,6 @@ import Login from '../views/Login'
 import Changecode from '../views/Changecode'
 import Register from '../views/Register'
 import ForgetPassword from '../views/ForgetPassword'
-import UserAdmin from '../views/UserAdmin'
 import Navbar from '../views/NavBar/index'
 import Users from '../views/Users'
 import Roles from '../views/Roles/RolesManageIndex'
@@ -21,55 +20,65 @@ const routes = [
   {
     path: '/',
     name: 'Login',
-    component: Login
+    component: () => import(/* webpackChunkName: "login" */ '@/views/Login.vue'),
   },
   {
     path: '/Register',
     name: 'Register',
-    component: Register
+    component: () => import(/* webpackChunkName: "register" */ '@/views/Register.vue'),
   },
 
   {
     path: '/ForgetPassword',
     name: 'ForgetPassword',
-    component: ForgetPassword
+    component: ()=>import(/* webpackChunkName: "forgetPassword" */ '@/views/ForgetPassword.vue'),
   },
 
-  // {
-  //   path: '/about',
-  //   name: 'About',
-  //   component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue')
-  // },
+  
   {
     path:'/admin',
     name: 'Admin',
     component: Navbar,
+    meta:{
+      requireAuth: true
+    },
     children:[
       {
         path: '/admin',
         name: 'AdminIndex',
-        component: Home
-      }
+        component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
+        meta: {
+          requireAuth: true
+        }
+      },
+      {
+        path: '/about',
+        name: 'About',
+        component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue'),
+        meta: {
+          requireAuth: true
+        }
+      },
     ]
   },
   {
     path: '/error/notFound',
     name: 'Error',
-    component: Page404
+    component: () => import(/* webpackChunkName: "page404" */ '@/views/error/Page404.vue'),
   }, 
   {
     path: '/error/unauthorized',
     name: 'Unauthorized',
-    component: Page403
+    component: () => import(/* webpackChunkName: "page403" */ '@/views/error/Page403.vue'),
   }, 
   {
     path: '/error/serverError',
     name: 'ServerError',
-    component: Page500
+    component: () => import(/* webpackChunkName: "page500" */ '@/views/error/Page500.vue'),
   },
   {
     path: '*',
-    component:Page404
+    component: () => import(/* webpackChunkName: "page404" */ '@/views/error/Page404.vue'),
   }
 ]
 

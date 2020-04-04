@@ -6,7 +6,10 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     rolesData: [],
-    adminMenus: []
+    adminMenus: [],
+    CLouduser:{
+      username: window.localStorage.getItem('user') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).username
+    }
   },
   mutations: {
     changeRolesData(state, obj) {
@@ -19,6 +22,17 @@ export default new Vuex.Store({
       state.adminMenus=menus
       console.log("adminMenus")
       console.log(state.adminMenus)
+    },
+    login (state, user) {
+      state.CLouduser = user
+      console.log("user")
+      console.log(state.CLouduser)
+      window.localStorage.setItem('CLouduser', JSON.stringify(user))
+    },
+    logout (state) {
+      state.user = []
+      window.localStorage.removeItem('CLouduser')
+      state.adminMenus = []
     }
   },
   actions: {

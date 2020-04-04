@@ -19,7 +19,7 @@
                         prefix-icon="iconfont icon-user"
                         clearable
                         ref="username"
-                        v-model="NormalloginForm.username"
+                        v-model.trim="NormalloginForm.username"
                         placeholder="账号"
                         name="username"
                         type="text"
@@ -33,7 +33,7 @@
                         prefix-icon="iconfont icon-password"
                         show-password
                         ref="password"
-                        v-model="NormalloginForm.password"
+                        v-model.trim="NormalloginForm.password"
                         placeholder="密码"
                         name="password"
                         tabindex="2"
@@ -51,7 +51,7 @@
                         prefix-icon="iconfont icon-caigoutonggerenbangaobaozhenzhucedenglu20"
                         clearable
                         ref="phone"
-                        v-model="PhoneloginForm.phone"
+                        v-model.trim="PhoneloginForm.phone"
                         placeholder="手机"
                         name="phone"
                         type="text"
@@ -64,7 +64,7 @@
                       <el-input
                         prefix-icon="iconfont icon-mail"
                         ref="verificationCode"
-                        v-model="PhoneloginForm.verificationCode"
+                        v-model.trim="PhoneloginForm.verificationCode"
                         placeholder="验证码"
                         name="verificationCode"
                         tabindex="2"
@@ -76,6 +76,7 @@
                           @click.native.prevent="GetVCode"
                           :disabled="disabled"
                         >{{btntxt}}</el-button>
+                        
                       </el-input>
                     </el-form-item>
                   </el-form>
@@ -167,25 +168,22 @@ export default {
     },
 
     handleClick(tab, event) {
-      // console.log(tab.name);
       this.nowactive = tab.name;
     },
     GetVCode() {
-      this.$refs["PhoneloginForm"].validate(valid => {
-        if (valid) {
+        if(this.PhoneloginForm.phone){
           var data = {
             phone: this.PhoneloginForm.phone,
             count: 4
           };
-          var url = "/index/getVerificationCode";
+          var url = "/index/common/getVerificationCode";
           this.$http
             .get(url, { params: data })
             .then(res => {
               if (res.data.code == 200) {
-                this.$message({
-                  message: "发送成功",
-                  type: "info"
-                });
+                console.log("getVertificationCode")
+                console.log(res.data)
+                this.$message.success("发送成功")
                 this.time = 60;
                 this.disabled = true;
                 this.timer();
@@ -193,20 +191,15 @@ export default {
             })
             .catch(err => {
               console.log(err);
-              this.$message({
-                message: err,
-                type: "error"
-              });
+              this.$message.error("发送失败")
             });
         }
-      });
     },
     LoginClick() {
       this.fullscreenLoading = true;
       setTimeout(() => {
         this.fullscreenLoading = false;
       }, 1500);
-      console.log(this.nowactive);
       if (this.nowactive == "first") {
         var data = {
           account: this.NormalloginForm.username,
@@ -225,11 +218,15 @@ export default {
       console.log(data);
       this.$refs[whichone].validate(valid => {
         if (valid) {
+          console.log(data)
           this.$http
             .get(url, { params: data })
             .then(res => {
+              console.log(res)
               if (res.data.code == 200) {
-                this.$router.push({ name: "AdminIndex" }); //占位
+                this.$store.commit("login",res.data.data)
+                this.$message.success("欢迎～")
+                this.$router.push({ name: "AdminIndex" }); 
               }else{
                 console.log(res);
                 this.$message.error(res.data.message);
@@ -272,7 +269,6 @@ export default {
   width: 50%;
 }
 .bgImg {
-  /* background: url("/assetsDir/image/background1.jpg"); */
   background-size: cover;
   position: fixed;
   top: 0;
@@ -292,7 +288,8 @@ export default {
   border-radius: 10px;
 }
 .a-footer {
-  margin-top: 10px;
+  margin-top: 50px;
+  margin-bottom: 20px;
 }
 .norbtn {
   width: 100%;

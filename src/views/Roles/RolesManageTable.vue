@@ -82,6 +82,7 @@ export default {
               if (res.data.code == 200) {
                 this.rolesdata = res.data.data;
                 this.total = res.data.data.length;
+                console.log("rolesget")
                 console.log(res.data.data);
               } else {
                 console.log(res);
@@ -128,6 +129,7 @@ export default {
           if (res.data.code == 200) {
             // this.$message.success(res.data.message);
             this.$message.success("更新角色状态成功");
+            this.load()
           } else {
             row.enabled=!row.enabled
             // this.$message.error(res.data.message);
@@ -153,7 +155,6 @@ export default {
               this.$message.success("成功删除该用户")
               this.load()
             }else{
-              
               this.$message.error(res.data.message)
             }
           }).catch(err => {

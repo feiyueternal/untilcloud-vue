@@ -136,10 +136,9 @@ export default {
       }
     },
     GetVCode() {
-      this.$refs["ForgetForm"].validate(valid => {
-        if (valid) {
+      if(this.ForgetForm.phone){ {
           var data = {
-            phone: this.PhoneloginForm.phone,
+            phone: this.ForgetForm.phone,
             count: 4
           };
           var url = "/index/getVerificationCode";
@@ -164,7 +163,7 @@ export default {
               });
             });
         }
-      });
+      }
     },
     FgtConfirm(){
         var data={
@@ -179,7 +178,8 @@ export default {
             .get(url, { params: data })
             .then(res => {
               if (res.data.code == 200) {
-                this.$router.push({ path: "/" });
+                this.$message.success("修改密码成功")
+                this.$router.push({ name: "Login" });
               }else{
                 console.log(res);
                 this.$message.error(res.data.message);

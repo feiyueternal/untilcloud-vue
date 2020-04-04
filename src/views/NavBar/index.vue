@@ -1,11 +1,14 @@
 <template>
 	<el-container style="height:100%">
-
-      <el-aside style="width: 250px">
-        <menu-tree></menu-tree>
-      </el-aside>
+    
+    <el-aside style="width: 250px">
+      <menu-tree></menu-tree>
+    </el-aside>
 
     <el-container>
+      <el-header>
+        <Header></Header>
+      </el-header>
       <el-main>
         <router-view/>
       </el-main>
@@ -16,9 +19,10 @@
 
 <script>
 import MenuTree from "./MenuTree"
+import Header from './Header'
 export default {
   name: "Navbar",
-  components:{MenuTree},
+  components:{MenuTree,Header},
   data() {
     return {
       
@@ -48,8 +52,8 @@ export default {
 .el-container {
   height: 100%;
 }
-.el-main{
-  /* display:block; */
-  position: 
+.el-header {
+  background-color: #545c64;
 }
+
 </style>

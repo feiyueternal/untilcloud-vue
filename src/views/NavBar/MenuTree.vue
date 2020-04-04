@@ -4,7 +4,6 @@
     <el-menu
     :unique-opened="unique"
     class="el-menu-admin"
-    router
     mode="vertical"
     background-color="#545c64"
     text-color="#fff"
@@ -14,13 +13,16 @@
       <!--index 没有用但是必需字段-->
       <template v-for="(item) in adminMenus">
       
-      <el-menu-item v-if="item.children.length===0" style="text-align: left" :index="item.id.toString()"
-      @click="handleRoute(item)">
-        <span slot="title" style="font-size: 17px;">
-          <i :class="item.iconCls"></i>
-          {{item.nameZh}}
-        </span>
-      </el-menu-item>
+        <el-menu-item v-if="item.children===null|| item.children.length===0" 
+        style="text-align: left" 
+        :key="item.id"
+        :index="item.id.toString()"
+        @click="handleRoute(item)">
+          <span slot="title" style="font-size: 17px;">
+            <i :class="item.iconCls"></i>
+            {{item.nameZh}}
+          </span>
+        </el-menu-item>
 
       <el-submenu  v-else :key="item.id" :index="item.id.toString()" style="text-align: left">
         <span slot="title" style="font-size: 17px;">
@@ -60,7 +62,7 @@ export default {
   methods:{
     handleRoute(menu){
       // this.$router.push({name:menu.name})
-      console.log(menu)
+      console.log(menu.path)
       this.$router.push({path:menu.path})
     }
   }

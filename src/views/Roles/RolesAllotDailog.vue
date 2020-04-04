@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    title="用户分配"
+    title="分配用户"
     :visible.sync="AllotDialogVisible"
     width="85%"
     :append-to-body="true"
@@ -84,12 +84,14 @@ export default {
       return new Promise((resolve, reject) => {
         this.loading = true;
         var url = "/index/admin/user/all";
+        console.log("beforeget")
         setTimeout(() => {
           this.$http
             .get(url)
             .then(res => {
-              if (res.status == 200) {
-                this.users = res.data;
+              console.log(res)
+              if (res.data.code == 200) {
+                this.users = res.data.data;
                 this.totalnum=this.users.length
               } else {
                 this.$message.error("获取用户名单失败");
@@ -127,7 +129,7 @@ export default {
       })
     }
   },
-  created() {
+  mounted() {
     this.load();
   }
 };

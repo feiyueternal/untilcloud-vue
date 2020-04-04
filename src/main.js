@@ -10,7 +10,6 @@ import iconPicker from 'e-icon-picker';
 import 'e-icon-picker/dist/index.css';//基础样式
 import 'e-icon-picker/dist/main.css'; //fontAwesome 图标库样式
 import maplist from '@/router/router_list.js' 
-// import {filterAsyncRouter} from './utils/menusDeal'
 import Router from 'vue-router'
 
 Vue.use(iconPicker);
@@ -21,48 +20,61 @@ Vue.use(ElementUI)
 
 
 const originalPush = Router.prototype.push
+//解决某种报错
 Router.prototype.push = function push(location) {
-return originalPush.call(this, location).catch(err => err)
+  return originalPush.call(this, location).catch(err => err)
 }
 
+
 router.beforeEach((to,from,next) => {
-  initAdminMenu(router,store)
-  next({to,replace:true})
-  next()
+
+  if (store.state.CLouduser.username && to.path.startsWith('/admin')) {
+    initAdminMenu(router, store)
+  }
+
+  if(to.meta.requireAuth){
+    if(store.state.CLouduser.username){
+      initAdminMenu(router,store)
+      next()
+    }else{
+      next({
+        path: '/',
+      })
+    }
+  }else{
+    next()
+  }
 })
 
 
 const initAdminMenu=(router,store) => {
-  // if(store.state.adminMenus.length>0){
-  //   return
-  // }
   var url="/index/menu"
   axios.get(url).then(res => {
-    if(res&&res.status==200){
-      var fmtRoutes = res.data
+    console.log(res)
+    if(res.data.code==200){
+      var fmtRoutes = res.data.data
       filterAsyncRouter(fmtRoutes)
+      console.log("fmtRoutes")
       console.log(fmtRoutes)
-      
       fmtRoutes.forEach(ro =>{
         router.options.routes.push(ro)
       })
-      // router.addRoutes(fmtRoutes)
       router.addRoutes(router.options.routes)
-      console.log(router)
       store.commit('initAdminMenu', fmtRoutes)
     }else{
       this.$message.error("获取菜单失败")
+      console.log(res.data)
     }
   }).catch(err => {
     console.log(err)
   })
 }
 
-const filterAsyncRouter=function(asyncRouters){
+const filterAsyncRouter=function(asyncRouters=[]){
   asyncRouters.forEach((route) => {
     route.component=maplist[route.name]
     if(route.children){
-        filterAsyncRouter(route.children)
+      filterAsyncRouter(route.children)
     }
   })
 }
