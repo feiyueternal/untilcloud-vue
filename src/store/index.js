@@ -6,7 +6,20 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     rolesData: [],
-    adminMenus: []
+    adminMenus: [],
+    dicTypeId: '',
+    dicTypeInfo: {
+      id: '',
+      code: '',
+      name: ''
+    },
+    dicDetail: {
+      id: '',
+      sort: '',
+      name: '',
+      value: '',
+      typeId: ''
+    }
   },
   mutations: {
     changeRolesData(state, obj) {
@@ -17,8 +30,24 @@ export default new Vuex.Store({
     },
     initAdminMenu(state,menus){
       state.adminMenus=menus
-      console.log("adminMenus")
-      console.log(state.adminMenus)
+      // console.log("adminMenus")
+      // console.log(state.adminMenus)
+    },
+    getDicTypeId(state, id) {
+      state.dicTypeId = id;
+      console.log(id)
+    },
+    getDicTypeInfo(state, info) {
+      state.dicTypeInfo.id = info.id;
+      state.dicTypeInfo.code = info.code;
+      state.dicTypeInfo.name = info.name;
+    },
+    getDicDetail(state, info) {
+      state.dicDetail.id = info.id;
+      state.dicDetail.sort = info.sort;
+      state.dicDetail.name = info.name;
+      state.dicDetail.value = info.value;
+      state.dicDetail.typeId = info.dictionaryType.id;
     }
   },
   actions: {

@@ -187,7 +187,7 @@ const mpalist=
         'Unauthorized': () => import('@/views/error/Page403.vue'),
         'ServerError': () => import('@/views/error/Page500.vue'),
         'NotFound': () => import('@/views/error/Page404.vue'),
-        "DataDictionary": () => import('@/views/Home.vue'),
+        "DataDictionary": () => import('@/views/DataDic/DataDicIndex.vue'),
         "User": Navbar,
         "System": Navbar,
         "Error":Navbar, 

@@ -60,7 +60,7 @@ export default {
   methods:{
     handleRoute(menu){
       // this.$router.push({name:menu.name})
-      console.log(menu)
+      // console.log(menu)
       this.$router.push({path:menu.path})
     }
   }

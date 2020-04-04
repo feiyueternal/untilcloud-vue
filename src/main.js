@@ -33,26 +33,28 @@ router.beforeEach((to,from,next) => {
 
 
 const initAdminMenu=(router,store) => {
-  // if(store.state.adminMenus.length>0){
-  //   return
-  // }
+  if(store.state.adminMenus.length>0){
+    return
+  }
   var url="/index/menu"
   axios.get(url).then(res => {
-    if(res&&res.status==200){
-      var fmtRoutes = res.data
+    // console.log(res);
+    if(res&&res.data.code==200){
+      var fmtRoutes = res.data.data
       filterAsyncRouter(fmtRoutes)
-      console.log(fmtRoutes)
+      // console.log(fmtRoutes)
       
       fmtRoutes.forEach(ro =>{
         router.options.routes.push(ro)
       })
       // router.addRoutes(fmtRoutes)
       router.addRoutes(router.options.routes)
-      console.log(router)
+      // console.log(router)
       store.commit('initAdminMenu', fmtRoutes)
     }else{
       this.$message.error("获取菜单失败")
     }
+    
   }).catch(err => {
     console.log(err)
   })
