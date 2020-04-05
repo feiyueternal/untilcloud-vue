@@ -18,6 +18,9 @@
         <el-col :span="3">
           <el-button type="danger" @click="DeletechosenRoles">批量删除</el-button>
         </el-col>
+        <el-col :span="3">
+        <el-button type="success" icon="el-icon-refresh" @click="GetUsersAll"></el-button>
+        </el-col>
       </el-row>
       <el-table
         :data="userList.slice((userListInfo.pagenum-1)*userListInfo.pagesize,userListInfo.pagenum*userListInfo.pagesize)"
@@ -193,7 +196,7 @@ export default {
       keywords: "",
       password: "",
       userList: [],
-      rolesData: this.$store.state.rolesData,
+      rolesData: [],//this.$store.state.rolesData,
       // rolesList: []
       addDialogVisible: false,
       addForm: {
@@ -266,8 +269,8 @@ export default {
   },
   created() {
     this.getUserList();
-
-    this.$store.dispatch("getRolesData");
+    this.getRolesData();
+    // this.$store.dispatch("getRolesData");
     // this.getRoles();
     // console.log(this.$store.state.rolesData)
   },
@@ -286,6 +289,25 @@ export default {
     //   this.checkedRoles = val ? roles : [];
     //   this.isIndeterminate = false;
     // },
+    GetUsersAll() {
+      this.getUserList();
+    },
+    getRolesData() {
+      this.$http.get('/index/admin/user/role')
+          .then(res => {
+            if(res.data.code == 200) {
+              this.rolesData = [];
+              for(var i = 0; i < res.data.data.length; i++){
+                this.rolesData.push(res.data.data[i])
+              }
+            }else {
+              this.$message.error(res.data.message);
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
+    },
     handleCheckedRolesChange(value) {
       console.log(value.length);
       this.editForm.roles = [];
@@ -305,9 +327,10 @@ export default {
       // this.isIndeterminate = checkedCount > 0 && checkedCount < this.roles.length
     },
     getRoles() {
+      this.roles = [];
       for (var i = 0; i < this.rolesData.length; i++) {
-        // this.roles.push(this.rolesData[i].nameZh)
-        this.roles[i] = this.rolesData[i].nameZh;
+        this.roles.push(this.rolesData[i].nameZh)
+        // this.roles[i] = this.rolesData[i].nameZh;
       }
       // console.log(this.roles)
     },
