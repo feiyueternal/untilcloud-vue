@@ -121,12 +121,12 @@ export default {
         name: "",
         phone: "",
         email: "",
-        confirmps: ""
+        confirmps: "",
+        verificationCode:""
       },
       time: 0, //验证码倒计时
       disabled: false, //验证码按钮可用
       btntxt: "获取验证码", //验证码按钮文字,
-      verificationCode:"",
       rules: {
         phone: [
           { required: true, message: "请输入手机号", trigger: "blur" },
@@ -187,6 +187,8 @@ export default {
           .get(url, { params: data })
           .then(res => {
             if (res.data.code == 200) {
+              console.log("验证码")
+              console.log(res.data)
               this.$message.success("发送成功")
               this.time = 60;
               this.disabled = true;
@@ -209,15 +211,13 @@ export default {
             phone: this.RegisterForm.phone,
             email: this.RegisterForm.email
           };
-          var url =
-            "/index/common/register?VerificationCode=" + this.verificationCode;
-          console.log(data);
+          var url =`/index/common/register?verificationCode=${this.RegisterForm.verificationCode}`;
           this.$http
             .post(url, data)
             .then(res => {
               console.log(res);
               if (res.data.code == 200) {
-                this.$message.success(res.data.message);
+                this.$message.success("注册成功");
                 this.$router.push({ name: "Login" }); 
               } else {
                 console.log(res);

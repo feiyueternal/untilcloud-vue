@@ -73,9 +73,8 @@ export default {
       var url = "/index/admin/menu/all";
       setTimeout(() => {
         if (tmpdata != undefined && tmpdata.length > 0) {
-          // console.log(tmpdata);
-          // console.log("rolesdata->tmp");
           this.menusdata = tmpdata;
+          // console.log(tmpdata)
         } else {
           this.$http
             .get(url)

@@ -8,8 +8,8 @@
   >
     <roles-info-form ref="editform" v-bind:editable="true" :data="info" :loading="showLoading"
     @success-edit="successEdit">
-      
     </roles-info-form>
+
     <div class="demo-drawer__footer">
       <el-button @click.native.prevent="dialogVisible=false">取 消</el-button>
       <el-button type="primary" @click.native.prevent="Submit"
@@ -38,6 +38,11 @@
       init (row) {
         this.loadingStart();
         this.info=Object.assign({},row);
+        setTimeout(() =>{
+          this.$refs.editform.init()
+        },20)
+        
+        // console.log(this.info)
         this.loadingEnd();
       },
       open (row) {

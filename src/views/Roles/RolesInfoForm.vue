@@ -56,7 +56,7 @@
     <el-form-item    
       prop="perms"
       label="角色权限"
-      v-if="!editable"
+      v-show="!editable"
       >
       <el-tree
       class="scroll_y"
@@ -71,7 +71,7 @@
     <el-form-item
       prop="perms"
       label="角色权限"
-      v-if="editable"
+      v-show="editable"
     >
       <el-tree
         class="scroll_y"
@@ -91,7 +91,7 @@
    
       prop="menus"
       label="菜单显示"
-      v-if="!editable"
+      v-show="!editable"
       >
       <el-tree
           class="scroll_y"
@@ -107,7 +107,7 @@
 
       prop="menus"
       label="菜单显示"
-      v-if="editable"
+      v-show="editable"
       >
       <el-tree
           ref="menustree"
@@ -155,13 +155,14 @@ export default {
         ]
       },
       permsprops: {
+          id: 'id',
           label: 'desc_',
           isLeaf: 'leaf'
       },
       menusprops:{
+        id: 'id',
         label:'nameZh',
         isLeaf:'leaf',
-        icon:'iconCls'
       },
       perms:[],
       menus:[],
@@ -170,7 +171,7 @@ export default {
     };
   },
   methods: {
-    resetFields() {
+    reset() {
       this.$refs.rolesForm.resetFields();
     },
     validate() {
@@ -192,7 +193,7 @@ export default {
       }
       this.selectedPermIds=permsId
       if (this.$refs.permstree) {
-        this.$refs.permstree.setCheckedKeys(permsId)
+        this.$refs.permstree.setCheckedKeys(this.selectedPermIds)
       }
     },
     GetAllperms(){
@@ -218,7 +219,7 @@ export default {
       }
       this.selectedMenuIds=menusId
       if (this.$refs.menustree) {
-        this.$refs.menustree.setCheckedKeys(menusId)
+        this.$refs.menustree.setCheckedKeys(this.selectedMenuIds)
       }
     },
     GetAllmenus(){
@@ -259,9 +260,20 @@ export default {
           this.$message.error("请按要求填写信息")
         }
       })
+    },
+    init(){
+      this.$nextTick(() =>{
+        this.selectedPermIds=[]
+        this.selectedMenuIds=[]
+        this.GetAllperms()
+        this.GetAllmenus()
+      })
+      
     }
   },
   mounted(){
+    this.selectedPermIds=[]
+    this.selectedMenuIds=[]
     this.GetAllmenus()
     this.GetAllperms()
   }

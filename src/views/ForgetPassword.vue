@@ -141,15 +141,14 @@ export default {
             phone: this.ForgetForm.phone,
             count: 4
           };
-          var url = "/index/getVerificationCode";
+          var url = "/index/common/getVerificationCode";
           this.$http
             .get(url, { params: data })
             .then(res => {
               if (res.data.code == 200) {
-                this.$message({
-                  message: "发送成功",
-                  type: "info"
-                });
+                this.$message.success("发送成功")
+                console.log("验证码")
+                console.log(res.data)
                 this.time = 60;
                 this.disabled = true;
                 this.timer();
@@ -157,10 +156,7 @@ export default {
             })
             .catch(err => {
               console.log(err);
-              this.$message({
-                message: err,
-                type: "error"
-              });
+              this.$message.error("发送失败");
             });
         }
       }

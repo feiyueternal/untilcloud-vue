@@ -74,7 +74,7 @@ export default {
       setTimeout(() => {
         if (tmpdata != undefined && tmpdata.length > 0) {
           this.rolesdata = tmpdata;
-          console.log(rolesdata)
+          console.log(this.rolesdata)
         } else {
           this.$http
             .get(url)
@@ -82,8 +82,6 @@ export default {
               if (res.data.code == 200) {
                 this.rolesdata = res.data.data;
                 this.total = res.data.data.length;
-                console.log("rolesget")
-                console.log(res.data.data);
               } else {
                 console.log(res);
                 this.$message.error(res.data.message);
