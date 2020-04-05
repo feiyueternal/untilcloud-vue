@@ -339,7 +339,7 @@ export default {
       // this.$store.dispatch('getRolesData')
       this.userList = [];
       this.$http
-        .get("/index/admin/role/user")
+        .get("/index/admin/user/all")
         .then(res => {
           console.log(res.data)
           for (var i = 0; i < res.data.data.length; i++) {
@@ -399,9 +399,12 @@ export default {
               return this.$message.error("该用户不存在");
             }
             this.userList = [];
-            console.log(this.userList);
-            this.userList.push(res.data.data[0]);
-            console.log(this.userList);
+            // console.log(this.userList);
+            for(var i = 0; i < res.data.data.length; i++){
+              this.userList.push(res.data.data[i]);
+            }
+            this.userListInfo.total = res.data.data.length;
+            // console.log(this.userList);
           }
         })
         .catch(err => {
