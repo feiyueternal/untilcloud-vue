@@ -25,6 +25,7 @@ export default new Vuex.Store({
   },
   mutations: {
     changeRolesData(state, obj) {
+      state.rolesData = [];
       for (var i = 0; i < obj.length; i++) {
         state.rolesData.push(obj[i])
       }
