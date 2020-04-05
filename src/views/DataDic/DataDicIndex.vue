@@ -2,7 +2,7 @@
   <div>
     <!-- 面包屑导航栏 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/Home' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ name: 'AdminIndex' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>系统配置</el-breadcrumb-item>
       <el-breadcrumb-item>数据字典</el-breadcrumb-item>
     </el-breadcrumb>
