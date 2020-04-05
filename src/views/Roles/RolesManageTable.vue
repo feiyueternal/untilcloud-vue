@@ -2,7 +2,10 @@
   <div>
     <el-table
       ref="table"
-      v-loading="loading"
+      v-loading.fullscreen.lock="loading"
+      element-loading-text="加载中"
+      element-loading-spinner="el-icon-loading"
+      element-loading-background="rgba(0, 0, 0, 0.8)"
       border
       stripe
       style="width: 100%"
@@ -10,8 +13,9 @@
       :data="rolesdata.slice((pagenum-1)*pagesize,pagenum*pagesize)"
     >
       <el-table-column align="center" type="selection" width="55" ></el-table-column>
-      <el-table-column align="center" fixed width="70" 
-      prop="id" label="角色id" v-model="rolesdata.id"></el-table-column>
+      <!-- <el-table-column align="center" fixed width="70" 
+      prop="id" label="角色id" v-model="rolesdata.id"></el-table-column> -->
+      <el-table-column align="center" fixed width="70" type="index" label="序号"></el-table-column>
       <el-table-column align="center" fixed prop="name" label="角色名"></el-table-column>
       <el-table-column align="center" prop="enabled" label="状态">
         <template slot-scope="scope">
@@ -82,8 +86,10 @@ export default {
               if (res.data.code == 200) {
                 this.rolesdata = res.data.data;
                 this.total = res.data.data.length;
+                this.loading = false;
               } else {
                 console.log(res);
+                this.loading = false;
                 this.$message.error(res.data.message);
               }
             })
@@ -91,8 +97,7 @@ export default {
               console.log(err);
             });
         }
-        this.loading = false;
-      }, 1000);
+      }, 700);
     },
 
     Openshow(row) {
