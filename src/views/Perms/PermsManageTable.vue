@@ -2,7 +2,10 @@
   <div>
     <el-table
       ref="table"
-      v-loading="loading"
+      v-loading.fullscreen.lock="loading"
+      element-loading-text="加载中"
+      element-loading-spinner="el-icon-loading"
+      element-loading-background="rgba(0, 0, 0, 0.8)"
       border
       stripe
       style="width: 100%"
@@ -75,18 +78,19 @@ export default {
               if (res.data.code == 200) {
                 this.permsdata = res.data.data;
                 this.total = res.data.data.length;
+                this.loading = false;
                 // console.log(res.data.data);
               } else {
                 // console.log(res);
                 this.$message.error(res.data.message);
+                this.loading = false;
               }
             })
             .catch(err => {
               console.log(err);
             });
         }
-        this.loading = false;
-      }, 1000);
+      }, 700);
     },
     Openedit(row){
       this.$emit("permsInfo-Edit",row)
