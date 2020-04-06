@@ -46,7 +46,7 @@
         </el-table-column>
         <el-table-column prop="phone" label="手机号" width="120" align="center"></el-table-column>
         <el-table-column prop="email" label="邮箱" width="180" align="center"></el-table-column>
-        <el-table-column prop="roles[0].nameZh" label="角色类型" align="center"></el-table-column>
+        <el-table-column prop="rolesZh" label="角色类型" align="center"></el-table-column>
         <el-table-column label="操作" width="200" align="center">
           <template slot-scope="scope">
             <el-button
@@ -360,6 +360,14 @@ export default {
             for (var i = 0; i < res.data.data.length; i++) {
               this.userList.push(res.data.data[i]);
               // this.rolesList[i] = res.data[i].roles
+              this.userList[i]['rolesZh'] = '';
+              if(this.userList[i].roles.length == 0) {
+                this.userList[i]['rolesZh'] == '';
+              } else{
+                for(var j = 0; j < this.userList[i].roles.length; j++){
+                  this.userList[i].rolesZh += this.userList[i].roles[j].nameZh + ' ';
+                }
+              }
             }
             this.userListInfo.total = res.data.data.length;
             console.log(this.userList);
