@@ -78,7 +78,7 @@ export default {
                 this.$emit("needfresh", true);
                 this.editTypeDialogVisible = false;
               } else {
-                this.$message.error("修改字典类型失败");
+                this.$message.error(res.data.message);
               }
             })
             .catch(err => {

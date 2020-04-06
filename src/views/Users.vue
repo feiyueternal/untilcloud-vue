@@ -19,7 +19,7 @@
           <el-button type="danger" @click="DeletechosenRoles">批量删除</el-button>
         </el-col>
         <el-col :span="3">
-        <el-button type="success" icon="el-icon-refresh" @click="GetUsersAll"></el-button>
+          <el-button type="success" icon="el-icon-refresh" @click="getUserList"></el-button>
         </el-col>
       </el-row>
       <el-table
@@ -29,21 +29,25 @@
         stripe
         @selection-change="handleSelectionChange"
         ref="table"
+        v-loading.fullscreen.lock="loading"
+        element-loading-text="加载中"
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(0, 0, 0, 0.8)"
       >
-        <el-table-column type="selection" width="30"></el-table-column>
-        <el-table-column type="index" label="序号" width="55"></el-table-column>
-        <el-table-column prop="username" label="用户名" width="100"></el-table-column>
+        <el-table-column type="selection" width="30" align="center"></el-table-column>
+        <el-table-column type="index" label="序号" width="55" align="center"></el-table-column>
+        <el-table-column prop="username" label="用户名" width="100" align="center"></el-table-column>
 
-        <el-table-column prop="name" label="真实姓名" width="100"></el-table-column>
-        <el-table-column prop="enabled" label="状态" width="100">
+        <el-table-column prop="name" label="真实姓名" width="100" align="center"></el-table-column>
+        <el-table-column prop="enabled" label="状态" width="100" align="center">
           <template slot-scope="scope">
             <el-switch v-model="scope.row.enabled" @change="userStateChange(scope.row)"></el-switch>
           </template>
         </el-table-column>
-        <el-table-column prop="phone" label="手机号" width="120"></el-table-column>
-        <el-table-column prop="email" label="邮箱" width="180"></el-table-column>
-        <el-table-column prop="roles[0].nameZh" label="角色类型"></el-table-column>
-        <el-table-column label="操作" width="200">
+        <el-table-column prop="phone" label="手机号" width="120" align="center"></el-table-column>
+        <el-table-column prop="email" label="邮箱" width="180" align="center"></el-table-column>
+        <el-table-column prop="roles[0].nameZh" label="角色类型" align="center"></el-table-column>
+        <el-table-column label="操作" width="200" align="center">
           <template slot-scope="scope">
             <el-button
               type="primary"
@@ -146,12 +150,18 @@
         <el-button type="primary" @click="editUserInfo(editForm)">确 定</el-button>
       </span>
     </el-dialog>
-    <el-dialog title="修改密码" :visible.sync="resetDialogVisible" width="50%" :append-to-body="true" @close="resetDialogClosed">
-       <el-form :model="resetPwd" :rules="resetFormRules" ref="resetFormRef" label-width="70px">
+    <el-dialog
+      title="修改密码"
+      :visible.sync="resetDialogVisible"
+      width="50%"
+      :append-to-body="true"
+      @close="resetDialogClosed"
+    >
+      <el-form :model="resetPwd" :rules="resetFormRules" ref="resetFormRef" label-width="70px">
         <el-form-item label="新密码" prop="newPassword">
           <el-input v-model="resetPwd.newPassword"></el-input>
         </el-form-item>
-        </el-form>
+      </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="resetDialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="resetUserPwd(resetPwd)">确 定</el-button>
@@ -179,9 +189,10 @@ export default {
     };
     return {
       // checkAll: false,
+      loading: true,
       resetPwd: {
-      newPassword: '',
-      username: ''
+        newPassword: "",
+        username: ""
       },
       resetDialogVisible: false,
       checkedRoles: [],
@@ -196,7 +207,7 @@ export default {
       keywords: "",
       password: "",
       userList: [],
-      rolesData: [],//this.$store.state.rolesData,
+      rolesData: [], //this.$store.state.rolesData,
       // rolesList: []
       addDialogVisible: false,
       addForm: {
@@ -217,7 +228,8 @@ export default {
       editDialogVisible: false,
       selections: [],
       resetFormRules: {
-        newPassword: [   { required: true, message: "请输入密码", trigger: "blur" },
+        newPassword: [
+          { required: true, message: "请输入密码", trigger: "blur" },
           {
             min: 3,
             max: 10,
@@ -293,35 +305,36 @@ export default {
       this.getUserList();
     },
     getRolesData() {
-      this.$http.get('/index/admin/user/role')
-          .then(res => {
-            if(res.data.code == 200) {
-              this.rolesData = [];
-              for(var i = 0; i < res.data.data.length; i++){
-                this.rolesData.push(res.data.data[i])
-              }
-            }else {
-              this.$message.error(res.data.message);
+      this.$http
+        .get("/index/admin/user/role")
+        .then(res => {
+          if (res.data.code == 200) {
+            this.rolesData = [];
+            for (var i = 0; i < res.data.data.length; i++) {
+              this.rolesData.push(res.data.data[i]);
             }
-          })
-          .catch(err => {
-            console.log(err);
-          })
+          } else {
+            this.$message.error(res.data.message);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     handleCheckedRolesChange(value) {
       console.log(value.length);
       this.editForm.roles = [];
-      for(var i = 0; i < value.length; i++) {
-        for(var j = 0; j < this.rolesData.length; j++) {
-          if(value[i] !== this.rolesData[j].nameZh) {
+      for (var i = 0; i < value.length; i++) {
+        for (var j = 0; j < this.rolesData.length; j++) {
+          if (value[i] !== this.rolesData[j].nameZh) {
             continue;
-          }else {
-            this.editForm.roles.push({'id':this.rolesData[j].id})
+          } else {
+            this.editForm.roles.push({ id: this.rolesData[j].id });
             break;
           }
         }
       }
-      console.log(this.editForm.roles)
+      console.log(this.editForm.roles);
       // let checkedCount = value.length;
       // this.checkAll = checkedCount === this.roles.length;
       // this.isIndeterminate = checkedCount > 0 && checkedCount < this.roles.length
@@ -329,7 +342,7 @@ export default {
     getRoles() {
       this.roles = [];
       for (var i = 0; i < this.rolesData.length; i++) {
-        this.roles.push(this.rolesData[i].nameZh)
+        this.roles.push(this.rolesData[i].nameZh);
         // this.roles[i] = this.rolesData[i].nameZh;
       }
       // console.log(this.roles)
@@ -337,17 +350,25 @@ export default {
     getUserList() {
       // console.log(this.rolesData);
       // this.$store.dispatch('getRolesData')
+      this.loading = true;
       this.userList = [];
       this.$http
         .get("/index/admin/user/all")
         .then(res => {
-          console.log(res.data)
-          for (var i = 0; i < res.data.data.length; i++) {
-            this.userList.push(res.data.data[i]);
-            // this.rolesList[i] = res.data[i].roles
+          console.log(res.data);
+          if (res.data.code == 200) {
+            for (var i = 0; i < res.data.data.length; i++) {
+              this.userList.push(res.data.data[i]);
+              // this.rolesList[i] = res.data[i].roles
+            }
+            this.userListInfo.total = res.data.data.length;
+            console.log(this.userList);
+            this.loading = false;
+          } else {
+            console.log(res);
+            this.loading = false;
+            this.$message.error(res.data.message);
           }
-          this.userListInfo.total = res.data.data.length;
-          console.log(this.userList);
         })
         .catch(err => {
           console.log(err);
@@ -396,11 +417,11 @@ export default {
             this.getUserList();
           } else {
             if (res.data.data.length == 0) {
-              return this.$message.error("该用户不存在");
+              return this.$message.error(res.data.message);
             }
             this.userList = [];
             // console.log(this.userList);
-            for(var i = 0; i < res.data.data.length; i++){
+            for (var i = 0; i < res.data.data.length; i++) {
               this.userList.push(res.data.data[i]);
             }
             this.userListInfo.total = res.data.data.length;
@@ -448,10 +469,10 @@ export default {
             console.log(err);
           });
       });
-    }, 
+    },
     showResetDialog(info) {
       this.resetDialogVisible = true;
-      this.resetPwd.username = info.username
+      this.resetPwd.username = info.username;
       console.log(this.resetPwd);
     },
     showEditDialog(info) {
@@ -515,18 +536,18 @@ export default {
           .then(res => {
             console.log(res);
             if (res.data.code == 200) {
-               this.$message.success("修改用户密码成功");
-                this.resetDialogVisible = false;
+              this.$message.success("修改用户密码成功");
+              this.resetDialogVisible = false;
               this.getUserList();
-            }else {
+            } else {
               this.$message.error(res.data.message);
               this.resetDialogVisible = false;
             }
           })
-           .catch(err => {
+          .catch(err => {
             console.log(err);
           });
-      })
+      });
     },
     removeUserById(id) {
       console.log(id);
@@ -601,7 +622,7 @@ export default {
             message: "已取消删除"
           });
         });
-    },
+    }
     // showResetDialog() {
     //   // console.log(pwd)
     // }

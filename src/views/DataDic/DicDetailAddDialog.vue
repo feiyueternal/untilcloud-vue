@@ -84,7 +84,7 @@ export default {
                 this.$emit("needfresh", true);
                 this.addDialogVisible = false;
               } else {
-                this.$message.error("添加字典明细失败");
+                this.$message.error(res.data.message);
               }
             })
             .catch(err => {

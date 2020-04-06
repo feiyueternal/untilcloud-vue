@@ -8,14 +8,17 @@
     </el-breadcrumb>
     <!-- 搜索框及旁边添加按钮 -->
     <el-card>
-      <el-row :gutter="10">
-        <el-col :span="7">
-          <el-input placeholder="请输入内容" v-model="keywords">
+      <el-row :gutter="20">
+        <el-col :span="10">
+          <el-input placeholder="请输入搜索内容" v-model="keywords">
             <el-button slot="append" icon="el-icon-search"></el-button>
           </el-input>
         </el-col>
-        <el-col :span="2">
+        <el-col :span="3">
           <el-button type="primary" @click="addDicType">添加字典类型</el-button>
+        </el-col>
+        <el-col :span="3">
+          <el-button type="success" icon="el-icon-refresh" @click="Fresh"></el-button>
         </el-col>
       </el-row>
       <!-- 表格显示 -->
@@ -26,7 +29,7 @@
         </data-dic-manage-table>
       </div>
     </el-card>
-    <dic-type-add-dialog ref="dicTypeAddDialog" @needfresh ="Fresh"></dic-type-add-dialog>
+    <dic-type-add-dialog ref="dicTypeAddDialog" @needfresh ="Fresh()"></dic-type-add-dialog>
   </div>
 </template>
 
