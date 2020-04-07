@@ -10,8 +10,8 @@
     :disabled="!editable"
     class="scroll_form"
   >
-    <el-form-item
-      label="Id">
+    <!-- <el-form-item
+      label="id">
       <el-row>
         <el-col :span="15"> 
           <el-input
@@ -22,7 +22,7 @@
         ></el-input>
         </el-col>
       </el-row>
-    </el-form-item>
+    </el-form-item> -->
 
     <el-form-item
       prop="name"

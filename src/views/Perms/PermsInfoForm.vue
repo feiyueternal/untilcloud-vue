@@ -10,7 +10,7 @@
     :disabled="!editable"
     class="scroll_form"
   >
-    <el-form-item label="Id">
+    <el-form-item label="id">
       <el-row>
         <el-col :span="15">
           <el-input readonly autocomplete="off" v-model="data.id"></el-input>

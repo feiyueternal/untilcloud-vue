@@ -11,7 +11,7 @@
       <el-table :data="users" ref="table" border stripe style="width: 100%" 
       @selection-change="Count">
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column align="center" fixed type="index" width="50" prop="id" label="用户id"></el-table-column>
+        <el-table-column align="center" fixed type="index" width="50" label="序号"></el-table-column>
         <el-table-column align="center" fixed prop="username" label="用户名"></el-table-column>
         <el-table-column align="center" prop="name" fixed label="真实姓名"></el-table-column>
         <el-table-column align="center" prop="enabled" label="状态">
