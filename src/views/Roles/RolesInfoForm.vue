@@ -5,7 +5,7 @@
     ref="rolesForm"
     :rules="rules"
     label-position="right"
-    label-width="120px"
+    label-width="150px"
     v-loading="loading"
     :disabled="!editable"
     class="scroll_form"
@@ -13,7 +13,7 @@
     <el-form-item
       label="Id">
       <el-row>
-        <el-col :span="12"> 
+        <el-col :span="15"> 
           <el-input
           size="small"
           readonly
@@ -29,7 +29,7 @@
       label="角色名"
       >
       <el-row>
-        <el-col :span="12"> 
+        <el-col :span="15"> 
       <el-input
           type="textarea"
           v-model="data.name"
@@ -43,7 +43,7 @@
       prop="nameZh"
       label="角色描述">
       <el-row>
-        <el-col :span="12"> 
+        <el-col :span="15"> 
       <el-input
           v-model="data.nameZh"
         ></el-input>

@@ -15,17 +15,17 @@
       <el-table-column align="center" type="selection" width="55" ></el-table-column>
       <el-table-column align="center" fixed width="70" 
       prop="id" label="菜单id" v-model="menusdata.id"></el-table-column>
-      <el-table-column align="center" fixed prop="name" width="150" label="菜单代码"></el-table-column>
+      <el-table-column align="center" fixed prop="name"  label="菜单代码"></el-table-column>
  
-      <el-table-column align="center" prop="nameZh" fixed label="菜单名称"></el-table-column>
-       <el-table-column align="center" prop="path" fixed label="菜单路径"></el-table-column>
-        <el-table-column align="center" prop="iconCls" fixed label="菜单图标">
+      <el-table-column align="center" prop="nameZh" width="120" fixed label="菜单名称"></el-table-column>
+       <el-table-column align="center" prop="path"  fixed label="菜单路径"></el-table-column>
+        <el-table-column align="center" prop="iconCls" width="80" fixed label="菜单图标">
             <template slot-scope="scope">
                 <i v-if="scope.row.iconCls!=undefined" :class="scope.row.iconCls"></i>
                 <label v-else>暂无图标</label>
             </template>
         </el-table-column>
-        <el-table-column align="center" prop="component" width="100" fixed label="组件名"></el-table-column>
+        <el-table-column align="center" prop="component" width="140" fixed label="组件名"></el-table-column>
         <!-- <el-table-column align="center" prop="parentId" fixed label="菜单他爸"></el-table-column> -->
       <el-table-column label="操作" fixed="right" align="center" width="200">
         <template slot-scope="scope">
@@ -107,12 +107,12 @@ export default {
     //每页查看页数变化
     handleSizeChange(val) {
       this.pagesize = val;
-      this.load();
+      // this.load();
     },
     // 当前页码变化
     handleCurrentChange(val) {
       this.pagenum = val;
-      this.load();
+      // this.load();
     },
     
     DeleteMenu(row){

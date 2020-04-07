@@ -113,12 +113,12 @@ export default {
     //每页查看页数变化
     handleSizeChange(val) {
       this.pagesize = val;
-      this.load();
+      // this.load();
     },
     // 当前页码变化
     handleCurrentChange(val) {
       this.pagenum = val;
-      this.load();
+      // this.load();
     },
     RolesChangeState(row) {
       var url = "/index/admin/role/status";

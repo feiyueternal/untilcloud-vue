@@ -5,14 +5,14 @@
     ref="menusForm"
     :rules="rules"
     label-position="right"
-    label-width="120px"
+    label-width="150px"
     v-loading="loading"
     :disabled="!editable"
     class="scroll_form"
   >
     <el-form-item label="Id">
       <el-row>
-        <el-col :span="12">
+        <el-col :span="15">
           <el-input readonly autocomplete="off" v-model="data.id"></el-input>
         </el-col>
       </el-row>
@@ -20,7 +20,7 @@
 
     <el-form-item prop="name" label="菜单代码">
       <el-row>
-        <el-col :span="12">
+        <el-col :span="15">
           <el-input type="textarea" v-model="data.name"></el-input>
         </el-col>
       </el-row>
@@ -28,7 +28,7 @@
 
     <el-form-item prop="nameZh" label="菜单名称">
       <el-row>
-        <el-col :span="12">
+        <el-col :span="15">
           <el-input v-model="data.nameZh" placeholder="请输入菜单名称"></el-input>
         </el-col>
       </el-row>
@@ -36,14 +36,14 @@
 
     <el-form-item prop="iconCls" label="菜单图标">
       <el-row>
-      <el-col :span="12">
+      <el-col :span="15">
       <e-icon-picker v-model="data.iconCls" />
       </el-col>
       </el-row>
     </el-form-item>
     <el-form-item prop="path" label="菜单路径">
       <el-row>
-        <el-col :span="12">
+        <el-col :span="15">
           <el-input type="textarea" v-model="data.path"></el-input>
         </el-col>
       </el-row>
@@ -51,7 +51,7 @@
 
     <el-form-item prop="component" label="组件名">
       <el-row>
-        <el-col :span="12">
+        <el-col :span="15">
           <el-input type="textarea" v-model="data.component"></el-input>
         </el-col>
       </el-row>
@@ -59,7 +59,7 @@
 
     <el-form-item prop="parentId" label="父节点id">
       <el-row>
-        <el-col :span="12">
+        <el-col :span="15">
           <el-input v-model="data.parentId"></el-input>
         </el-col>
       </el-row>
@@ -150,7 +150,7 @@ export default {
 </script>
 <style scoped>
 .el-input__inner {
-  /* width: 50%; */
+  width: 50%; 
   text-align: left;
 }
 .scroll-form {

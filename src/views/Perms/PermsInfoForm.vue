@@ -5,14 +5,14 @@
     ref="permsForm"
     :rules="rules"
     label-position="right"
-    label-width="120px"
+    label-width="150px"
     v-loading="loading"
     :disabled="!editable"
     class="scroll_form"
   >
     <el-form-item label="Id">
       <el-row>
-        <el-col :span="12">
+        <el-col :span="15">
           <el-input readonly autocomplete="off" v-model="data.id"></el-input>
         </el-col>
       </el-row>
@@ -20,7 +20,7 @@
 
     <el-form-item prop="name" label="权限代码">
       <el-row>
-        <el-col :span="12">
+        <el-col :span="15">
           <el-input type="textarea" v-model="data.name"></el-input>
         </el-col>
       </el-row>
@@ -28,7 +28,7 @@
 
     <el-form-item prop="desc_" label="权限描述">
       <el-row>
-        <el-col :span="12">
+        <el-col :span="15">
           <el-input v-model="data.desc_" placeholder="请输入权限描述"></el-input>
         </el-col>
       </el-row>
@@ -36,7 +36,7 @@
 
     <el-form-item prop="url" label="权限路径">
       <el-row>
-        <el-col :span="12">
+        <el-col :span="15">
           <el-input type="textarea" v-model="data.url"></el-input>
         </el-col>
       </el-row>
@@ -44,7 +44,7 @@
 
     <el-form-item prop="parentId" label="父节点id">
       <el-row>
-        <el-col :span="12">
+        <el-col :span="15">
           <el-input v-model="data.parentId"></el-input>
         </el-col>
       </el-row>

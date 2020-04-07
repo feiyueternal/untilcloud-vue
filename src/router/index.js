@@ -52,7 +52,7 @@ const routes = [
         }
       },
       {
-        path: '/about',
+        path: '/admin',
         name: 'About',
         component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue'),
         meta: {
