@@ -9,8 +9,9 @@ import './assets/fonts/iconfont.css'
 import iconPicker from 'e-icon-picker';
 import 'e-icon-picker/dist/index.css';//基础样式
 import 'e-icon-picker/dist/main.css'; //fontAwesome 图标库样式
-import maplist from '@/router/router_list.js' 
-import Router from 'vue-router'
+import maplist from '@/router/router_list.js'; 
+import Router from 'vue-router';
+import { Message } from 'element-ui';
 
 Vue.use(iconPicker);
 
@@ -62,7 +63,8 @@ const initAdminMenu=(router,store) => {
       router.addRoutes(router.options.routes)
       store.commit('initAdminMenu', fmtRoutes)
     }else{
-      this.$message.error("获取菜单失败")
+      // this.$message.error("获取菜单失败")
+      Message.error("获取菜单失败")
       console.log(res.data)
     }
     

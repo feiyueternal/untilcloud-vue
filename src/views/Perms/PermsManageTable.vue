@@ -71,6 +71,7 @@ export default {
       setTimeout(() => {
         if (tmpdata != undefined && tmpdata.length > 0) {
           this.permsdata = tmpdata;
+          this.loading = false;
         } else {
           this.$http
             .get(url)

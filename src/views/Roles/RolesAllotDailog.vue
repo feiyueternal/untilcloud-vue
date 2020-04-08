@@ -51,11 +51,13 @@ export default {
   methods: {
     open(row) {
       this.rid = row.id;
+
       this.AllotDialogVisible = true;
       this.loading = true;
       this.getSelect();
       this.$nextTick(() => {
         this.$refs.table.clearSelection();
+        console.log(this.selectedUsers)
         for (var i = 0; i < this.selectedUsers.length; i++) {
           this.$refs.table.toggleRowSelection(this.selectedUsers[i], true);
         }
@@ -84,12 +86,11 @@ export default {
       return new Promise((resolve, reject) => {
         this.loading = true;
         var url = "/index/admin/user/all";
-        console.log("beforeget")
         setTimeout(() => {
           this.$http
             .get(url)
             .then(res => {
-              console.log(res)
+              // console.log(res)
               if (res.data.code == 200) {
                 this.users = res.data.data;
                 this.totalnum=this.users.length

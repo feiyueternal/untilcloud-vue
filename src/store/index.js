@@ -33,8 +33,8 @@ export default new Vuex.Store({
     },
     initAdminMenu(state,menus){
       state.adminMenus=menus
-      console.log("adminMenus")
-      console.log(state.adminMenus)
+      // console.log("adminMenus")
+      // console.log(state.adminMenus)
     },
     login (state, user) {
       state.CLouduser = user
@@ -46,8 +46,6 @@ export default new Vuex.Store({
       state.user = []
       window.localStorage.removeItem('CLouduser')
       state.adminMenus = []
-      // console.log("adminMenus")
-      // console.log(state.adminMenus)
     },
     getDicTypeId(state, id) {
       state.dicTypeId = id;

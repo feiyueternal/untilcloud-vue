@@ -77,6 +77,7 @@ export default {
       setTimeout(() => {
         if (tmpdata != undefined && tmpdata.length > 0) {
           this.menusdata = tmpdata;
+          this.loading = false;
           // console.log(tmpdata)
         } else {
           this.$http

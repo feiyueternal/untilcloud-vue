@@ -20,18 +20,21 @@ const routes = [
   {
     path: '/',
     name: 'Login',
-    component: () => import(/* webpackChunkName: "login" */ '@/views/Login.vue'),
+    // component: () => import(/* webpackChunkName: "login" */ '@/views/Login.vue'),
+    component:resolve => require(['@/views/Login.vue'],resolve)
   },
   {
     path: '/Register',
     name: 'Register',
-    component: () => import(/* webpackChunkName: "register" */ '@/views/Register.vue'),
+    // component: () => import(/* webpackChunkName: "register" */ '@/views/Register.vue'),
+    component:resolve => require(['@/views/Register.vue'],resolve)
   },
 
   {
     path: '/ForgetPassword',
     name: 'ForgetPassword',
-    component: ()=>import(/* webpackChunkName: "forgetPassword" */ '@/views/ForgetPassword.vue'),
+    // component: ()=>import(/* webpackChunkName: "forgetPassword" */ '@/views/ForgetPassword.vue'),
+    component:resolve => require(['@/views/ForgetPassword.vue'],resolve)
   },
 
   
@@ -46,7 +49,8 @@ const routes = [
       {
         path: '/admin',
         name: 'AdminIndex',
-        component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
+        // component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
+        component:resolve => require(['@/views/Home.vue'],resolve),
         meta: {
           requireAuth: true
         }
@@ -54,7 +58,8 @@ const routes = [
       {
         path: '/admin',
         name: 'About',
-        component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue'),
+        // component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue'),
+        component:resolve => require(['@/views/About.vue'],resolve),
         meta: {
           requireAuth: true
         }
@@ -64,21 +69,25 @@ const routes = [
   {
     path: '/error/notFound',
     name: 'Error',
-    component: () => import(/* webpackChunkName: "page404" */ '@/views/error/Page404.vue'),
+    // component: () => import(/* webpackChunkName: "page404" */ '@/views/error/Page404.vue'),
+    component: resolve => require(['@/views/error/Page404.vue'],resolve),
   }, 
   {
     path: '/error/unauthorized',
     name: 'Unauthorized',
-    component: () => import(/* webpackChunkName: "page403" */ '@/views/error/Page403.vue'),
+    // component: () => import(/* webpackChunkName: "page403" */ '@/views/error/Page403.vue'),
+    component:resolve => require(['@/views/error/Page403.vue'],resolve),
   }, 
   {
     path: '/error/serverError',
     name: 'ServerError',
-    component: () => import(/* webpackChunkName: "page500" */ '@/views/error/Page500.vue'),
+    // component: () => import(/* webpackChunkName: "page500" */ '@/views/error/Page500.vue'),
+    component:resolve => require(['@/views/error/Page500.vue'],resolve),
   },
   {
     path: '*',
-    component: () => import(/* webpackChunkName: "page404" */ '@/views/error/Page404.vue'),
+    // component: () => import(/* webpackChunkName: "page404" */ '@/views/error/Page404.vue'),
+    component:resolve => require(['@/views/error/Page404.vue'],resolve),
   }
 ]
 

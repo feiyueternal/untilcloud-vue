@@ -78,6 +78,7 @@ export default {
       setTimeout(() => {
         if (tmpdata != undefined && tmpdata.length > 0) {
           this.rolesdata = tmpdata;
+          this.loading = false;
           console.log(this.rolesdata)
         } else {
           this.$http
