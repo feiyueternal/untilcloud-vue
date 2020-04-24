@@ -34,7 +34,7 @@
 
                         <el-form-item label="确认密码:" prop="confirmps">
                         <el-col :span="20">
-                            <el-input v-model="ForgetForm.confirmps" placeholder="再次输入密码" 
+                            <el-input v-model="ForgetForm.confirmps" placeholder="再次输入新密码" 
                             show-password></el-input>
                         </el-col>
                         </el-form-item>

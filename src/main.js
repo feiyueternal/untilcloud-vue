@@ -36,6 +36,7 @@ router.beforeEach((to,from,next) => {
   if(to.meta.requireAuth){
     if(store.state.CLouduser.username){
       initAdminMenu(router,store)
+      // console.log(store.state.CLouduser.username)
       next()
     }else{
       next({
@@ -63,7 +64,6 @@ const initAdminMenu=(router,store) => {
       router.addRoutes(router.options.routes)
       store.commit('initAdminMenu', fmtRoutes)
     }else{
-      // this.$message.error("获取菜单失败")
       Message.error("获取菜单失败")
       console.log(res.data)
     }

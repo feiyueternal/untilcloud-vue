@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <span class="text-t">Welcome</span>
+    <span class="text-t">{{name}},Welcome</span>
     <img :src="img" alt="" class="imgf">
   </div>
 </template>
@@ -10,13 +10,24 @@ import logo from '@/assets/image/IMG_6103.jpg'
 
 export default {
   name: 'Home',
-  components: {
-  },
   data() {
     return {
-      img:logo
+      img:logo,
+      name:""
     }
     
+  },
+  methods:{
+    init(){
+      this.name=this.$store.state.CLouduser.username
+      console.log(this.$store.state.CLouduser.username)
+    }
+  },
+  mounted(){
+    this.init()
+  },
+  created(){
+    this.init()
   }
 }
 </script>
