@@ -197,9 +197,7 @@ export default {
     },
     LoginClick() {
       this.fullscreenLoading = true;
-      setTimeout(() => {
-        this.fullscreenLoading = false;
-      }, 1500);
+      
       if (this.nowactive == "first") {
         var data = {
           account: this.NormalloginForm.username,
@@ -216,8 +214,12 @@ export default {
         var whichone = "PhoneloginForm";
       }
       console.log(data);
+      
+        
+      
       this.$refs[whichone].validate(valid => {
         if (valid) {
+          setTimeout(() => {
           console.log(data)
           this.$http
             .get(url, { params: data })
@@ -227,16 +229,21 @@ export default {
                 this.$store.commit("login",res.data.data)
                 this.$message.success("欢迎～")
                 this.$router.push({ name: "AdminIndex" }); 
+                this.fullscreenLoading = false;
               }else{
                 console.log(res);
                 this.$message.error(res.data.message);
+                this.fullscreenLoading = false;
               }
             })
             .catch(err => {
               console.log(err);
+              this.fullscreenLoading = false;
             });
+          }, 700);
         }else{
           this.$message.error("不可为空!");
+          this.fullscreenLoading = false;
         }
       });
     },
