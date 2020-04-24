@@ -72,7 +72,7 @@ export default {
           var url = "/index/sys/dic/info/edit";
           var data = {
             id: this.editDetailForm.id,
-            sort: this.editDetailForm.code,
+            sort: this.editDetailForm.sort,
             name: this.editDetailForm.name,
             value: this.editDetailForm.value,
             dictionaryType: {
@@ -88,6 +88,7 @@ export default {
                 this.$message.success("修改字典明细成功");
                 this.$emit("needfresh", true);
                 this.editDetailDialogVisible = false;
+                console.log(this.editDetailForm)
               } else {
                 this.$message.error(res.data.message);
               }
