@@ -33,10 +33,16 @@ router.beforeEach((to,from,next) => {
     initAdminMenu(router, store)
   }
 
+  if (store.state.CLouduser.username && to.path.startsWith('/')) {
+    next({
+      path: '/admin'
+    })
+  }
+
   if(to.meta.requireAuth){
     if(store.state.CLouduser.username){
       initAdminMenu(router,store)
-      // console.log(store.state.CLouduser.username)
+      console.log(store.state.CLouduser.username)
       next()
     }else{
       next({
@@ -61,7 +67,12 @@ const initAdminMenu=(router,store) => {
       fmtRoutes.forEach(ro =>{
         router.options.routes.push(ro)
       })
+      // router.options.routes.push({
+      //   path:"*",
+      //   redirect:"/error/notFound"
+      // })
       router.addRoutes(router.options.routes)
+      console.log(router.options.routes)
       store.commit('initAdminMenu', fmtRoutes)
     }else{
       Message.error("获取菜单失败")
