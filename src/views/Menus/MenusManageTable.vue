@@ -7,13 +7,14 @@
       element-loading-spinner="el-icon-loading"
       element-loading-background="rgba(0, 0, 0, 0.8)"
       border
+      row-key="id"
       stripe
       style="width: 100%"
       @selection-change="handleSelectionChange"
       :data="menusdata.slice((pagenum-1)*pagesize,pagenum*pagesize)"
     >
       <el-table-column align="center" type="selection" width="55" ></el-table-column>
-      <el-table-column align="center" fixed width="70" 
+      <el-table-column align="center" fixed width="85" 
       prop="id" label="菜单id" v-model="menusdata.id"></el-table-column>
       <el-table-column align="center" fixed prop="name"  label="菜单代码"></el-table-column>
  
@@ -25,7 +26,7 @@
                 <label v-else>暂无图标</label>
             </template>
         </el-table-column>
-        <el-table-column align="center" prop="component" width="140" fixed label="组件名"></el-table-column>
+        <el-table-column align="center" prop="component" width="120" fixed label="组件名"></el-table-column>
         <!-- <el-table-column align="center" prop="parentId" fixed label="菜单他爸"></el-table-column> -->
       <el-table-column label="操作" fixed="right" align="center" width="200">
         <template slot-scope="scope">
@@ -87,7 +88,8 @@ export default {
                 this.menusdata = res.data.data;
                 this.total = res.data.data.length;
                 this.loading = false;
-                // console.log(res.data.data);
+                console.log("menus")
+                console.log(res.data.data);
               } else {
                 console.log(res);
                 this.loading = false;

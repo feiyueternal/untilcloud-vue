@@ -71,6 +71,8 @@ export default {
           })
           .then(res => {
             if (res.data.code == 200) {
+              console.log("keyword")
+              console.log(res.data)
               if (res.data.data == undefined || res.data.data.length <= 0) {
                 return this.$message.error("该菜单不存在");
               } else {

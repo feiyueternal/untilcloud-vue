@@ -33,11 +33,11 @@ router.beforeEach((to,from,next) => {
     initAdminMenu(router, store)
   }
 
-  if (store.state.CLouduser.username && to.path.startsWith('/')) {
-    next({
-      path: '/admin'
-    })
-  }
+  // if (store.state.CLouduser.username && to.path.startsWith('/')) {
+  //   next({
+  //     path: '/admin'
+  //   })
+  // }
 
   if(to.meta.requireAuth){
     if(store.state.CLouduser.username){
