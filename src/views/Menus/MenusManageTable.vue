@@ -7,10 +7,14 @@
       element-loading-spinner="el-icon-loading"
       element-loading-background="rgba(0, 0, 0, 0.8)"
       border
-      row-key="id"
+      :row-key="GetRowId"
       stripe
+      :indent="indent"
+      :reserve-selection="true"
       style="width: 100%"
       @selection-change="handleSelectionChange"
+      @select-all="ChangeAll"
+      
       :data="menusdata.slice((pagenum-1)*pagesize,pagenum*pagesize)"
     >
       <el-table-column align="center" type="selection" width="55" ></el-table-column>
@@ -27,14 +31,8 @@
             </template>
         </el-table-column>
         <el-table-column align="center" prop="component" width="120" fixed label="组件名"></el-table-column>
-        <!-- <el-table-column align="center" prop="parentId" fixed label="菜单他爸"></el-table-column> -->
       <el-table-column label="操作" fixed="right" align="center" width="200">
         <template slot-scope="scope">
-          <!-- <el-tooltip effect="dark" content="查看子菜单" placement="top" :enterable="false">
-            <el-button type="info" icon="el-icon-info" size="mini" 
-            @click.native.prevent="Openshow(scope.row)"></el-button> -->
-          <!-- </el-tooltip> -->
-
           <el-tooltip effect="dark" content="编辑菜单" placement="top" :enterable="false">
             <el-button size="mini" type="primary" icon="el-icon-edit"
             @click.native.prevent="Openedit(scope.row)"></el-button>
@@ -69,6 +67,8 @@ export default {
       pagenum: 1,
       pagesize: 5,
       total: 0,
+      indent:7,
+      multipleSelection:[],
     };
   },
   methods: {
@@ -79,7 +79,6 @@ export default {
         if (tmpdata != undefined && tmpdata.length > 0) {
           this.menusdata = tmpdata;
           this.loading = false;
-          // console.log(tmpdata)
         } else {
           this.$http
             .get(url)
@@ -117,6 +116,9 @@ export default {
       this.pagenum = val;
       // this.load();
     },
+    GetRowId(row){
+      return row.id
+    },
     
     DeleteMenu(row){
       this.$confirm('是否确认删除此菜单?', '提示', {
@@ -145,9 +147,41 @@ export default {
           });          
         });
     },
-    handleSelectionChange(){
+    handleSelectionChange(val){
+      this.multipleSelection=val
+      console.log(this.$refs.table.selection)
       this.$emit("DeleteChosenMenus",this.$refs.table.selection)
-    }
+    },
+    // Change(val){
+    //   var emmm=this.$refs.table.selection
+    //   var tmp=[]
+    //   var flag=false
+    //   tmp=this.$refs.table.selection
+    //   console.log(tmp)
+    //   this.$nextTick(() =>{
+    //     tmp.forEach(tt => {
+    //     if(tt.children.length!=0){
+    //       tt.children.forEach(child => {
+    //         for(var i=0;i<emmm.length;i++){
+    //           if(emmm[i].id==child.id){
+    //             console.log(emmm[i])
+    //             console.log(child)
+    //             flag=true
+    //             break
+    //           }
+    //         }
+    //         if(!flag){
+    //           this.$refs.table.toggleRowSelection(child)
+    //         }
+            
+    //       })
+    //     }
+    //   }) 
+    // })
+    // },
+    ChangeAll(val){
+    this.$refs.table.clearSelection()
+    },
   },
   mounted() {
     this.load();

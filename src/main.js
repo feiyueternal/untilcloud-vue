@@ -29,9 +29,9 @@ Router.prototype.push = function push(location) {
 
 router.beforeEach((to,from,next) => {
 
-  if (store.state.CLouduser.username && to.path.startsWith('/admin')) {
-    initAdminMenu(router, store)
-  }
+  // if (store.state.CLouduser.username && to.path.startsWith('/admin')) {
+  //   initAdminMenu(router, store)
+  // }
 
   // if (store.state.CLouduser.username && to.path.startsWith('/')) {
   //   next({
