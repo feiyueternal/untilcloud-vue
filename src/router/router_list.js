@@ -189,6 +189,7 @@ const mpalist=
         'NotFound': () => import(/* webpackChunkName: "page404" */ '@/views/error/Page404.vue'),
         "DataDictionary": () => import(/* webpackChunkName: "home" */ '@/views/DataDic/DataDicIndex.vue'),
         "sysPara": () => import(/* webpackChunkName: "home" */ '@/views/sysPara.vue'),
+        "sysManagement":() => import(/* webpackChunkName: "roles" */ '@/views/SysM/SysManageIndex.vue'),
         "User": Navbar,
         "System": Navbar,
         "Error":Navbar, 

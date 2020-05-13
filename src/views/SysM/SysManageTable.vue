@@ -10,37 +10,28 @@
       :row-key="GetRowId"
       stripe
       :indent="indent"
-      :reserve-selection="true"
       style="width: 100%"
       @selection-change="handleSelectionChange"
       @select-all="ChangeAll"
-      
-      :data="menusdata.slice((pagenum-1)*pagesize,pagenum*pagesize)"
+      :default-sort = "{prop: 'sort', order: 'ascending'}"
+      :data="sysdata.slice((pagenum-1)*pagesize,pagenum*pagesize)"
     >
       <el-table-column align="center" type="selection" width="55" ></el-table-column>
-      <el-table-column align="center" fixed width="85" 
-      prop="id" label="菜单id" v-model="menusdata.id"></el-table-column>
-      <el-table-column align="center" fixed prop="name"  label="菜单代码"></el-table-column>
- 
-      <el-table-column align="center" prop="nameZh" width="120" fixed label="菜单名称"></el-table-column>
-       <el-table-column align="center" prop="path"  fixed label="菜单路径"></el-table-column>
-        <el-table-column align="center" prop="iconCls" width="80" fixed label="菜单图标">
-            <template slot-scope="scope">
-                <i v-if="scope.row.iconCls!=undefined||''" :class="scope.row.iconCls"></i>
-                <label v-else>暂无图标</label>
-            </template>
-        </el-table-column>
-        <el-table-column align="center" prop="component" width="120" fixed label="组件名"></el-table-column>
+      <el-table-column align="center" fixed width="130" 
+      prop="id" label="机构id" v-model="sysdata.id"></el-table-column>
+      <el-table-column align="center" prop="name" width="170" fixed label="机构名称"></el-table-column>
+      <el-table-column align="center"  prop="sort" fixed width="55" label="排序"></el-table-column>
+      <el-table-column align="center" prop="updateTime" label="更新时间"></el-table-column>
       <el-table-column label="操作" fixed="right" align="center" width="200">
         <template slot-scope="scope">
-          <el-tooltip effect="dark" content="编辑菜单" placement="top" :enterable="false">
+          <el-tooltip effect="dark" content="编辑机构" placement="top" :enterable="false">
             <el-button size="mini" type="primary" icon="el-icon-edit"
             @click.native.prevent="Openedit(scope.row)"></el-button>
           </el-tooltip>
 
-          <el-tooltip effect="dark" content="删除菜单" placement="top" :enterable="false">
+          <el-tooltip effect="dark" content="删除机构" placement="top" :enterable="false">
             <el-button size="mini" type="danger" icon="el-icon-delete" 
-            @click="DeleteMenu(scope.row)"></el-button>
+            @click="DeleteSys(scope.row)"></el-button>
           </el-tooltip>
         </template>
       </el-table-column>
@@ -59,35 +50,35 @@
 
 <script>
 export default {
-  name: "MenusManageTable",
+  name: "SysManageTable",
   data() {
     return {
-      menusdata: [],
+      sysdata: [],
       loading: true,
       pagenum: 1,
       pagesize: 5,
       total: 0,
-      indent:12,
+      indent:16,
       multipleSelection:[],
     };
   },
   methods: {
     load(tmpdata) {
       this.loading = true;
-      var url = "/index/admin/menu/all";
+      var url = "/index/sys/school/all";
       setTimeout(() => {
         if (tmpdata != undefined && tmpdata.length > 0) {
-          this.menusdata = tmpdata;
+          this.sysdata = tmpdata;
           this.loading = false;
         } else {
           this.$http
             .get(url)
             .then(res => {
               if (res.data.code == 200) {
-                this.menusdata = res.data.data;
+                this.sysdata = res.data.data;
                 this.total = res.data.data.length;
                 this.loading = false;
-                console.log("menus")
+                console.log("sys")
                 console.log(res.data.data);
               } else {
                 console.log(res);
@@ -103,7 +94,7 @@ export default {
       }, 700);
     },
     Openedit(row){
-      this.$emit("menusInfo-Edit",row)
+      this.$emit("sysInfo-Edit",row)
     },
 
     //每页查看页数变化
@@ -120,19 +111,19 @@ export default {
       return row.id
     },
     
-    DeleteMenu(row){
-      this.$confirm('是否确认删除此菜单?', '提示', {
+    DeleteSys(row){
+      this.$confirm('是否确认删除此机构?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          var url="/index/admin/menu/delete"
+          var url="/index/sys/school/delete"
           var data={
             rid:row.id
           }
           this.$http.get(url,{params: data}).then(res => {
             if(res.data.code==200){
-              this.$message.success("成功删除此菜单")
+              this.$message.success("成功删除此机构")
               this.load()
             }else{
               this.$message.error(res.data.message)
@@ -148,9 +139,9 @@ export default {
         });
     },
     handleSelectionChange(val){
-      this.multipleSelection=val
+    //   this.multipleSelection=val
       console.log(this.$refs.table.selection)
-      this.$emit("DeleteChosenMenus",this.$refs.table.selection)
+    //   this.$emit("DeleteChosenMenus",this.$refs.table.selection)
     },
     // Change(val){
     //   var emmm=this.$refs.table.selection
