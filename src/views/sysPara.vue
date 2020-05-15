@@ -36,6 +36,7 @@
         <el-table-column prop="value2" label="签到允许距离(m)" align="center"></el-table-column>
         <el-table-column prop="value1" label="每次签到经验" align="center"></el-table-column>
         <el-table-column prop="value3" label="一节课时间(min)" align="center"></el-table-column>
+        <el-table-column prop="updateTime" label="更新时间" align="center"></el-table-column>
         <el-table-column label="操作" width="100" align="center">
           <template slot-scope="scope">
             <el-button

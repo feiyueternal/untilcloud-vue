@@ -56,6 +56,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="name" label="描述" align="center"></el-table-column>
+      <el-table-column prop="updateTime" label="更新时间" align="center"></el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
           <el-button
@@ -129,7 +130,7 @@ export default {
         .get("/index/sys/dic/type/all")
         .then(res => {
           this.dicType = [];
-          //   console.log(res.data.data);
+            console.log(res.data.data);
           for (var i = 0; i < res.data.data.length; i++) {
             this.dicType.push(res.data.data[i]);
             this.dicType[i]["detail"] = [];
