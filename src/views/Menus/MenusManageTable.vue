@@ -128,9 +128,12 @@ export default {
         }).then(() => {
           var url="/index/admin/menu/delete"
           var data={
-            rid:row.id
+            mid:row.id
           }
+          console.log("删除")
+          console.log(data)
           this.$http.get(url,{params: data}).then(res => {
+            console.log(res)
             if(res.data.code==200){
               this.$message.success("成功删除此菜单")
               this.load()

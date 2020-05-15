@@ -19,8 +19,8 @@
       <el-table-column align="center" type="selection" width="55" ></el-table-column>
       <el-table-column align="center" fixed width="130" 
       prop="id" label="机构id" v-model="sysdata.id"></el-table-column>
-      <el-table-column align="center" prop="name" width="170" fixed label="机构名称"></el-table-column>
-      <el-table-column align="center"  prop="sort" fixed width="55" label="排序"></el-table-column>
+      <el-table-column align="center" prop="name" width="270" fixed label="机构名称"></el-table-column>
+      <el-table-column align="center"  prop="sort" fixed width="85" label="顺序"></el-table-column>
       <el-table-column align="center" prop="updateTime" label="更新时间"></el-table-column>
       <el-table-column label="操作" fixed="right" align="center" width="200">
         <template slot-scope="scope">
@@ -119,9 +119,12 @@ export default {
         }).then(() => {
           var url="/index/sys/school/delete"
           var data={
-            rid:row.id
+            siid:row.id
           }
+          // console.log("删除机构")
+          // console.log(data)
           this.$http.get(url,{params: data}).then(res => {
+            // console.log(res)
             if(res.data.code==200){
               this.$message.success("成功删除此机构")
               this.load()
