@@ -212,7 +212,7 @@ export default {
       addDialogVisible: false,
       addForm: {
         username: "",
-        password: "",
+        password: "123456",
         name: "",
         mobile: "",
         email: ""
