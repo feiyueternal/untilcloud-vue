@@ -1,7 +1,7 @@
 <template>
   <div class="bgImg" :style="bgImg">
     <div class="forget">
-      <el-page-header title="返回登录页面" @back="Back"></el-page-header>
+      <el-page-header title="返回首页" @back="Back"></el-page-header>
       <el-row class="b-el-row">
         <el-col :span="12" :offset="6">
           <el-container>
