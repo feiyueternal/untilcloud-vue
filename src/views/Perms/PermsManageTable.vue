@@ -116,7 +116,7 @@ export default {
         }).then(() => {
           var url="/index/admin/perm/delete"
           var data={
-            rid:row.id
+            pid:row.id
           }
           this.$http.get(url,{params: data}).then(res => {
             if(res.data.code==200){

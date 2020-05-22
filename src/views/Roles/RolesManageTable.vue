@@ -13,9 +13,9 @@
       :data="rolesdata.slice((pagenum-1)*pagesize,pagenum*pagesize)"
     >
       <el-table-column align="center" type="selection" width="55" ></el-table-column>
-      <!-- <el-table-column align="center" fixed width="70" 
-      prop="id" label="角色id" v-model="rolesdata.id"></el-table-column> -->
-      <el-table-column align="center" fixed width="70" type="index" label="序号"></el-table-column>
+      <el-table-column align="center" fixed width="70" 
+      prop="id" label="角色id" v-model="rolesdata.id"></el-table-column>
+      <!-- <el-table-column align="center" fixed width="70" type="index" label="序号"></el-table-column> -->
       <el-table-column align="center" fixed prop="name" label="角色名"></el-table-column>
       <el-table-column align="center" prop="enabled" label="状态">
         <template slot-scope="scope">
