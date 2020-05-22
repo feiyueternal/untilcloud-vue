@@ -38,8 +38,8 @@ export default new Vuex.Store({
     },
     login (state, user) {
       state.CLouduser = user
-      console.log("user")
-      console.log(state.CLouduser)
+      // console.log("user")
+      // console.log(state.CLouduser)
       window.localStorage.setItem('CLouduser', JSON.stringify(user))
     },
     logout (state) {

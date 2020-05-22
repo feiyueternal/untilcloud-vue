@@ -23,6 +23,7 @@ Vue.use(ElementUI)
 const originalPush = Router.prototype.push
 //解决某种报错
 Router.prototype.push = function push(location) {
+  
   return originalPush.call(this, location).catch(err => err)
 }
 
@@ -38,19 +39,21 @@ router.beforeEach((to,from,next) => {
   //     path: '/admin'
   //   })
   // }
-
+  
   if(to.meta.requireAuth){
     if(store.state.CLouduser.username){
       initAdminMenu(router,store)
       console.log(store.state.CLouduser.username)
       next()
     }else{
+      // console.log(store.state.CLouduser.username)
       next({
-        path: '/',
+        path: '/'
       })
     }
   }else{
     next()
+    // console.log(store.state.CLouduser.username)
   }
 })
 
@@ -58,12 +61,12 @@ router.beforeEach((to,from,next) => {
 const initAdminMenu=(router,store) => {
   var url="/index/menu"
   axios.get(url).then(res => {
-    console.log(res)
+    // console.log(res)
     if(res.data.code==200){
       var fmtRoutes = res.data.data
       filterAsyncRouter(fmtRoutes)
-      console.log("fmtRoutes")
-      console.log(fmtRoutes)
+      // console.log("fmtRoutes")
+      // console.log(fmtRoutes)
       fmtRoutes.forEach(ro =>{
         router.options.routes.push(ro)
       })
@@ -72,7 +75,7 @@ const initAdminMenu=(router,store) => {
       //   redirect:"/error/notFound"
       // })
       router.addRoutes(router.options.routes)
-      console.log(router.options.routes)
+      // console.log(router.options.routes)
       store.commit('initAdminMenu', fmtRoutes)
     }else{
       Message.error("获取菜单失败")

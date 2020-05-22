@@ -76,11 +76,13 @@
                           @click.native.prevent="GetVCode"
                           :disabled="disabled"
                         >{{btntxt}}</el-button>
-                        
                       </el-input>
                     </el-form-item>
                   </el-form>
                 </el-tab-pane>
+                <el-row type="flex" justify="start">
+                  <el-checkbox v-model="rememberMe" @change="click">记住我</el-checkbox>
+                </el-row>
                 <el-row type="flex" justify="space-between" class="c-el-row">
                   <el-col :span="6">
                     <el-button class="norbtn" round @click.native.prevent="ForgetPw">忘记密码</el-button>
@@ -117,9 +119,11 @@ export default {
   name: "Login",
   data() {
     return {
+      rememberMe: false,
       activetab: "first", //tab首选项
-      bgImg:{
-        backgroundImage: "url(" + require("../assets/image/background1.jpg") + ") "
+      bgImg: {
+        backgroundImage:
+          "url(" + require("../assets/image/background1.jpg") + ") "
       },
       NormalloginForm: {
         username: "",
@@ -146,15 +150,32 @@ export default {
         ],
         verificationCode: [
           { required: true, message: "请输入验证码", trigger: "blur" },
-          {type: 'string', min: 4, message: '验证码必须是4位', trigger: 'blur'}
+          {
+            type: "string",
+            min: 4,
+            message: "验证码必须是4位",
+            trigger: "blur"
+          }
         ]
       }
     };
   },
   mounted() {
     this.nowactive = this.activetab;
+    
+  },
+  created() {
+    console.log(JSON.parse(window.localStorage.CLouduser).rememberMe);
   },
   methods: {
+    loginAuth() {
+      if (JSON.parse(window.localStorage.CLouduser).rememberMe = true) {
+
+      }
+    },
+    click() {
+      console.log(this.rememberMe);
+    },
     timer() {
       if (this.time > 0) {
         this.time--;
@@ -171,77 +192,77 @@ export default {
       this.nowactive = tab.name;
     },
     GetVCode() {
-        if(this.PhoneloginForm.phone){
-          var data = {
-            phone: this.PhoneloginForm.phone,
-            count: 4
-          };
-          var url = "/index/common/getVerificationCode";
-          this.$http
-            .get(url, { params: data })
-            .then(res => {
-              if (res.data.code == 200) {
-                console.log("验证码")
-                console.log(res.data)
-                this.$message.success("发送成功")
-                this.time = 60;
-                this.disabled = true;
-                this.timer();
-              }
-            })
-            .catch(err => {
-              console.log(err);
-              this.$message.error("发送失败")
-            });
-        }
+      if (this.PhoneloginForm.phone) {
+        var data = {
+          phone: this.PhoneloginForm.phone,
+          count: 4
+        };
+        var url = "/index/common/getVerificationCode";
+        this.$http
+          .get(url, { params: data })
+          .then(res => {
+            if (res.data.code == 200) {
+              // console.log("验证码");
+              // console.log(res.data);
+              this.$message.success("发送成功");
+              this.time = 60;
+              this.disabled = true;
+              this.timer();
+            }
+          })
+          .catch(err => {
+            console.log(err);
+            this.$message.error("发送失败");
+          });
+      }
     },
     LoginClick() {
       this.fullscreenLoading = true;
-      
+
       if (this.nowactive == "first") {
         var data = {
           account: this.NormalloginForm.username,
-          password: this.NormalloginForm.password
+          password: this.NormalloginForm.password,
+          rememberMe: this.rememberMe
         };
         var url = "/index/common/login";
         var whichone = "NormalloginForm";
       } else {
         var data = {
           phone: this.PhoneloginForm.phone,
-          verificationCode: this.PhoneloginForm.verificationCode
+          verificationCode: this.PhoneloginForm.verificationCode,
+          rememberMe: this.rememberMe
         };
         var url = "/index/common/phoneLogin";
         var whichone = "PhoneloginForm";
       }
-      console.log(data);
-      
-        
-      
+      // console.log(data);
+
       this.$refs[whichone].validate(valid => {
         if (valid) {
           setTimeout(() => {
-          console.log(data)
-          this.$http
-            .get(url, { params: data })
-            .then(res => {
-              console.log(res)
-              if (res.data.code == 200) {
-                this.$store.commit("login",res.data.data)
-                this.$message.success("欢迎～")
-                this.$router.push({ name: "AdminIndex" }); 
-                this.fullscreenLoading = false;
-              }else{
+            console.log(data);
+            this.$http
+              .get(url, { params: data })
+              .then(res => {
                 console.log(res);
-                this.$message.error(res.data.message);
+                if (res.data.code == 200) {
+                  this.$store.commit("login", res.data.data);
+                  this.$message.success("欢迎～");
+                  this.$router.push({ name: "AdminIndex" });
+                  this.fullscreenLoading = false;
+                } else {
+                  // console.log(res);
+                  this.$message.error(res.data.message);
+                  this.fullscreenLoading = false;
+                }
+              })
+              .catch(err => {
+                console.log(err);
                 this.fullscreenLoading = false;
-              }
-            })
-            .catch(err => {
-              console.log(err);
-              this.fullscreenLoading = false;
-            });
+              });
           }, 700);
-        }else{
+        } else {
           this.$message.error("不可为空!");
           this.fullscreenLoading = false;
         }
