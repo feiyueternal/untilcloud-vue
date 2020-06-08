@@ -190,9 +190,11 @@ const mpalist=
         "DataDictionary": () => import(/* webpackChunkName: "home" */ '@/views/DataDic/DataDicIndex.vue'),
         "sysPara": () => import(/* webpackChunkName: "home" */ '@/views/sysPara.vue'),
         "sysManagement":() => import(/* webpackChunkName: "roles" */ '@/views/SysM/SysManageIndex.vue'),
+        "ClassManagement":() => import(/* webpackChunkName: "class" */ '@/views/Class/ClassManageIndex.vue'),
         "User": Navbar,
         "System": Navbar,
         "Error":Navbar, 
+        "Content":Navbar,
     }
 
     export default mpalist;

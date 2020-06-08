@@ -169,8 +169,8 @@ export default {
   },
   methods: {
     loginAuth() {
-      if (JSON.parse(window.localStorage.CLouduser).rememberMe = true) {
-
+      if (JSON.parse(window.localStorage.CLouduser).rememberMe == true) {
+          
       }
     },
     click() {
