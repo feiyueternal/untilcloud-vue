@@ -28,13 +28,20 @@
       </el-form-item>
 
       <el-form-item prop="grade" label="年级">
-        <el-input v-model="addDialogForm.grade" placeholder="请输入年级"></el-input>
+        <el-select v-model="addDialogForm.grade" placeholder="请选择年级" @change="selectE">
+          <el-option
+            v-for="item in grade_options"
+            :key="item.value"
+            :label="item.name"
+            :value="item.value"
+          ></el-option>
+        </el-select>
       </el-form-item>
 
       <el-form-item prop="semester" label="所属学期">
-        <el-select v-model="addDialogForm.semester" placeholder="请选择" @change="selectC">
+        <el-select v-model="addDialogForm.semester" placeholder="请选择" @change="selectA">
           <el-option
-            v-for="item in options"
+            v-for="item in semester_options"
             :key="item.value"
             :label="item.name"
             :value="item.value"
@@ -43,15 +50,36 @@
       </el-form-item>
 
       <el-form-item prop="school" label="学校">
-        <el-input v-model="addDialogForm.school" placeholder="请输入学校"></el-input>
+        <el-select v-model="addDialogForm.school" placeholder="请选择学校" @change="selectB">
+          <el-option
+            v-for="item in school_options"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          ></el-option>
+        </el-select>
       </el-form-item>
 
       <el-form-item prop="college" label="学院">
-        <el-input v-model="addDialogForm.college" placeholder="请输入学院"></el-input>
+        <el-select v-model="addDialogForm.college" placeholder="请选择学院" @change="selectC">
+          <el-option
+            v-for="item in college_options"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          ></el-option>
+        </el-select>
       </el-form-item>
 
       <el-form-item prop="major" label="专业">
-        <el-input v-model="addDialogForm.major" placeholder="请输入专业"></el-input>
+        <el-select v-model="addDialogForm.major" placeholder="请选择专业" @change="selectD">
+          <el-option
+            v-for="item in major_options"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          ></el-option>
+        </el-select>
       </el-form-item>
 
       <el-form-item prop="teacher" label="任课教师">
@@ -59,15 +87,15 @@
       </el-form-item>
 
       <el-form-item prop="learnRequire" label="学习要求">
-        <el-input v-model="addDialogForm.learnRequire" placeholder="请输入学习要求"></el-input>
+        <el-input v-model="addDialogForm.learnRequire" placeholder="暂无内容"></el-input>
       </el-form-item>
 
-      <el-form-item prop="teacherProgress" label="教学进度">
-        <el-input v-model="addDialogForm.teacherProgress" placeholder="请输入教学进度"></el-input>
+      <el-form-item prop="teachProgress" label="教学进度">
+        <el-input v-model="addDialogForm.teachProgress" placeholder="暂无内容"></el-input>
       </el-form-item>
 
       <el-form-item prop="examArrange" label="考试安排">
-        <el-input v-model="addDialogForm.examArrange" placeholder="请输入考试安排"></el-input>
+        <el-input v-model="addDialogForm.examArrange" placeholder="暂无内容"></el-input>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -109,37 +137,131 @@ export default {
           { required: true, message: "请输入任课教师", trigger: "blur" }
         ]
       },
-      options: [],
+      semester_options: [],
+      school_options: [],
+      college_options: [],
+      major_options: [],
+      grade_options: [],
       formdata: new window.FormData(),
-            flag:false,
-            imageUrl:null
+      flag: false,
+      imageUrl: null
     };
   },
   methods: {
     handleChange(file, fileList) {
       this.formdata.append("cover", file.raw);
-      this.flag=true
-      this.addDialogForm.cover=URL.createObjectURL(file.raw)
+      this.flag = true;
+      this.addDialogForm.cover = URL.createObjectURL(file.raw);
     },
     beforeUpload(file) {
       return false;
     },
-    selectC(value) {
-       var obj = {};
-      obj = this.options.find(item => {
+    selectA(value) {
+      var obj = {};
+      obj = this.semester_options.find(item => {
         return item.value == value;
       });
       // console.log(obj);
       this.addDialogForm.semester = obj.name;
     },
-    getItem() {
+    selectB(id) {
+      var obj = {};
+      obj = this.school_options.find(item => {
+        return item.id == id;
+      });
+      this.addDialogForm.school = obj.name;
+      this.addDialogForm.schoolId = obj.id;
+      this.getItemC();
+      this.addDialogForm.college = null;
+      this.addDialogForm.major = null;
+    },
+    selectC(id) {
+      var obj = {};
+      obj = this.college_options.find(item => {
+        return item.id == id;
+      });
+      this.addDialogForm.college = obj.name;
+      this.addDialogForm.collegeId = obj.id;
+      this.getItemD();
+      this.addDialogForm.major = null;
+    },
+    selectD(id) {
+      var obj = {};
+      obj = this.major_options.find(item => {
+        return item.id == id;
+      });
+      this.addDialogForm.major = obj.name;
+    },
+    selectE(value) {
+      var obj = {};
+      obj = this.grade_options.find(item => {
+        return item.value == value;
+      });
+      this.addDialogForm.grade = obj.name;
+    },
+    getItemA() {
       var url = "/index/userInfo/get/666";
       this.$http
         .get(url)
         .then(res => {
-          console.log(res.data.data);
           if (res.data.code == 200) {
-            this.options = res.data.data;
+            this.semester_options = res.data.data;
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getItemB() {
+      var url = "/index/userInfo/school/get";
+      this.$http
+        .get(url)
+        .then(res => {
+          if (res.data.code == 200) {
+            this.school_options = res.data.data;
+            // console.log(this.school_options)
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getItemC() {
+      var url = `/index/userInfo/school/get/${this.addDialogForm.schoolId}`;
+      this.$http
+        .get(url)
+        .then(res => {
+          if (res.data.code == 200) {
+            this.college_options = res.data.data;
+            // console.log(this.college_options);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getItemD() {
+      var url = `/index/userInfo/school/get/${this.addDialogForm.collegeId}`;
+      this.$http
+        .get(url)
+        .then(res => {
+          if (res.data.code == 200) {
+            this.major_options = res.data.data;
+            console.log(this.major_options);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getItemE() {
+      var url = "/index/userInfo/get/777";
+      this.$http
+        .get(url)
+        .then(res => {
+          console.log(res);
+          if (res.data.code == 200) {
+            this.grade_options = res.data.data;
           }
         })
         .catch(err => {
@@ -160,7 +282,7 @@ export default {
             this.addDialogForm.examArrange = "暂无内容";
           }
 
-          if(this.flag==false){
+          if (this.flag == false) {
             this.formdata.append("cover", this.addDialogForm.cover);
           }
           this.formdata.append("name", this.addDialogForm.name);
@@ -172,22 +294,27 @@ export default {
           this.formdata.append("teacher", this.addDialogForm.teacher);
           this.formdata.append("learnRequire", this.addDialogForm.learnRequire);
           this.formdata.append(
-            "teacherProgress",
-            this.addDialogForm.teacherProgress
+            "teachProgress",
+            this.addDialogForm.teachProgress
           );
           this.formdata.append("examArrange", this.addDialogForm.examArrange);
+          this.formdata.append("schoolId", this.addDialogForm.schoolId);
+          this.formdata.append("collegeId", this.addDialogForm.collegeId);
           console.log(this.formdata);
           this.$http
             .post(url, this.formdata)
             .then(res => {
               if (res.data.code == 200) {
-                this.imageUrl=res.data.data
-                // this.$msgbox({
-                //   type:"info"
-                // })
-                this.$alert("<strong><img src="+this.imageUrl+" width=200px eight=200px><strong>","课程二维码",{
-                  dangerouslyUseHTMLString: true
-                })
+                this.imageUrl = res.data.data;
+                this.$alert(
+                  "<strong><img src=" +
+                    this.imageUrl +
+                    " width=200px eight=200px><strong>",
+                  "课程二维码",
+                  {
+                    dangerouslyUseHTMLString: true
+                  }
+                );
                 this.$message.success("添加课程成功");
                 this.$emit("needfresh", true);
                 this.addDialogVisible = false;
@@ -211,8 +338,10 @@ export default {
     }
   },
   mounted() {
-    this.getItem();
-    this.flag=false
+    this.getItemA();
+    this.getItemB();
+    this.getItemE();
+    this.flag = false;
   }
 };
 </script>
@@ -240,7 +369,7 @@ export default {
   height: 150px;
   display: block;
 }
-.el-select{
+.el-select {
   width: 100%;
   text-align: left;
 }

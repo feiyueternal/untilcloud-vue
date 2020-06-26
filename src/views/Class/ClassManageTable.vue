@@ -71,14 +71,14 @@ export default {
         if (tmpdata != undefined && tmpdata.length > 0) {
           this.classdata = tmpdata;
           this.loading = false;
-          console.log(this.classdata)
+          // console.log(this.classdata)
         } else {
           this.$http
             .get(url)
             .then(res => {
               if (res.data.code == 200) {
                 this.classdata = res.data.data;
-                console.log(this.classdata)
+                // console.log(this.classdata)
                 this.total = res.data.data.length;
                 this.loading = false;
               } else {

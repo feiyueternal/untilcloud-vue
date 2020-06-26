@@ -41,7 +41,14 @@
     <el-form-item prop="grade" label="年级">
       <el-row>
         <el-col :span="15">
-          <el-input v-model="data.grade" placeholder="请输入年级"></el-input>
+          <el-select v-model="data.grade" placeholder="请选择年级" @change="selectE">
+            <el-option
+              v-for="item in grade_options"
+              :key="item.value"
+              :label="item.name"
+              :value="item.value"
+            ></el-option>
+          </el-select>
         </el-col>
       </el-row>
     </el-form-item>
@@ -49,9 +56,9 @@
     <el-form-item prop="semester" label="所属学期">
       <el-row>
         <el-col :span="15">
-          <el-select v-model="data.semester" placeholder="请选择" @change="selectC">
+          <el-select v-model="data.semester" placeholder="请选择学期" @change="selectA">
             <el-option
-              v-for="item in options"
+              v-for="item in semester_options"
               :key="item.value"
               :label="item.name"
               :value="item.value"
@@ -64,7 +71,14 @@
     <el-form-item prop="school" label="学校">
       <el-row>
         <el-col :span="15">
-          <el-input v-model="data.school" placeholder="请输入学校"></el-input>
+          <el-select v-model="data.school" placeholder="请选择学校" @change="selectB">
+            <el-option
+              v-for="item in school_options"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            ></el-option>
+          </el-select>
         </el-col>
       </el-row>
     </el-form-item>
@@ -72,7 +86,14 @@
     <el-form-item prop="college" label="学院">
       <el-row>
         <el-col :span="15">
-          <el-input v-model="data.college" placeholder="请输入学院"></el-input>
+          <el-select v-model="data.college" placeholder="请选择学院" @change="selectC">
+            <el-option
+              v-for="item in college_options"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            ></el-option>
+          </el-select>
         </el-col>
       </el-row>
     </el-form-item>
@@ -80,7 +101,14 @@
     <el-form-item prop="major" label="专业">
       <el-row>
         <el-col :span="15">
-          <el-input v-model="data.major" placeholder="请输入专业"></el-input>
+          <el-select v-model="data.major" placeholder="请选择专业" @change="selectD">
+            <el-option
+              v-for="item in major_options"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            ></el-option>
+          </el-select>
         </el-col>
       </el-row>
     </el-form-item>
@@ -101,10 +129,10 @@
       </el-row>
     </el-form-item>
 
-    <el-form-item prop="teacherProgress" label="教学进度">
+    <el-form-item prop="teachProgress" label="教学进度">
       <el-row>
         <el-col :span="15">
-          <el-input v-model="data.teacherProgress" placeholder="请输入教学进度"></el-input>
+          <el-input v-model="data.teachProgress" placeholder="请输入教学进度"></el-input>
         </el-col>
       </el-row>
     </el-form-item>
@@ -154,8 +182,12 @@ export default {
         ]
       },
       formdata: new window.FormData(),
-      options: [],
-      flag:false
+      semester_options: [],
+      school_options: [],
+      college_options: [],
+      major_options: [],
+      grade_options: [],
+      flag: false
     };
   },
   methods: {
@@ -174,22 +206,146 @@ export default {
     beforeUpload(file) {
       return true;
     },
-    selectC(value) {
+    selectA(value) {
       var obj = {};
-      obj = this.options.find(item => {
+      obj = this.semester_options.find(item => {
         return item.value == value;
       });
       this.data.semester = obj.name;
-      console.log(this.data.semester);
     },
-    getItem() {
+    selectB(id) {
+      var obj = {};
+      console.log(id);
+      obj = this.school_options.find(item => {
+        return item.id == id;
+      });
+      this.data.school = obj.name;
+      this.data.schoolId = obj.id;
+      this.getItemC();
+      this.data.college = null;
+      this.data.major = null;
+    },
+    selectC(id) {
+      var obj = {};
+      obj = this.college_options.find(item => {
+        return item.id == id;
+      });
+      this.data.college = obj.name;
+      this.data.collegeId = obj.id;
+      // console.log(this.data.collegeId)
+      this.getItemD();
+      this.data.major = null;
+    },
+    selectD(id) {
+      var obj = {};
+      obj = this.major_options.find(item => {
+        return item.id == id;
+      });
+      this.data.major = obj.name;
+    },
+    selectE(value) {
+      var obj = {};
+      obj = this.grade_options.find(item => {
+        return item.value == value;
+      });
+      this.data.grade = obj.name;
+    },
+    getItemA() {
       var url = "/index/userInfo/get/666";
+      this.$http
+        .get(url)
+        .then(res => {
+          if (res.data.code == 200) {
+            this.semester_options = res.data.data;
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getItemB() {
+      var url = "/index/userInfo/school/get";
+      this.$http
+        .get(url)
+        .then(res => {
+          if (res.data.code == 200) {
+            this.school_options = res.data.data;
+            // console.log(this.school_options);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      console.log("1");
+      console.log(this.data.schoolId);
+      console.log(this.data.collegeId);
+      if (this.data.schoolId) {
+        var url = `/index/userInfo/school/get/${this.data.schoolId}`;
+
+        this.$http
+          .get(url)
+          .then(res => {
+            if (res.data.code == 200) {
+              this.college_options = res.data.data;
+              // console.log(this.college_options);
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+
+        if (this.data.collegeId) {
+          var url = `/index/userInfo/school/get/${this.data.collegeId}`;
+          this.$http
+            .get(url)
+            .then(res => {
+              if (res.data.code == 200) {
+                this.major_options = res.data.data;
+                // console.log(this.major_options);
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        }
+      }
+    },
+    getItemC() {
+      var url = `/index/userInfo/school/get/${this.data.schoolId}`;
+      this.$http
+        .get(url)
+        .then(res => {
+          if (res.data.code == 200) {
+            this.college_options = res.data.data;
+            // console.log(this.college_options);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getItemD() {
+      var url = `/index/userInfo/school/get/${this.data.collegeId}`;
+      this.$http
+        .get(url)
+        .then(res => {
+          if (res.data.code == 200) {
+            this.major_options = res.data.data;
+            // console.log(this.major_options);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getItemE() {
+      var url = "/index/userInfo/get/777";
       this.$http
         .get(url)
         .then(res => {
           // console.log(res);
           if (res.data.code == 200) {
-            this.options = res.data.data;
+            this.grade_options = res.data.data;
           }
         })
         .catch(err => {
@@ -198,16 +354,17 @@ export default {
     },
     handleChange(file, fileList) {
       this.formdata.append("cover", file.raw);
-      this.flag=true
+      this.flag = true;
       this.data.cover = URL.createObjectURL(file.raw);
     },
     submit() {
       this.$refs.classForm.validate(valid => {
         if (valid) {
           var url = "/index/class/course/modify";
-          if(this.flag==false){
+          if (this.flag == false) {
             this.formdata.append("cover", this.data.cover);
           }
+          console.log(this.data.name);
           this.formdata.append("id", this.data.id);
           this.formdata.append("name", this.data.name);
           this.formdata.append("grade", this.data.grade);
@@ -217,9 +374,13 @@ export default {
           this.formdata.append("major", this.data.major);
           this.formdata.append("teacher", this.data.teacher);
           this.formdata.append("learnRequire", this.data.learnRequire);
-          this.formdata.append("teacherProgress", this.data.teacherProgress);
+          this.formdata.append("teachProgress", this.data.teachProgress);
           this.formdata.append("examArrange", this.data.examArrange);
-          console.log(this.formdata.get("semester"));
+          this.formdata.append("schoolId", this.data.schoolId);
+          this.formdata.append("collegeId", this.data.collegeId);
+          console.log("111");
+          console.log(this.data.schoolId);
+          console.log(this.data.collegeId);
           this.$http
             .post(url, this.formdata)
             .then(res => {
@@ -237,11 +398,24 @@ export default {
           this.$message.error("请按要求填写信息");
         }
       });
+    },
+    init() {
+      this.$nextTick(() => {
+        this.formdata = new window.FormData();
+        this.getItemA();
+        this.getItemB();
+        this.getItemE();
+        this.flag = false;
+      });
     }
   },
   mounted() {
-    this.getItem();
-    this.flag=false
+    this.formdata = new window.FormData();
+    this.getItemA();
+    this.getItemB();
+    this.getItemE();
+
+    this.flag = false;
   }
 };
 </script>
@@ -250,7 +424,7 @@ export default {
   width: 50%;
   text-align: left;
 }
-.el-select{
+.el-select {
   width: 100%;
   text-align: left;
 }

@@ -5,7 +5,7 @@
   :modal-append-to-body="false"
   style="height:100%"
   >
-  <el-scrollbar style="height: 550px" ref="scroll">
+  <el-scrollbar style="height: 650px" ref="scroll">
     <class-info-form ref="showform" v-bind:editable="false" :data="info" :loading="showLoading">
       
     </class-info-form>  
