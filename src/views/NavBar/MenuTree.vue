@@ -53,6 +53,7 @@ export default {
   computed: {
     
     adminMenus() {
+    
       return this.$store.state.adminMenus;
     },
     currentPath(){
@@ -62,7 +63,7 @@ export default {
   methods:{
     handleRoute(menu){
       // this.$router.push({name:menu.name})
-      console.log(menu.path)
+      // console.log(menu.path)
       // console.log(menu)
       this.$router.push({path:menu.path})
     }

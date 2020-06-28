@@ -30,31 +30,21 @@ Router.prototype.push = function push(location) {
 
 router.beforeEach((to,from,next) => {
 
-  // if (store.state.CLouduser.username && to.path.startsWith('/admin')) {
-  //   initAdminMenu(router, store)
+  initAdminMenu(router,store)
+  next()
+  // if(to.meta.requireAuth){
+  //   if(store.state.CLouduser.username!=null && (to.path.startsWith('/admin')||to.path.startsWith('/about'))){
+  //     initAdminMenu(router,store)
+  //     console.log(store.state.CLouduser.username)
+  //     next()
+  //   }else{
+  //     next({
+  //       path: '/'
+  //     })
+  //   }
+  // }else{
+  //   next()
   // }
-
-  // if (store.state.CLouduser.username && to.path.startsWith('/')) {
-  //   next({
-  //     path: '/admin'
-  //   })
-  // }
-  
-  if(to.meta.requireAuth){
-    if(store.state.CLouduser.username){
-      initAdminMenu(router,store)
-      console.log(store.state.CLouduser.username)
-      next()
-    }else{
-      // console.log(store.state.CLouduser.username)
-      next({
-        path: '/'
-      })
-    }
-  }else{
-    next()
-    // console.log(store.state.CLouduser.username)
-  }
 })
 
 
@@ -65,8 +55,6 @@ const initAdminMenu=(router,store) => {
     if(res.data.code==200){
       var fmtRoutes = res.data.data
       filterAsyncRouter(fmtRoutes)
-      // console.log("fmtRoutes")
-      // console.log(fmtRoutes)
       fmtRoutes.forEach(ro =>{
         router.options.routes.push(ro)
       })
@@ -75,7 +63,6 @@ const initAdminMenu=(router,store) => {
       //   redirect:"/error/notFound"
       // })
       router.addRoutes(router.options.routes)
-      // console.log(router.options.routes)
       store.commit('initAdminMenu', fmtRoutes)
     }else{
       Message.error("获取菜单失败")
@@ -83,6 +70,7 @@ const initAdminMenu=(router,store) => {
     }
     
   }).catch(err => {
+    Message.error(err)
     console.log(err)
   })
 }

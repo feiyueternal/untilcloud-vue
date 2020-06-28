@@ -30,6 +30,7 @@ export default {
   },
   computed: {
      adminMenus() {
+       console.log(this.$store.state.adminMenus)
       return this.$store.state.adminMenus;
     }
   },
