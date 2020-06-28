@@ -23,7 +23,7 @@ export default {
   methods:{
     init(){
       this.name=this.$store.state.CLouduser.username
-      console.log(this.$store.state.CLouduser.username)
+      // console.log(this.$store.state.CLouduser.username)
     }
   },
   mounted(){

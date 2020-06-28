@@ -56,7 +56,7 @@ const routes = [
         }
       },
       {
-        path: '/about',
+        path: '/admin/about',
         name: 'About',
         component:resolve => require(['@/views/About.vue'],resolve),
         meta: {
