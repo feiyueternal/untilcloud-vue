@@ -162,15 +162,16 @@ export default {
   },
   mounted() {
     this.nowactive = this.activetab;
-    
   },
   created() {
     console.log(JSON.parse(window.localStorage.CLouduser).rememberMe);
+    window.localStorage.removeItem("CLouduser");
+    window.localStorage.removeItem("CLouduser_name");
+    window.localStorage.removeItem("Cloud_menus");
   },
   methods: {
     loginAuth() {
       if (JSON.parse(window.localStorage.CLouduser).rememberMe == true) {
-          
       }
     },
     click() {

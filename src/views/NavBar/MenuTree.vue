@@ -53,8 +53,10 @@ export default {
   computed: {
     
     adminMenus() {
-    
+      
       return this.$store.state.adminMenus;
+      // console.log(JSON.parse(window.localStorage.getItem('Cloud_menus')))
+      // return JSON.parse(window.localStorage.getItem('Cloud_menus'))
     },
     currentPath(){
       return this.$router.path;

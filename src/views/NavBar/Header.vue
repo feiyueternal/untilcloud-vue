@@ -37,7 +37,7 @@ import log from '@/assets/image/earth.png'
             this.$router.replace({path:"/"})
           }else{
             this.$message.error("登出发生错误")
-            console.loh(res.data)
+            console.log(res.data)
           }
         }).catch(err => {
             console.log(err)

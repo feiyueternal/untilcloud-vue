@@ -30,7 +30,10 @@ export default {
   },
   computed: {
      adminMenus() {
-       console.log(this.$store.state.adminMenus)
+      //  console.log(this.$store.state.adminMenus)
+      // console.log(window.localStorage.getItem('Cloud_menus'))
+      //  return window.localStorage.getItem('Cloud_menus')
+      // return JSON.parse(window.localStorage.getItem('Cloud_menus'))
       return this.$store.state.adminMenus;
     }
   },

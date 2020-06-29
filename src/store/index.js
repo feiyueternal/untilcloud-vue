@@ -34,17 +34,22 @@ export default new Vuex.Store({
     initAdminMenu(state,menus){
       state.adminMenus=menus
       // console.log("adminMenus")
+      window.localStorage.setItem('Cloud_menus',JSON.stringify(menus))
+      // state.adminMenus=window.localStorage.getItem('Cloud_menus')
       console.log(state.adminMenus)
     },
     login (state, user) {
       state.CLouduser = user
       // console.log("user")
-      console.log(state.CLouduser)
+      console.log(typeof(state.CLouduser))
+
       window.localStorage.setItem('CLouduser', JSON.stringify(user))
+      window.localStorage.setItem('CLouduser_name', JSON.stringify(user.username))
     },
     logout (state) {
       state.user = []
       window.localStorage.removeItem('CLouduser')
+      window.localStorage.removeItem('Cloud_menus')
       state.adminMenus = []
     },
     getDicTypeId(state, id) {
