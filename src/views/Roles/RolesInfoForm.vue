@@ -187,8 +187,12 @@ export default {
       let permsId=[]
       for(var i =0;i<this.data.perms.length;i++){
         permsId.push(this.data.perms[i].id)
+        var a=this.data.perms[i].children
+        console.log(a)
+        if(a!=null){
         for (var j = 0; j < this.data.perms[i].children.length; j++) {
           permsId.push(this.data.perms[i].children[j].id)
+        }
         }
       }
       this.selectedPermIds=permsId
@@ -213,10 +217,15 @@ export default {
       let menusId=[]
       for(var i =0;i<this.data.menus.length;i++){
         menusId.push(this.data.menus[i].id)
+        var a=this.data.menus[i].children
+        console.log(a)
+        if(a!=null){
         for (var j = 0; j < this.data.menus[i].children.length; j++) {
           menusId.push(this.data.menus[i].children[j].id)
         }
+        }
       }
+      console.log(menusId)
       this.selectedMenuIds=menusId
       if (this.$refs.menustree) {
         this.$refs.menustree.setCheckedKeys(this.selectedMenuIds)
