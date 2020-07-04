@@ -56,33 +56,40 @@ router.beforeEach((to, from, next) => {
   var clu = window.localStorage.getItem('CLouduser')
   console.log(clu)
   // next()
-  if (clu && to.path.startsWith('/admin')) {
-    initAdminMenu(router, store)
-  }
-
-  if (clu) {
-    initAdminMenu(router, store)
-
-    if (to.meta.requireAuth == true) {
-      next()
-    } else {
-      // Message.error("没有权限，无法访问此页面")
-      // Message.warning("回到首页啦")
-      next({ path: '/admin' })
-      // next({name:'Unauthorized'})
+  if(to.path === '/'||to.path.startsWith('/Register')||to.path.startsWith('/ForgetPassword')){
+    // initAdminMenu(router,store)
+    next()
+  }else{
+    if (clu && to.path.startsWith('/admin')) {
+      initAdminMenu(router, store)
     }
-  } else {
-    // store.commit('logout')
-    window.localStorage.removeItem('Cloud_menus')
-    window.localStorage.removeItem('CLouduser')
-    window.localStorage.removeItem('CLouduser_name')
-    if (to.path === '/') {
-      next()
+  
+    if (clu) {
+      initAdminMenu(router, store)
+  
+      if (to.meta.requireAuth == true) {
+        next()
+      } else {
+        // Message.error("没有权限，无法访问此页面")
+        // Message.warning("回到首页啦")
+        next({ path: '/admin' })
+        // next({name:'Unauthorized'})
+      }
     } else {
-      Message.error("请先登录")
-      next({ path: '/' });
+      // store.commit('logout')
+      window.localStorage.removeItem('Cloud_menus')
+      window.localStorage.removeItem('CLouduser')
+      window.localStorage.removeItem('CLouduser_name')
+      window.localStorage.clear()
+      if (to.path === '/') {
+        next()
+      } else {
+        Message.error("请先登录")
+        next({ path: '/' });
+      }
     }
   }
+ 
 
 
 })

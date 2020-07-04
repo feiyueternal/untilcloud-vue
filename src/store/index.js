@@ -50,6 +50,8 @@ export default new Vuex.Store({
       state.user = []
       window.localStorage.removeItem('CLouduser')
       window.localStorage.removeItem('Cloud_menus')
+      window.localStorage.removeItem('CLouduser_name')
+      window.localStorage.clear()
       state.adminMenus = []
     },
     getDicTypeId(state, id) {

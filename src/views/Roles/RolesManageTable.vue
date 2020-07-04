@@ -85,6 +85,7 @@ export default {
             .get(url)
             .then(res => {
               if (res.data.code == 200) {
+                console.log(res.data.data)
                 this.rolesdata = res.data.data;
                 this.total = res.data.data.length;
                 this.loading = false;

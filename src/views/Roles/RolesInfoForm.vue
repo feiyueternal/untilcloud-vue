@@ -238,6 +238,7 @@ export default {
     submit(){
       this.$refs.rolesForm.validate(valid => {
         if(valid){
+          console.log(this.$refs.permstree.getCheckedNodes())
           var url="/index/admin/role/edit"
           var edit_data={
             id:this.data.id,
@@ -246,6 +247,7 @@ export default {
             menus:this.$refs.menustree.getCheckedNodes(),
             perms:this.$refs.permstree.getCheckedNodes()
           }
+          console.log(edit_data)
           this.$http.put(url,edit_data).then(res => {
             if(res.data.code==200){
               this.$message.success("编辑角色成功")
