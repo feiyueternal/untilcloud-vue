@@ -66,7 +66,13 @@ export default {
   methods: {
     load(tmpdata) {
       this.loading = true;
-      var url = "/index/class/course/all";
+      var Teacher=window.localStorage.getItem("CLouduser_teacher")
+      if(Teacher=="yes"){
+        var url="/index/class/course/getCreate"
+      }else{
+        var url = "/index/class/course/all";
+      }
+      
       setTimeout(() => {
         if (tmpdata != undefined && tmpdata.length > 0) {
           this.classdata = tmpdata;
@@ -78,7 +84,7 @@ export default {
             .then(res => {
               if (res.data.code == 200) {
                 this.classdata = res.data.data;
-                // console.log(this.classdata)
+                console.log(this.classdata)
                 this.total = res.data.data.length;
                 this.loading = false;
               } else {

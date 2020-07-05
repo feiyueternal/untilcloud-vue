@@ -77,9 +77,6 @@ router.beforeEach((to, from, next) => {
       }
     } else {
       // store.commit('logout')
-      window.localStorage.removeItem('Cloud_menus')
-      window.localStorage.removeItem('CLouduser')
-      window.localStorage.removeItem('CLouduser_name')
       window.localStorage.clear()
       if (to.path === '/') {
         next()

@@ -21,7 +21,8 @@ export default new Vuex.Store({
       name: '',
       value: '',
       typeId: ''
-    }
+    },
+    isTeacher:''
   },
   mutations: {
     changeRolesData(state, obj) {
@@ -42,15 +43,24 @@ export default new Vuex.Store({
       state.CLouduser = user
       // console.log("user")
       console.log(typeof(state.CLouduser))
-
+      for(var i = 0; i < user.roles.length; i++) {
+        if(user.roles[i].id == 3) {
+          state.isTeacher=true
+          window.localStorage.setItem('CLouduser_teacher', "yes")
+          break;
+        } else {
+          continue;
+        }
+      }
+      if(state.isTeacher!=true){
+        state.isTeacher=false
+        window.localStorage.setItem('CLouduser_teacher', "no")
+      }
       window.localStorage.setItem('CLouduser', JSON.stringify(user))
       window.localStorage.setItem('CLouduser_name', JSON.stringify(user.username))
     },
     logout (state) {
       state.user = []
-      window.localStorage.removeItem('CLouduser')
-      window.localStorage.removeItem('Cloud_menus')
-      window.localStorage.removeItem('CLouduser_name')
       window.localStorage.clear()
       state.adminMenus = []
     },

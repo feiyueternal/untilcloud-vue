@@ -8,7 +8,7 @@
     <el-card>
       <el-row :gutter="20">
         <el-col :span="10">
-          <el-input placeholder="请输入搜索内容" v-model="keywords" clearable @clear="GetClassAll">
+          <el-input placeholder="请输入搜索内容" v-model="keywords" clearable @clear="GetClassAll" v-show="!isTeacher">
             <el-button slot="append" icon="el-icon-search" @click="SearchClass(keywords)"></el-button>
           </el-input>
         </el-col>
@@ -49,7 +49,8 @@ export default {
   data() {
     return {
       keywords: "",
-      selections: []
+      selections: [],
+      isTeacher:false
     };
   },
   methods: {
@@ -136,6 +137,14 @@ export default {
     Fresh() {
       this.$refs.classmanageTable.load();
     }
+  },
+  mounted(){
+    var Teacher=window.localStorage.getItem("CLouduser_teacher")
+      if(Teacher=="yes"){
+        this.isTeacher=true
+      }else{
+        this.isTeacher=false
+      }
   }
 };
 </script>
