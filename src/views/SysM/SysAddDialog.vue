@@ -51,9 +51,9 @@ export default {
           var data = {
             name: this.addDialogForm.name,
             parentId:this.addDialogForm.parentId,
-            sort:this.addDialogVisible.sort   
+            sort:this.addDialogForm.sort   
           };
-          // console.log(data)
+          console.log(data)
           this.$http
             .post(url, data)
             .then(res => {
