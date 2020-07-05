@@ -87,16 +87,16 @@ export default {
                 this.menusdata = res.data.data;
                 this.total = res.data.data.length;
                 this.loading = false;
-                console.log("menus")
-                console.log(res.data.data);
+                // console.log("menus")
+                // console.log(res.data.data);
               } else {
-                console.log(res);
+                // console.log(res);
                 this.loading = false;
                 this.$message.error(res.data.message);
               }
             })
             .catch(err => {
-              console.log(err);
+              // console.log(err);
             });
         }
         
@@ -130,10 +130,10 @@ export default {
           var data={
             mid:row.id
           }
-          console.log("删除")
-          console.log(data)
+          // console.log("删除")
+          // console.log(data)
           this.$http.get(url,{params: data}).then(res => {
-            console.log(res)
+            // console.log(res)
             if(res.data.code==200){
               this.$message.success("成功删除此菜单")
               this.load()
@@ -141,7 +141,7 @@ export default {
               this.$message.error(res.data.message)
             }
           }).catch(err => {
-            console.log(err)
+            // console.log(err)
           })
         }).catch(() => {
           this.$message({
@@ -152,7 +152,7 @@ export default {
     },
     handleSelectionChange(val){
       this.multipleSelection=val
-      console.log(this.$refs.table.selection)
+      // console.log(this.$refs.table.selection)
       this.$emit("DeleteChosenMenus",this.$refs.table.selection)
     },
     // Change(val){

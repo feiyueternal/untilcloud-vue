@@ -37,12 +37,12 @@ export default new Vuex.Store({
       // console.log("adminMenus")
       window.localStorage.setItem('Cloud_menus',JSON.stringify(menus))
       // state.adminMenus=window.localStorage.getItem('Cloud_menus')
-      console.log(state.adminMenus)
+      // console.log(state.adminMenus)
     },
     login (state, user) {
       state.CLouduser = user
       // console.log("user")
-      console.log(typeof(state.CLouduser))
+      // console.log(typeof(state.CLouduser))
       for(var i = 0; i < user.roles.length; i++) {
         if(user.roles[i].id == 3) {
           state.isTeacher=true
@@ -66,7 +66,7 @@ export default new Vuex.Store({
     },
     getDicTypeId(state, id) {
       state.dicTypeId = id;
-      console.log(id)
+      // console.log(id)
     },
     getDicTypeInfo(state, info) {
       state.dicTypeInfo.id = info.id;
@@ -89,14 +89,14 @@ export default new Vuex.Store({
           if (res.data.code == 200) {
             // state.rolesData = res.data.data;
             context.commit('changeRolesData', res.data.data)
-            console.log(res.data.data);
+            // console.log(res.data.data);
           } else {
-            console.log(res);
+            // console.log(res);
             this.$message.error(res.data.message);
           }
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
         })
     },
   },

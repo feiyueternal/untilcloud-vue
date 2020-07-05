@@ -58,7 +58,7 @@ export default {
             url:this.addDialogForm.url, 
             parentId:this.addDialogForm.parentId   
           };
-          console.log(data)
+          // console.log(data)
           this.$http
             .post(url, data)
             .then(res => {
@@ -71,7 +71,7 @@ export default {
               }
             })
             .catch(err => {
-              console.log(err);
+              // console.log(err);
             });
         } else {
           this.$message.error("不可为空");

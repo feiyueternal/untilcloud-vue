@@ -53,7 +53,7 @@ export default {
             parentId:this.addDialogForm.parentId,
             sort:this.addDialogVisible.sort   
           };
-          console.log(data)
+          // console.log(data)
           this.$http
             .post(url, data)
             .then(res => {
@@ -66,7 +66,7 @@ export default {
               }
             })
             .catch(err => {
-              console.log(err);
+              // console.log(err);
             });
         } else {
           this.$message.error("不可为空");

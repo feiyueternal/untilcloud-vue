@@ -84,7 +84,7 @@ export default {
             .then(res => {
               if (res.data.code == 200) {
                 this.classdata = res.data.data;
-                console.log(this.classdata)
+                // console.log(this.classdata)
                 this.total = res.data.data.length;
                 this.loading = false;
               } else {
@@ -93,7 +93,7 @@ export default {
               }
             })
             .catch(err => {
-              console.log(err);
+              // console.log(err);
             });
         }
       }, 700);
@@ -134,7 +134,7 @@ export default {
               this.$message.error(res.data.message)
             }
           }).catch(err => {
-            console.log(err)
+            // console.log(err)
           })
         }).catch(() => {
           this.$message({

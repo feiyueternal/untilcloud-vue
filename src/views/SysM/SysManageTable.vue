@@ -78,16 +78,16 @@ export default {
                 this.sysdata = res.data.data;
                 this.total = res.data.data.length;
                 this.loading = false;
-                console.log("sys")
-                console.log(res.data.data);
+                // console.log("sys")
+                // console.log(res.data.data);
               } else {
-                console.log(res);
+                // console.log(res);
                 this.loading = false;
                 this.$message.error(res.data.message);
               }
             })
             .catch(err => {
-              console.log(err);
+              // console.log(err);
             });
         }
         
@@ -132,7 +132,7 @@ export default {
               this.$message.error(res.data.message)
             }
           }).catch(err => {
-            console.log(err)
+            // console.log(err)
           })
         }).catch(() => {
           this.$message({
@@ -143,7 +143,7 @@ export default {
     },
     handleSelectionChange(val){
     //   this.multipleSelection=val
-      console.log(this.$refs.table.selection)
+      // console.log(this.$refs.table.selection)
     //   this.$emit("DeleteChosenMenus",this.$refs.table.selection)
     },
     // Change(val){

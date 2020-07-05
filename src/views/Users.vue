@@ -318,11 +318,11 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
         });
     },
     handleCheckedRolesChange(value) {
-      console.log(value.length);
+      // console.log(value.length);
       this.editForm.roles = [];
       for (var i = 0; i < value.length; i++) {
         for (var j = 0; j < this.rolesData.length; j++) {
@@ -334,7 +334,7 @@ export default {
           }
         }
       }
-      console.log(this.editForm.roles);
+      // console.log(this.editForm.roles);
       // let checkedCount = value.length;
       // this.checkAll = checkedCount === this.roles.length;
       // this.isIndeterminate = checkedCount > 0 && checkedCount < this.roles.length
@@ -355,7 +355,7 @@ export default {
       this.$http
         .get("/index/admin/user/all")
         .then(res => {
-          console.log(res.data);
+          // console.log(res.data);
           if (res.data.code == 200) {
             for (var i = 0; i < res.data.data.length; i++) {
               this.userList.push(res.data.data[i]);
@@ -370,29 +370,29 @@ export default {
               }
             }
             this.userListInfo.total = res.data.data.length;
-            console.log(this.userList);
+            // console.log(this.userList);
             this.loading = false;
           } else {
-            console.log(res);
+            // console.log(res);
             this.loading = false;
             this.$message.error(res.data.message);
           }
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
         });
     },
     handleSizeChange(newSize) {
       this.userListInfo.pagesize = newSize;
       // this.getUserList();
-      console.log(this.userListInfo.pagesize);
+      // console.log(this.userListInfo.pagesize);
     },
     handleCurrentChange(newPage) {
-      console.log(newPage);
+      // console.log(newPage);
       this.userListInfo.pagenum = newPage;
     },
     userStateChange(userinfo) {
-      console.log(userinfo);
+      // console.log(userinfo);
       // var data = {
       //   id: userinfo.id,
       //   enabled: userinfo.enabled
@@ -404,7 +404,7 @@ export default {
           username: userinfo.username
         })
         .then(res => {
-          console.log(res);
+          // console.log(res);
           if (res.data.code !== 200) {
             userinfo.enabled = !userinfo.enabled;
             return this.$message.error(res.data.data);
@@ -412,7 +412,7 @@ export default {
           this.$message.success("更新用户状态成功!");
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
         });
     },
     searchUser(keywords) {
@@ -420,7 +420,7 @@ export default {
       this.$http
         .get("/index/admin/user/search", { params: { keywords } })
         .then(res => {
-          console.log(res.data.data);
+          // console.log(res.data.data);
           if (keywords == "") {
             this.getUserList();
           } else {
@@ -437,7 +437,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
         });
     },
     addDialogClosed() {
@@ -451,7 +451,7 @@ export default {
     },
     addUser(addForm) {
       this.$refs.addFormRef.validate(valid => {
-        console.log(valid);
+        // console.log(valid);
         if (!valid) return;
         this.$http
           .post("/index/admin/user/add", {
@@ -462,7 +462,7 @@ export default {
             email: addForm.email
           })
           .then(res => {
-            console.log(res);
+            // console.log(res);
             // console.log(this.addForm)
             if (res.data.code == 200) {
               this.$message.success("添加用户成功");
@@ -474,14 +474,14 @@ export default {
             }
           })
           .catch(err => {
-            console.log(err);
+            // console.log(err);
           });
       });
     },
     showResetDialog(info) {
       this.resetDialogVisible = true;
       this.resetPwd.username = info.username;
-      console.log(this.resetPwd);
+      // console.log(this.resetPwd);
     },
     showEditDialog(info) {
       // console.log(info);
@@ -501,11 +501,11 @@ export default {
           this.checkedRoles[i] = this.editForm.roles[i].nameZh;
         }
       }
-      console.log(this.editForm), (this.editDialogVisible = true);
+      // console.log(this.editForm), (this.editDialogVisible = true);
     },
     editUserInfo(editForm) {
       this.$refs.editFormRef.validate(valid => {
-        console.log(valid);
+        // console.log(valid);
         if (!valid) return;
         this.$http
           .put("/index/admin/user/edit", {
@@ -517,7 +517,7 @@ export default {
             roles: editForm.roles
           })
           .then(res => {
-            console.log(res);
+            // console.log(res);
             if (res.data.code == 200) {
               this.$message.success("修改用户信息成功");
               this.editDialogVisible = false;
@@ -528,13 +528,13 @@ export default {
             }
           })
           .catch(err => {
-            console.log(err);
+            // console.log(err);
           });
       });
     },
     resetUserPwd(resetPwd) {
       this.$refs.resetFormRef.validate(valid => {
-        console.log(valid);
+        // console.log(valid);
         if (!valid) return;
         this.$http
           .put("/index/admin/user/password", {
@@ -542,7 +542,7 @@ export default {
             password: resetPwd.newPassword
           })
           .then(res => {
-            console.log(res);
+            // console.log(res);
             if (res.data.code == 200) {
               this.$message.success("修改用户密码成功");
               this.resetDialogVisible = false;
@@ -553,12 +553,12 @@ export default {
             }
           })
           .catch(err => {
-            console.log(err);
+            // console.log(err);
           });
       });
     },
     removeUserById(id) {
-      console.log(id);
+      // console.log(id);
       this.$confirm("此操作将永久删除该用户, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -577,7 +577,7 @@ export default {
               }
             })
             .catch(err => {
-              console.log(err);
+              // console.log(err);
             });
         })
         .catch(() => {
@@ -593,7 +593,7 @@ export default {
       for (var i = 0; i < this.$refs.table.selection.length; i++) {
         this.selections[i] = this.$refs.table.selection[i].id;
       }
-      console.log(this.selections);
+      // console.log(this.selections);
     },
     DeletechosenRoles() {
       this.$confirm("是否确认删除选中的角色?", "提示", {
@@ -606,7 +606,7 @@ export default {
           for (var i = 0; i < this.selections.length; i++) {
             id_nums.push(this.selections[i]);
           }
-          console.log(id_nums);
+          // console.log(id_nums);
           var data = {
             userIds: id_nums
           };
@@ -621,7 +621,7 @@ export default {
               }
             })
             .catch(err => {
-              console.log(err);
+              // console.log(err);
             });
         })
         .catch(() => {

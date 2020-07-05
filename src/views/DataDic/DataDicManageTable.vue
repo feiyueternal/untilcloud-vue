@@ -130,19 +130,19 @@ export default {
         .get("/index/sys/dic/type/all")
         .then(res => {
           this.dicType = [];
-            console.log(res.data.data);
+            // console.log(res.data.data);
           for (var i = 0; i < res.data.data.length; i++) {
             this.dicType.push(res.data.data[i]);
             this.dicType[i]["detail"] = [];
             this.getDicInfoAll(i);
           }
           this.dicListInfo.total = res.data.data.length;
-          console.log(this.dicType);
+          // console.log(this.dicType);
           this.loading = false;
           //   console.log(this.dicTypeInfo);
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
         });
       }, 300)
       
@@ -161,12 +161,12 @@ export default {
           this.dicType[index].detail.push(res.data.data);
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
         });
     },
     // 修改字典类型状态
     dicStateChange(dicInfo) {
-      console.log(dicInfo);
+      // console.log(dicInfo);
       // dicInfo.status = !dicInfo.status;
       this.$http
         .put("/index/sys/dic/type/status", {
@@ -174,7 +174,7 @@ export default {
           status: dicInfo.status
         })
         .then(res => {
-          console.log(res);
+          // console.log(res);
           if (res.data.code !== 200) {
             dicInfo.status = !dicInfo.status;
             return this.$message.error(res.data.message);
@@ -182,19 +182,19 @@ export default {
           this.$message.success("更新字典类型状态成功");
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
         });
     },
     // 修改字典明细状态
     detailStateChange(detailInfo) {
-      console.log(detailInfo);
+      // console.log(detailInfo);
       this.$http
         .put("/index/sys/dic/info/status", {
           id: detailInfo.id,
           status: detailInfo.status
         })
         .then(res => {
-          console.log(res);
+          // console.log(res);
           if (res.data.code !== 200) {
             detailInfo.status = !detailInfo.status;
             return this.$message.error(res.data.data);
@@ -202,7 +202,7 @@ export default {
           this.$message.success("更新该字典明细状态成功");
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
         });
     },
     // 分页效果
@@ -216,23 +216,23 @@ export default {
     addDicInfo(id) {
       this.$store.commit("getDicTypeId", id);
       this.$refs.dicDetailAddDialog.open();
-      console.log(id);
+      // console.log(id);
     },
     //打开修改类型对话框
     editDicTypeInfo(info) {
       this.$store.commit("getDicTypeInfo", info);
       this.$refs.dicTypeEditDialog.open();
-      console.log(info);
+      // console.log(info);
     },
     // 打开修改明细对话框
     editDicDetail(info) {
       this.$store.commit("getDicDetail", info);
       this.$refs.dicDetailEditDialog.open();
-      console.log(info);
+      // console.log(info);
     },
     //删除字典类型
     removeDicTypeById(id) {
-      console.log(id);
+      // console.log(id);
       this.$confirm("此操作将永久删除该类型, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -251,7 +251,7 @@ export default {
               }
             })
             .catch(err => {
-              console.log(err);
+              // console.log(err);
             });
         })
         .catch(() => {
@@ -263,7 +263,7 @@ export default {
     },
     //删除字典明细
     removeDicDetail(info) {
-      console.log(info);
+      // console.log(info);
       this.$confirm("此操作将永久删除该明细, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -284,7 +284,7 @@ export default {
               }
             })
             .catch(err => {
-              console.log(err);
+              // console.log(err);
             });
         })
         .catch(() => {

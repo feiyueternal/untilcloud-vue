@@ -42,7 +42,7 @@ export default {
       setTimeout(() =>{
           this.$refs.editform.init()
         },20)
-      console.log(this.info);
+      // console.log(this.info);
       this.loadingEnd();
     },
     open(row) {
@@ -63,7 +63,7 @@ export default {
       this.$emit("needfresh", true);
     },
     Submit() {
-      console.log(this.$refs.editform);
+      // console.log(this.$refs.editform);
       this.$refs.editform.submit();
     }
   }

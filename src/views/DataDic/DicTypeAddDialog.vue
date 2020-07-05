@@ -119,7 +119,7 @@ export default {
               }
             })
             .catch(err => {
-              console.log(err);
+              // console.log(err);
             });
         } else {
           this.$message.error("不可为空");
@@ -141,7 +141,7 @@ export default {
         status: "true"
       };
       this.addDetailForm.detailArray.push(infos);
-      console.log(this.addDetailForm);
+      // console.log(this.addDetailForm);
     },
     delNewDetail() {
       if (this.addDetailForm.detailArray.length == 0) {

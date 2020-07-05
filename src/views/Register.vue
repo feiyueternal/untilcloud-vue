@@ -196,7 +196,7 @@ export default {
             }
           })
           .catch(err => {
-            console.log(err);
+            // console.log(err);
             this.$message.error("发送失败")
           });
       }
@@ -215,17 +215,17 @@ export default {
           this.$http
             .post(url, data)
             .then(res => {
-              console.log(res);
+              // console.log(res);
               if (res.data.code == 200) {
                 this.$message.success("注册成功");
                 this.$router.push({ name: "Login" }); 
               } else {
-                console.log(res);
+                // console.log(res);
                 this.$message.error(res.data.message);
               }
             })
             .catch(err => {
-              console.log(err);
+              // console.log(err);
               this.$message.error("注册失败")
             });
         }

@@ -164,7 +164,7 @@ export default {
     this.nowactive = this.activetab;
   },
   created() {
-    console.log(JSON.parse(window.localStorage.CLouduser).rememberMe);
+    // console.log(JSON.parse(window.localStorage.CLouduser).rememberMe);
     window.localStorage.removeItem("CLouduser");
     window.localStorage.removeItem("CLouduser_name");
     window.localStorage.removeItem("Cloud_menus");
@@ -175,7 +175,7 @@ export default {
       }
     },
     click() {
-      console.log(this.rememberMe);
+      // console.log(this.rememberMe);
     },
     timer() {
       if (this.time > 0) {
@@ -212,7 +212,7 @@ export default {
             }
           })
           .catch(err => {
-            console.log(err);
+            // console.log(err);
             this.$message.error("发送失败");
           });
       }
@@ -242,11 +242,11 @@ export default {
       this.$refs[whichone].validate(valid => {
         if (valid) {
           setTimeout(() => {
-            console.log(data);
+            // console.log(data);
             this.$http
               .get(url, { params: data })
               .then(res => {
-                console.log(res);
+                // console.log(res);
                 if (res.data.code == 200) {
                   this.$store.commit("login", res.data.data);
                   this.$message.success("欢迎～");
@@ -259,7 +259,7 @@ export default {
                 }
               })
               .catch(err => {
-                console.log(err);
+                // console.log(err);
                 this.fullscreenLoading = false;
               });
           }, 700);

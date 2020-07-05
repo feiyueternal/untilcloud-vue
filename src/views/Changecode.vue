@@ -155,7 +155,7 @@ export default {
               }
             })
             .catch(err => {
-              console.log(err);
+              // console.log(err);
               this.$message.error("发送失败");
             });
         }
@@ -177,12 +177,12 @@ export default {
                 this.$message.success("修改密码成功")
                 this.$router.push({ name: "Login" });
               }else{
-                console.log(res);
+                // console.log(res);
                 this.$message.error(res.data.message);
               }
             })
             .catch(err => {
-              console.log(err);
+              // console.log(err);
             });
         }else{
           this.$message.error("不可为空!");

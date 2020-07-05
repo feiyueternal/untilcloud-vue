@@ -90,7 +90,7 @@ export default {
             }
           })
           .catch(err => {
-            console.log(err);
+            // console.log(err);
           });
       }
     },
@@ -124,7 +124,7 @@ export default {
               }
             })
             .catch(err => {
-              console.log(err);
+              // console.log(err);
             });
         })
         .catch(() => {

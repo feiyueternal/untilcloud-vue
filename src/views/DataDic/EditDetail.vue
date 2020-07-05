@@ -79,22 +79,22 @@ export default {
                 id: this.editDetailForm.typeId
             }
           };
-            console.log(data)
+            // console.log(data)
           this.$http
             .put(url, data)
             .then(res => {
-              console.log(res);
+              // console.log(res);
               if (res.data.code == 200) {
                 this.$message.success("修改字典明细成功");
                 this.$emit("needfresh", true);
                 this.editDetailDialogVisible = false;
-                console.log(this.editDetailForm)
+                // console.log(this.editDetailForm)
               } else {
                 this.$message.error(res.data.message);
               }
             })
             .catch(err => {
-              console.log(err);
+              // console.log(err);
             });
         } else {
           this.$message.error("不可为空");

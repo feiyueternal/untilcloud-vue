@@ -54,7 +54,7 @@ router.beforeEach((to, from, next) => {
 
   // console.log(to)
   var clu = window.localStorage.getItem('CLouduser')
-  console.log(clu)
+  // console.log(clu)
   // next()
   if(to.path === '/'||to.path.startsWith('/Register')||to.path.startsWith('/ForgetPassword')){
     // initAdminMenu(router,store)

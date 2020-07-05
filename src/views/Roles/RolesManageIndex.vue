@@ -95,7 +95,7 @@ export default {
               this.$message.error(res.data.message)
             }
           }).catch(err => {
-            console.log(err)
+            // console.log(err)
           })
         }
       },
@@ -125,7 +125,7 @@ export default {
               this.$message.error(res.data.message)
             }
           }).catch(err => {
-              console.log(err)
+              // console.log(err)
             })
         }).catch(() => {
           this.$message({

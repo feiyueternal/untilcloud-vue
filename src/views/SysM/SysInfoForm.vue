@@ -102,7 +102,7 @@ export default {
             parentId:this.data.parentId,
             sort:this.data.sort
           };
-          console.log(edit_data);
+          // console.log(edit_data);
             this.$http.put(url,edit_data).then(res => {
               if(res.data.code==200){
                 this.$message.success("编辑机构成功")
@@ -111,7 +111,7 @@ export default {
                 this.$message.error("编辑机构失败")
               }
             }).catch(err => {
-              console.log(err)
+              // console.log(err)
           })
         } else {
           this.$message.error("请按要求填写信息");

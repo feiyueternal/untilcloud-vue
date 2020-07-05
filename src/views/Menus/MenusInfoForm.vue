@@ -129,7 +129,7 @@ export default {
             component:this.data.component,
             parentId:this.data.parentId   
           };
-          console.log(edit_data);
+          // console.log(edit_data);
             this.$http.put(url,edit_data).then(res => {
               if(res.data.code==200){
                 this.$message.success("编辑菜单成功")
@@ -138,7 +138,7 @@ export default {
                 this.$message.error("编辑菜单失败")
               }
             }).catch(err => {
-              console.log(err)
+              // console.log(err)
           })
         } else {
           this.$message.error("请按要求填写信息");

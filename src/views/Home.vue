@@ -25,7 +25,7 @@ export default {
       this.name = window.localStorage.getItem("CLouduser_name");
       var a = this.name.replace(/\"/g, "");
       this.name = a;
-      console.log(this.name);
+      // console.log(this.name);
     }
   },
   mounted() {

@@ -68,11 +68,11 @@ export default {
             code: this.editTypeForm.code,
             name: this.editTypeForm.name
           };
-            console.log(data)
+            // console.log(data)
           this.$http
             .put(url, data)
             .then(res => {
-              console.log(res);
+              // console.log(res);
               if (res.data.code == 200) {
                 this.$message.success("修改字典类型成功");
                 this.$emit("needfresh", true);
@@ -82,7 +82,7 @@ export default {
               }
             })
             .catch(err => {
-              console.log(err);
+              // console.log(err);
             });
         } else {
           this.$message.error("不可为空");

@@ -79,24 +79,24 @@ export default {
         if (tmpdata != undefined && tmpdata.length > 0) {
           this.rolesdata = tmpdata;
           this.loading = false;
-          console.log(this.rolesdata)
+          // console.log(this.rolesdata)
         } else {
           this.$http
             .get(url)
             .then(res => {
               if (res.data.code == 200) {
-                console.log(res.data.data)
+                // console.log(res.data.data)
                 this.rolesdata = res.data.data;
                 this.total = res.data.data.length;
                 this.loading = false;
               } else {
-                console.log(res);
+                // console.log(res);
                 this.loading = false;
                 this.$message.error(res.data.message);
               }
             })
             .catch(err => {
-              console.log(err);
+              // console.log(err);
             });
         }
       }, 700);
@@ -142,7 +142,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
         });
     },
     DeleteRole(row){
@@ -163,7 +163,7 @@ export default {
               this.$message.error(res.data.message)
             }
           }).catch(err => {
-            console.log(err)
+            // console.log(err)
           })
         }).catch(() => {
           this.$message({

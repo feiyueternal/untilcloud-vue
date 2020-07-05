@@ -57,7 +57,7 @@ export default {
       this.getSelect();
       this.$nextTick(() => {
         this.$refs.table.clearSelection();
-        console.log(this.selectedUsers)
+        // console.log(this.selectedUsers)
         for (var i = 0; i < this.selectedUsers.length; i++) {
           this.$refs.table.toggleRowSelection(this.selectedUsers[i], true);
         }
@@ -99,7 +99,7 @@ export default {
               }
             })
             .catch(err => {
-              console.log(err);
+              // console.log(err);
             });
           this.loading = false;
         }, 1200);
@@ -116,7 +116,7 @@ export default {
       var data={
           userIds:this.userIds
       }
-      console.log(data)
+      // console.log(data)
       this.$http.put(url+this.rid,data).then(res => {
           if(res.data.code==200){
               this.$message.success("分配角色成功")
@@ -126,7 +126,7 @@ export default {
               this.$message.error("分配用户出错")
           }
       }).catch(err => {
-          console.log(err)
+          // console.log(err)
       })
     }
   },

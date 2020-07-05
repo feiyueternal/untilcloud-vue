@@ -54,7 +54,7 @@ export default {
     addRole() {
         this.$refs.addDialogForm.validate(valid => { 
             if(valid){
-                console.log(this.addDialogForm)
+                // console.log(this.addDialogForm)
                 var url="/index/admin/role/add"
                 var data={
                     name:this.addDialogForm.name,
@@ -71,7 +71,7 @@ export default {
                         this.$message.error(res.data.data)
                     }
                 }).catch(err => {
-                    console.log(err)
+                    // console.log(err)
                 })
                 
             }else{
@@ -87,7 +87,7 @@ export default {
     },
     RolesChangeState(value){
         // console.log(this.addDialogForm)
-        console.log(value)
+        // console.log(value)
     }
   }
 };

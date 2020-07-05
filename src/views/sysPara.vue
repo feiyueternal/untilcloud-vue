@@ -163,7 +163,7 @@ export default {
       this.$http
         .get(url)
         .then(res => {
-          console.log(res.data);
+          // console.log(res.data);
           if (res.data.code == 200) {
             for (var i = 0; i < res.data.data.length; i++) {
               this.sysParaList.push(res.data.data[i]);
@@ -183,14 +183,14 @@ export default {
             }
             this.sysParaListInfo.total = res.data.data.length;
             this.loading = false;
-            console.log(this.sysParaList);
+            // console.log(this.sysParaList);
           } else {
             this.loading = false;
             this.$message.error(res.data.message);
           }
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
         });
     },
     Fresh() {
@@ -200,7 +200,7 @@ export default {
        this.$http
         .get("/index/sys/param/search", { params: { keywords } })
         .then(res => {
-          console.log(res.data.data);
+          // console.log(res.data.data);
           if (keywords == "") {
             this.getSysParaList();
           } else {
@@ -217,16 +217,16 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
         });
     },
     handleSizeChange(newSize) {
       this.sysParaListInfo.pagesize = newSize;
       // this.getUserList();
-      console.log(this.sysParaListInfo.pagesize);
+      // console.log(this.sysParaListInfo.pagesize);
     },
     handleCurrentChange(newPage) {
-      console.log(newPage);
+      // console.log(newPage);
       this.sysParaListInfo.pagenum = newPage;
     },
     editDialogClosed() {
@@ -241,7 +241,7 @@ export default {
     },
     editUserInfo(editForm) {
       this.$refs.editFormRef.validate(valid => {
-        console.log(valid);
+        // console.log(valid);
         if (!valid) return;
         this.$http
           .put("/index/sys/param/edit", {
@@ -251,7 +251,7 @@ export default {
             value3: editForm.value3
           })
           .then(res => {
-            console.log(res);
+            // console.log(res);
             if (res.data.code == 200) {
               this.$message.success("修改系统参数信息成功");
               this.editDialogVisible = false;
@@ -262,7 +262,7 @@ export default {
             }
           })
           .catch(err => {
-            console.log(err);
+            // console.log(err);
           });
       });
     }

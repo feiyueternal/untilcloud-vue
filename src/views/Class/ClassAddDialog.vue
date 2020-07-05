@@ -209,7 +209,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
         });
     },
     getItemB() {
@@ -223,7 +223,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
         });
     },
     getItemC() {
@@ -237,7 +237,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
         });
     },
     getItemD() {
@@ -247,11 +247,11 @@ export default {
         .then(res => {
           if (res.data.code == 200) {
             this.major_options = res.data.data;
-            console.log(this.major_options);
+            // console.log(this.major_options);
           }
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
         });
     },
     getItemE() {
@@ -259,13 +259,13 @@ export default {
       this.$http
         .get(url)
         .then(res => {
-          console.log(res);
+          // console.log(res);
           if (res.data.code == 200) {
             this.grade_options = res.data.data;
           }
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
         });
     },
     addMenu() {
@@ -300,7 +300,7 @@ export default {
           this.formdata.append("examArrange", this.addDialogForm.examArrange);
           this.formdata.append("schoolId", this.addDialogForm.schoolId);
           this.formdata.append("collegeId", this.addDialogForm.collegeId);
-          console.log(this.formdata);
+          // console.log(this.formdata);
           this.$http
             .post(url, this.formdata)
             .then(res => {
@@ -323,7 +323,7 @@ export default {
               }
             })
             .catch(err => {
-              console.log(err);
+              // console.log(err);
             });
         } else {
           this.$message.error("不可为空");

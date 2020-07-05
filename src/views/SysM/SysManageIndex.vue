@@ -67,8 +67,8 @@ export default {
           })
           .then(res => {
             if (res.data.code == 200) {
-              console.log("keyword")
-              console.log(res.data)
+              // console.log("keyword")
+              // console.log(res.data)
               if (res.data.data == undefined || res.data.data.length <= 0) {
                 return this.$message.error("该机构不存在");
               } else {
@@ -80,7 +80,7 @@ export default {
             }
           })
           .catch(err => {
-            console.log(err);
+            // console.log(err);
           });
       }
     },

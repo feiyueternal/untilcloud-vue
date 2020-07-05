@@ -32,15 +32,15 @@ import log from '@/assets/image/earth.png'
         this.$http.get(url).then(res => {
           if (res.data.code === 200) {
             this.$store.commit('logout')
-            console.log(res.data)
+            // console.log(res.data)
             this.$message.success("再会")
             this.$router.replace({path:"/"})
           }else{
             this.$message.error("登出发生错误")
-            console.log(res.data)
+            // console.log(res.data)
           }
         }).catch(err => {
-            console.log(err)
+            // console.log(err)
         })
 
       }

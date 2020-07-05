@@ -61,7 +61,7 @@ export default {
   methods: {
       getDicId() {
           this.dicId = this.$store.state.dicTypeId;
-          console.log(this.dicId)
+          // console.log(this.dicId)
       },
     addDicTypeDetail() {
       this.$refs.addDialogForm.validate(valid => {
@@ -74,11 +74,11 @@ export default {
             status: this.addDialogForm.status,
             dictionaryType: {id: this.dicId}
           };
-            console.log(data)
+            // console.log(data)
           this.$http
             .post(url, data)
             .then(res => {
-              console.log(res);
+              // console.log(res);
               if (res.data.code == 200) {
                 this.$message.success("添加字典明细成功");
                 this.$emit("needfresh", true);
@@ -88,7 +88,7 @@ export default {
               }
             })
             .catch(err => {
-              console.log(err);
+              // console.log(err);
             });
         } else {
           this.$message.error("不可为空");

@@ -215,7 +215,7 @@ export default {
     },
     selectB(id) {
       var obj = {};
-      console.log(id);
+      // console.log(id);
       obj = this.school_options.find(item => {
         return item.id == id;
       });
@@ -260,7 +260,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
         });
     },
     getItemB() {
@@ -274,11 +274,11 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
         });
-      console.log("1");
-      console.log(this.data.schoolId);
-      console.log(this.data.collegeId);
+      // console.log("1");
+      // console.log(this.data.schoolId);
+      // console.log(this.data.collegeId);
       if (this.data.schoolId) {
         var url = `/index/userInfo/school/get/${this.data.schoolId}`;
 
@@ -291,7 +291,7 @@ export default {
             }
           })
           .catch(err => {
-            console.log(err);
+            // console.log(err);
           });
 
         if (this.data.collegeId) {
@@ -305,7 +305,7 @@ export default {
               }
             })
             .catch(err => {
-              console.log(err);
+              // console.log(err);
             });
         }
       }
@@ -321,7 +321,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
         });
     },
     getItemD() {
@@ -335,7 +335,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
         });
     },
     getItemE() {
@@ -349,7 +349,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
         });
     },
     handleChange(file, fileList) {
@@ -364,7 +364,7 @@ export default {
           if (this.flag == false) {
             this.formdata.append("cover", this.data.cover);
           }
-          console.log(this.data.name);
+          // console.log(this.data.name);
           this.formdata.append("id", this.data.id);
           this.formdata.append("name", this.data.name);
           this.formdata.append("grade", this.data.grade);
@@ -378,9 +378,9 @@ export default {
           this.formdata.append("examArrange", this.data.examArrange);
           this.formdata.append("schoolId", this.data.schoolId);
           this.formdata.append("collegeId", this.data.collegeId);
-          console.log("111");
-          console.log(this.data.schoolId);
-          console.log(this.data.collegeId);
+          // console.log("111");
+          // console.log(this.data.schoolId);
+          // console.log(this.data.collegeId);
           this.$http
             .post(url, this.formdata)
             .then(res => {
@@ -392,7 +392,7 @@ export default {
               }
             })
             .catch(err => {
-              console.log(err);
+              // console.log(err);
             });
         } else {
           this.$message.error("请按要求填写信息");

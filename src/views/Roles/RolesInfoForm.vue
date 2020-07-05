@@ -188,7 +188,7 @@ export default {
       for(var i =0;i<this.data.perms.length;i++){
         permsId.push(this.data.perms[i].id)
         var a=this.data.perms[i].children
-        console.log(a)
+        // console.log(a)
         if(a!=null){
         for (var j = 0; j < this.data.perms[i].children.length; j++) {
           permsId.push(this.data.perms[i].children[j].id)
@@ -210,7 +210,7 @@ export default {
           this.$message.error("获取权限失败")
         }
       }).catch(err => {
-        console.log(err)
+        // console.log(err)
       })
     },
     selectedMenus(){
@@ -218,14 +218,14 @@ export default {
       for(var i =0;i<this.data.menus.length;i++){
         menusId.push(this.data.menus[i].id)
         var a=this.data.menus[i].children
-        console.log(a)
+        // console.log(a)
         if(a!=null){
         for (var j = 0; j < this.data.menus[i].children.length; j++) {
           menusId.push(this.data.menus[i].children[j].id)
         }
         }
       }
-      console.log(menusId)
+      // console.log(menusId)
       this.selectedMenuIds=menusId
       if (this.$refs.menustree) {
         this.$refs.menustree.setCheckedKeys(this.selectedMenuIds)
@@ -241,13 +241,13 @@ export default {
           this.$message.error("获取菜单失败")
         }
       }).catch(err => {
-        console.log(err)
+        // console.log(err)
       })
     },
     submit(){
       this.$refs.rolesForm.validate(valid => {
         if(valid){
-          console.log(this.$refs.permstree.getCheckedNodes())
+          // console.log(this.$refs.permstree.getCheckedNodes())
           var url="/index/admin/role/edit"
           var edit_data={
             id:this.data.id,
@@ -256,7 +256,7 @@ export default {
             menus:this.$refs.menustree.getCheckedNodes(),
             perms:this.$refs.permstree.getCheckedNodes()
           }
-          console.log(edit_data)
+          // console.log(edit_data)
           this.$http.put(url,edit_data).then(res => {
             if(res.data.code==200){
               this.$message.success("编辑角色成功")
@@ -265,7 +265,7 @@ export default {
               this.$message.error("编辑角色失败")
             }
           }).catch(err => {
-            console.log(err)
+            // console.log(err)
         })
         }else{
           this.$message.error("请按要求填写信息")
