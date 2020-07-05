@@ -2,7 +2,7 @@
 <div>
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ name: 'AdminIndex' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>系统配置</el-breadcrumb-item>
+      <el-breadcrumb-item>参数配置</el-breadcrumb-item>
       <el-breadcrumb-item>学校机构</el-breadcrumb-item>
     </el-breadcrumb>
     <el-card>

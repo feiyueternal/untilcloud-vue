@@ -2,13 +2,13 @@
   <div>
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ name: 'AdminIndex' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>系统配置</el-breadcrumb-item>
+      <el-breadcrumb-item>参数配置</el-breadcrumb-item>
       <el-breadcrumb-item>系统参数</el-breadcrumb-item>
     </el-breadcrumb>
     <el-card>
       <el-row :gutter="20">
         <el-col :span="10">
-          <el-input placeholder="请输入内容" v-model="keywords" clearable @clear="getSysParaList">
+          <el-input placeholder="请输入内容" v-model="keywords" clearable @clear="getSysParaList" v-show="!isTeacher">
             <el-button slot="append" icon="el-icon-search" @click="searchSysPara(keywords)"></el-button>
           </el-input>
         </el-col>
@@ -140,7 +140,8 @@ export default {
             message: "一节课时间(min)必须为数字值",
             trigger: "blur"
           }
-        ]
+        ],
+        isTeacher:false
       }
     };
   },
@@ -151,10 +152,18 @@ export default {
     getSysParaList() {
       this.loading = true;
       this.sysParaList = [];
+     var Teacher=window.localStorage.getItem("CLouduser_teacher")
+      if(Teacher=="yes"){
+        var url="/index/sys/param/get"
+        this.isTeacher=true
+      }else{
+        var url = "/index/sys/param/all";
+        this.isTeacher=false
+      }
       this.$http
-        .get("/index/sys/param/all")
+        .get(url)
         .then(res => {
-          // console.log(res.data);
+          console.log(res.data);
           if (res.data.code == 200) {
             for (var i = 0; i < res.data.data.length; i++) {
               this.sysParaList.push(res.data.data[i]);

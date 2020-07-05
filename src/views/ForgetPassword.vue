@@ -147,8 +147,8 @@ export default {
             .then(res => {
               if (res.data.code == 200) {
                 this.$message.success("发送成功")
-                console.log("验证码")
-                console.log(res.data)
+                // console.log("验证码")
+                // console.log(res.data)
                 this.time = 60;
                 this.disabled = true;
                 this.timer();

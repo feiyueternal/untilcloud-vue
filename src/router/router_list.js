@@ -195,6 +195,7 @@ const mpalist=
         "System": Navbar,
         "Error":Navbar, 
         "Content":Navbar,
+        "Parameter":Navbar,
     }
 
     export default mpalist;

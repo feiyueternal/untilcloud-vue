@@ -187,8 +187,8 @@ export default {
           .get(url, { params: data })
           .then(res => {
             if (res.data.code == 200) {
-              console.log("验证码")
-              console.log(res.data)
+              // console.log("验证码")
+              // console.log(res.data)
               this.$message.success("发送成功")
               this.time = 60;
               this.disabled = true;
