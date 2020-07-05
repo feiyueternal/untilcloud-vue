@@ -486,7 +486,8 @@ export default {
     showEditDialog(info) {
       // console.log(info);
       // console.log(this.rolesData);
-      this.getRoles(), (this.editForm.id = info.id);
+      this.getRoles()
+      this.editForm.id = info.id;
       this.editForm.username = info.username;
       this.editForm.name = info.name;
       this.editForm.phone = info.phone;
@@ -501,7 +502,8 @@ export default {
           this.checkedRoles[i] = this.editForm.roles[i].nameZh;
         }
       }
-      // console.log(this.editForm), (this.editDialogVisible = true);
+      // console.log(this.editForm)
+        this.editDialogVisible = true;
     },
     editUserInfo(editForm) {
       this.$refs.editFormRef.validate(valid => {
