@@ -9,15 +9,15 @@
     <!-- 搜索框及旁边添加按钮 -->
     <el-card>
       <el-row :gutter="20">
-        <el-col :span="10">
+        <!-- <el-col :span="10">
           <el-input placeholder="请输入搜索内容" v-model="keywords">
             <el-button slot="append" icon="el-icon-search"></el-button>
           </el-input>
-        </el-col>
+        </el-col> -->
         <el-col :span="3">
           <el-button type="primary" @click="addDicType">添加字典类型</el-button>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="5">
           <el-button type="success" icon="el-icon-refresh" @click="Fresh"></el-button>
         </el-col>
       </el-row>
